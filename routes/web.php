@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BiroController;
+use App\Http\Controllers\ProgramController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,15 @@ Route::prefix('/biro')->controller(BiroController::class)->group(function () {
     Route::get('/edit/{id}', 'edit')->name('biros.edit');
     Route::put('/update/{id}', 'update')->name('biros.update');
     Route::get('/delete/{id}', 'destroy')->name('biros.delete');
+});
+
+Route::prefix('/program')->controller(ProgramController::class)->group(function () {
+    Route::get('/index', 'index')->name('programs.index');
+    Route::get('/create', 'create')->name('programs.create');
+    Route::post('/store', 'store')->name('programs.store');
+    Route::get('/edit/{id}', 'edit')->name('programs.edit');
+    Route::put('/update/{id}', 'update')->name('programs.update');
+    Route::get('/delete/{id}', 'destroy')->name('programs.delete');
 });
 require __DIR__.'/auth.php';
 
