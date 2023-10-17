@@ -14,23 +14,42 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
-
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+    <body class="font-sans antialiased bg-gradient-to-r from-slate-200 to-blue-300">
+        <div class="max-w-full max-h-screen overflow-auto">
+            @include('layouts.sidebar')
+            <div class="min-h-screen bg-gray-100">
+                @include('layouts.navigation')
+    
+                <!-- Page Heading -->
+                @if (isset($header))
+                    <header class="bg-white shadow">
+                        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                            {{ $header }}
+                        </div>
+                    </header>
+                @endif
+    
+                <!-- Page Content -->
+                <main class="ml-12 mr-12 mt-5">
+                    {{ $slot }}
+                </main>
+            </div>
         </div>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script>
+            function destroyFunction(url) {
+                Swal.fire({
+                    title: 'Anda Yakin Ingin Menghapus Data Ini?',
+                    text: "Setelah Data Dihapus, Data Tidak Bisa Dikembalikan!!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.replace(url)
+                    }
+                })
+            }
+        </script>
+    @stack('script')
     </body>
 </html>
