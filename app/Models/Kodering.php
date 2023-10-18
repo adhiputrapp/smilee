@@ -17,6 +17,6 @@ class Kodering extends Model
 
     public function subkegiatan() : BelongsTo
     {
-        return $this->belongsTo(Kegiatan::class, 'nama_sub_kegiatan_relasi', 'nama_sub_kegiatan');
+        return $this->belongsTo(SubKegiatan::class, 'nama_sub_kegiatan_relasi', 'nama_sub_kegiatan');
     }
 }

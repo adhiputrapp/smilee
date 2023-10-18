@@ -4,6 +4,9 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BiroController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\KegiatanController;
+use App\Http\Controllers\SubkegiatanController;
+use App\Http\Controllers\KoderingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +49,33 @@ Route::prefix('/program')->controller(ProgramController::class)->group(function 
     Route::get('/edit/{id}', 'edit')->name('programs.edit');
     Route::put('/update/{id}', 'update')->name('programs.update');
     Route::get('/delete/{id}', 'destroy')->name('programs.delete');
+});
+
+Route::prefix('/kegiatan')->controller(KegiatanController::class)->group(function () {
+    Route::get('/index', 'index')->name('kegiatans.index');
+    Route::get('/create', 'create')->name('kegiatans.create');
+    Route::post('/store', 'store')->name('kegiatans.store');
+    Route::get('/edit/{id}', 'edit')->name('kegiatans.edit');
+    Route::put('/update/{id}', 'update')->name('kegiatans.update');
+    Route::get('/delete/{id}', 'destroy')->name('kegiatans.delete');
+});
+
+Route::prefix('/subkegiatan')->controller(SubkegiatanController::class)->group(function () {
+    Route::get('/index', 'index')->name('subkegiatans.index');
+    Route::get('/create', 'create')->name('subkegiatans.create');
+    Route::post('/store', 'store')->name('subkegiatans.store');
+    Route::get('/edit/{id}', 'edit')->name('subkegiatans.edit');
+    Route::put('/update/{id}', 'update')->name('subkegiatans.update');
+    Route::get('/delete/{id}', 'destroy')->name('subkegiatans.delete');
+});
+
+Route::prefix('/kodering')->controller(KoderingController::class)->group(function () {
+    Route::get('/index', 'index')->name('koderings.index');
+    Route::get('/create', 'create')->name('koderings.create');
+    Route::post('/store', 'store')->name('koderings.store');
+    Route::get('/edit/{id}', 'edit')->name('koderings.edit');
+    Route::put('/update/{id}', 'update')->name('koderings.update');
+    Route::get('/delete/{id}', 'destroy')->name('koderings.delete');
 });
 require __DIR__.'/auth.php';
 
