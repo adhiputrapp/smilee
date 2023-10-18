@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('kode_kegiatan');
             $table->string('nama_kegiatan');
             $table->string('nama_program_relasi');
+            $table->index('nama_kegiatan');
+            $table->index('nama_program_relasi');
+            $table->foreign('nama_program_relasi')->references('nama_program')->on('programs')->onUpdate('cascade');
             $table->timestamps();
         });
     }

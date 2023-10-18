@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('nama_biro');
             $table->string('kode_biro');
+            $table->index('nama_biro');
             $table->timestamps();
         });
     }

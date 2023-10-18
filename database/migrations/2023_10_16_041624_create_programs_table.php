@@ -12,14 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('programs', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->Uuid('id')->primary();
             $table->string('kode_program');
             $table->string('nama_program');
             $table->string('nama_biro_relasi');
+            $table->index('nama_program');
+            $table->index('nama_biro_relasi');
+            $table->foreign('nama_biro_relasi')->references('nama_biro')->on('biros')->onUpdate('cascade');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
