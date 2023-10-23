@@ -7,6 +7,9 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\SubkegiatanController;
 use App\Http\Controllers\KoderingController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\PelimpahanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +79,31 @@ Route::prefix('/kodering')->controller(KoderingController::class)->group(functio
     Route::get('/edit/{id}', 'edit')->name('koderings.edit');
     Route::put('/update/{id}', 'update')->name('koderings.update');
     Route::get('/delete/{id}', 'destroy')->name('koderings.delete');
+});
+
+Route::prefix('/role')->controller(RoleController::class)->group(function () {
+    Route::get('/index', 'index')->name('roles.index');
+    Route::get('/create', 'create')->name('roles.create');
+    Route::post('/store', 'store')->name('roles.store');
+    Route::get('/edit/{id}', 'edit')->name('roles.edit');
+    Route::put('/update/{id}', 'update')->name('roles.update');
+    Route::get('/delete/{id}', 'destroy')->name('roles.delete');
+});
+
+Route::prefix('/user')->controller(UserController::class)->group(function () {
+    Route::get('/index', 'index')->name('users.index');
+    Route::get('/edit/{id}', 'edit')->name('users.edit');
+    Route::put('/update/{id}', 'update')->name('users.update');
+    Route::get('/delete/{id}', 'destroy')->name('users.delete');
+});
+
+Route::prefix('/pelimpahan')->controller(PelimpahanController::class)->group(function () {
+    Route::get('/index', 'index')->name('pelimpahans.index');
+    Route::get('/create', 'create')->name('pelimpahans.create');
+    Route::post('/store', 'store')->name('pelimpahans.store');
+    Route::get('/edit/{id}', 'edit')->name('pelimpahans.edit');
+    Route::put('/update/{id}', 'update')->name('pelimpahans.update');
+    Route::get('/delete/{id}', 'destroy')->name('pelimpahans.delete');
 });
 require __DIR__.'/auth.php';
 

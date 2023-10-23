@@ -9,28 +9,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Biro extends Model
+class Pelimpahan extends Model
 {
     use HasFactory, HasUuids;
 
     protected $guarded = ["id"];
 
-    public function user(): HasMany
+    public function biro(): BelongsTo
     {
-        return $this->hasMany(User::class, 'biro_id', 'id');
+        return $this->belongsTo(Biro::class, 'biro_id', 'id');
     }
-
-    public function pelimpahan(): HasMany
-    {
-        return $this->hasMany(Pelimpahan::class, 'biro_id', 'id');
-    }
-
-    public function programs()
-    {
-        return $this->hasMany(Program::class, 'nama_biro_relasi', 'nama_biro');
-    }
-
+    
 }
-
-
-
