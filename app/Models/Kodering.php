@@ -19,4 +19,9 @@ class Kodering extends Model
     {
         return $this->belongsTo(SubKegiatan::class, 'nama_sub_kegiatan_relasi', 'nama_sub_kegiatan');
     }
+
+    public function belanja()
+    {
+        return $this->hasMany(Belanja::class, 'kodering_id', 'id');
+    }
 }

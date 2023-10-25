@@ -11,74 +11,121 @@ use Illuminate\View\View;
 use App\Models\Biro;
 use App\Models\Pelimpahan;
 use App\Models\SubKegiatan;
+use App\Models\Kegiatan;
+use App\Models\Program;
+use App\Models\Kodering;
+use App\Models\Belanja;
 
 class BelanjaController extends Controller
 {
     public function index(): View
     {
-        return view('user.pelimpahan.index',[
-            'pelimpahans' => Pelimpahan::orderby('tanggal_pelimpahan', 'ASC')->with('biro')->get()
+        return view('user.belanja.index',[
+            'belanjas' => Belanja::orderby('tanggal_belanja', 'ASC')
+            ->with('biro','program','kegiatan','subkegiatan','kodering')
+            ->get()
         ]);
     }
 
     public function create(): View
     {
-        return view('user.pelimpahan.create',[
-            'biros' => Biro::all()
+        return view('user.belanja.create',[
+            'biros' => Biro::all(),
+            'programs' => Program::all(),
+            'kegiatans' => Kegiatan::all(),
+            'subkegiatans' => SubKegiatan::all(),
+            'koderings' => Kodering::all()
         ]);
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'tanggal_pelimpahan' => 'required',
-            'jumlah_pelimpahan' => 'required',
+            'tanggal_belanja' => 'required',
+            'jenis_belanja' => 'required',
             'biro_id' => 'required',
-            'note' => 'required',
+            'program_id' => 'required',
+            'kegiatan_id' => 'required',
+            'subkegiatan_id' => 'required',
+            'kodering_id' => 'required',
+            'nourut' => 'required',
+            'notbp' => 'required',
+            'pengeluaran' => 'required',
+            'uraian' => 'required',
         ]);
 
-        Pelimpahan::create([
+        Belanja::create([
             'id' => Str::uuid(),
-            'tanggal_pelimpahan' => $request->tanggal_pelimpahan,
-            'jumlah_pelimpahan' => $request->jumlah_pelimpahan,
             'biro_id' => $request->biro_id,
-            'note' => $request->note,
+            'tanggal_belanja' => $request->tanggal_belanja,
+            'jenis_belanja' => $request->jenis_belanja,
+            'program_id' => $request->program_id,
+            'kegiatan_id' => $request->kegiatan_id,
+            'subkegiatan_id' => $request->subkegiatan_id,
+            'kodering_id' => $request->kodering_id,
+            'nourut' => $request->nourut,
+            'notbp' => $request->notbp,
+            'pengeluaran' => $request->pengeluaran,
+            'uraian' => $request->uraian,
         ]);
 
-        return redirect()->route('pelimpahans.index');
+        return redirect()->route('belanjas.index');
     }
 
-    public function edit($id): View
+    public function edit($id)
     {
-        $pelimpahans = Pelimpahan::with('biro')->find($id);
-        $biros = Biro::all();
+        $belanja = Belanja::find($id);
 
-        return view('user.pelimpahan.edit', compact('pelimpahans','biros'));
+        return view('user.belanja.edit', [
+            'belanja' => $belanja,
+            'biros' => Biro::all(),
+            'programs' => Program::all(),
+            'kegiatans' => Kegiatan::all(),
+            'subkegiatans' => SubKegiatan::all(),
+            'koderings' => Kodering::all()
+        ]);
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
-            'tanggal_pelimpahan' => 'required',
-            'jumlah_pelimpahan' => 'required',
+            'tanggal_belanja' => 'required',
+            'jenis_belanja' => 'required',
             'biro_id' => 'required',
-            'note' => 'required',
+            'program_id' => 'required',
+            'kegiatan_id' => 'required',
+            'subkegiatan_id' => 'required',
+            'kodering_id' => 'required',
+            'nourut' => 'required',
+            'notbp' => 'required',
+            'pengeluaran' => 'required',
+            'uraian' => 'required',
         ]);
 
-        $pelimpahan = Pelimpahan::find($id);
+        $belanja = Belanja::find($id);
 
-        $pelimpahan->tanggal_pelimpahan = $request->tanggal_pelimpahan;
-        $pelimpahan->jumlah_pelimpahan = $request->jumlah_pelimpahan;
-        $pelimpahan->biro_id = $request->biro_id;
-        $pelimpahan->note = $request->note;
+        $belanja->update([
+            'biro_id' => $request->biro_id,
+            'tanggal_belanja' => $request->tanggal_belanja,
+            'jenis_belanja' => $request->jenis_belanja,
+            'program_id' => $request->program_id,
+            'kegiatan_id' => $request->kegiatan_id,
+            'subkegiatan_id' => $request->subkegiatan_id,
+            'kodering_id' => $request->kodering_id,
+            'nourut' => $request->nourut,
+            'notbp' => $request->notbp,
+            'pengeluaran' => $request->pengeluaran,
+            'uraian' => $request->uraian,
+        ]);
 
-        return redirect()->route('pelimpahans.index')->with('success', 'Program berhasil diperbarui.');
+        return redirect()->route('belanjas.index')->with('success', 'Belanja berhasil diperbarui.');
     }
+
 
     public function destroy($id)
     {
-        $pelimpahans = Pelimpahan::find($id);
-        $pelimpahans->delete();
+        $belankas = Belanja::find($id);
+        $belankas->delete();
 
         return redirect()->route('pelimpahans.index')->with('success', 'Pelimpahan berhasil dihapus.');
     }

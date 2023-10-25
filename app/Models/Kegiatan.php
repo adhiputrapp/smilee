@@ -25,4 +25,8 @@ class Kegiatan extends Model
         return $this->hasMany(SubKegiatan::class, 'nama_kegiatan_relasi', 'nama_kegiatan');
     }
 
+    public function belanja()
+    {
+        return $this->hasMany(Belanja::class, 'kegiatan_id', 'id');
+    }
 }

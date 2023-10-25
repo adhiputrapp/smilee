@@ -30,6 +30,11 @@ class Biro extends Model
         return $this->hasMany(Program::class, 'nama_biro_relasi', 'nama_biro');
     }
 
+    public function belanja()
+    {
+        return $this->hasMany(Belanja::class, 'biro_id', 'id');
+    }
+
 }
 
 

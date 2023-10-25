@@ -10,6 +10,7 @@ use App\Http\Controllers\KoderingController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PelimpahanController;
+use App\Http\Controllers\BelanjaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -104,6 +105,15 @@ Route::prefix('/pelimpahan')->controller(PelimpahanController::class)->group(fun
     Route::get('/edit/{id}', 'edit')->name('pelimpahans.edit');
     Route::put('/update/{id}', 'update')->name('pelimpahans.update');
     Route::get('/delete/{id}', 'destroy')->name('pelimpahans.delete');
+});
+
+Route::prefix('/belanja')->controller(BelanjaController::class)->group(function () {
+    Route::get('/index', 'index')->name('belanjas.index');
+    Route::get('/create', 'create')->name('belanjas.create');
+    Route::post('/store', 'store')->name('belanjas.store');
+    Route::get('/edit/{id}', 'edit')->name('belanjas.edit');
+    Route::put('/update/{id}', 'update')->name('belanjas.update');
+    Route::get('/delete/{id}', 'destroy')->name('belanjas.delete');
 });
 require __DIR__.'/auth.php';
 

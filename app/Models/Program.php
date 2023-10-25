@@ -24,4 +24,9 @@ class Program extends Model
     {
         return $this->hasMany(Kegiatan::class, 'nama_program_relasi', 'nama_prgoram');
     }
+
+    public function belanja()
+    {
+        return $this->hasMany(Belanja::class, 'program_id', 'id');
+    }
 }

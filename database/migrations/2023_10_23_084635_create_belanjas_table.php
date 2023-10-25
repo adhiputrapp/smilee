@@ -20,7 +20,10 @@ return new class extends Migration
             $table->integer('notbp');
             $table->string('uraian');
             $table->foreignuuid('biro_id')->references('id')->on('biros')->onUpdate('cascade');
-            $table->foreignuuid('biro_id')->references('id')->on('biros')->onUpdate('cascade');
+            $table->foreignuuid('program_id')->references('id')->on('programs')->onUpdate('cascade');
+            $table->foreignuuid('kegiatan_id')->references('id')->on('kegiatans')->onUpdate('cascade');
+            $table->foreignuuid('subkegiatan_id')->references('id')->on('sub_kegiatans')->onUpdate('cascade');
+            $table->foreignuuid('kodering_id')->references('id')->on('koderings')->onUpdate('cascade');
             $table->timestamps();
         });
     }
