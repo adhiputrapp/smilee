@@ -19,7 +19,7 @@
                         <x-input-label for="biro_id" :value="__('Nama Biro')"/>
                         <select id="nama_biro_relasi" name="biro_id" class="block mt-1 w-full" required>
                             @foreach ($biros as $biro)
-                                <option value="{{ $biro->nama_biro }}" {{ $biro->nama_biro === $pelimpahans->biro_id ? 'selected' : '' }} >{{ $biro->nama_biro }}</option>
+                                <option value="{{ $biro->id }}" {{ $biro->nama_biro === $pelimpahans->biro_id ? 'selected' : '' }} >{{ $biro->nama_biro }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -33,7 +33,7 @@
                 </form> 
             </div>
         </div>
-    </div>   
+    </div>    
     @push('script')
     <script>
         $(document).ready(function() {

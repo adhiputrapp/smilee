@@ -64,12 +64,14 @@ class PelimpahanController extends Controller
             'note' => 'required',
         ]);
 
-        $pelimpahan = Pelimpahan::find($id);
+        $pelimpahans = Pelimpahan::find($id);
 
-        $pelimpahan->tanggal_pelimpahan = $request->tanggal_pelimpahan;
-        $pelimpahan->jumlah_pelimpahan = $request->jumlah_pelimpahan;
-        $pelimpahan->biro_id = $request->biro_id;
-        $pelimpahan->note = $request->note;
+        $pelimpahans->tanggal_pelimpahan = $request->tanggal_pelimpahan;
+        $pelimpahans->jumlah_pelimpahan = $request->jumlah_pelimpahan;
+        $pelimpahans->biro_id = $request->biro_id;
+        $pelimpahans->note = $request->note;
+
+        $pelimpahans->save();
 
         return redirect()->route('pelimpahans.index')->with('success', 'Program berhasil diperbarui.');
     }
