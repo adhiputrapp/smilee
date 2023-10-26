@@ -11,6 +11,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PelimpahanController;
 use App\Http\Controllers\BelanjaController;
+use App\Http\Controllers\AnggaranController;
 
 /*
 |--------------------------------------------------------------------------
@@ -114,6 +115,15 @@ Route::prefix('/belanja')->controller(BelanjaController::class)->group(function 
     Route::get('/edit/{id}', 'edit')->name('belanjas.edit');
     Route::put('/update/{id}', 'update')->name('belanjas.update');
     Route::get('/delete/{id}', 'destroy')->name('belanjas.delete');
+});
+
+Route::prefix('/anggaran')->controller(AnggaranController::class)->group(function () {
+    Route::get('/index', 'index')->name('anggarans.index');
+    Route::get('/create', 'create')->name('anggarans.create');
+    Route::post('/store', 'store')->name('anggarans.store');
+    Route::get('/edit/{id}', 'edit')->name('anggarans.edit');
+    Route::put('/update/{id}', 'update')->name('anggarans.update');
+    Route::get('/delete/{id}', 'destroy')->name('anggarans.delete');
 });
 require __DIR__.'/auth.php';
 

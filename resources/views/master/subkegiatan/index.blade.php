@@ -44,11 +44,11 @@
 
             const data = {
                 columns: [{
-                        label: 'Kode Kegiatan',
+                        label: 'Kode Sub Kegiatan',
                         field: 'kode_sub_kegiatan'
                     },
                     {
-                        label: 'Nama Kegiatan',
+                        label: 'Nama Sub Kegiatan',
                         field: 'nama_sub_kegiatan',
                     },
                     {

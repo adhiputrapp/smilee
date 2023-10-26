@@ -1,26 +1,22 @@
 <x-app-layout>
-    <h1 class="text-3xl font-bold border-b-2">Input Pelimpahan</h1>
+    <h1 class="text-3xl font-bold border-b-2">Input Anggaran</h1>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-gradient-to-tr from-slate-300 to-slate-400 overflow-hidden shadow-sm sm:rounded-lg p-4 mb-4">
 
-                <form action="{{ route('pelimpahans.store') }}" method="POST">
+                <form action="{{ route('anggarans.store') }}" method="POST">
                     @csrf
                     <div class="form-group mb-5">
-                        <x-input-label for="tanggal_pelimpahan" :value="__('Tanggal Pelimpahan')"/>
-                        <x-text-input type="date" name="tanggal_pelimpahan" id="tanggal_pelimpahan" class="block mt-1 w-full" required/>
+                        <x-input-label for="dari" :value="__('Dari')"/>
+                        <x-text-input type="text" name="dari" id="dari" class="block mt-1 w-full" required/>
                     </div>
                     <div class="form-group mb-5">
-                        <x-input-label for="jumlah_pelimpahan" :value="__('Jumlah Pelimpahan')"/>
-                        <x-text-input type="number" name="jumlah_pelimpahan" id="jumlah_pelimpahan" class="block mt-1 w-full" required/>
+                        <x-input-label for="tanggal_anggaran" :value="__('Tanggal')"/>
+                        <x-text-input type="date" name="tanggal_anggaran" id="tanggal_anggaran" class="block mt-1 w-full" required/>
                     </div>
                     <div class="form-group mb-5">
-                        <x-input-label for="biro_id" :value="__('Nama Biro')"/>
-                        <select id="nama_biro_relasi" name="biro_id" class="block mt-1 w-full" required>
-                            @foreach ($biros as $biro)
-                                <option value="{{$biro->id}}">{{$biro->nama_biro}}</option>
-                            @endforeach
-                        </select>
+                        <x-input-label for="jumlah_anggaran" :value="__('Jumlah Anggaran')"/>
+                        <x-text-input type="number" name="jumlah_anggaran" id="jumlah_anggaran" class="block mt-1 w-full" required/>
                     </div>
                     <div class="form-group mb-5">
                         <x-input-label for="note" :value="__('Note')"/>
@@ -32,15 +28,4 @@
             </div>
         </div>
     </div>   
-
-    @push('script')
-    <script>
-        $(document).ready(function() {
-            $('#nama_biro_relasi').select2({
-                placeholder: 'Cari nama biro',
-                allowClear: true,
-            });
-        });
-    </script>
-    @endpush
 </x-app-layout>
