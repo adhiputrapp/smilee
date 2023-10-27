@@ -12,6 +12,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PelimpahanController;
 use App\Http\Controllers\BelanjaController;
 use App\Http\Controllers\AnggaranController;
+use App\Http\Controllers\VerifikasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -124,6 +125,15 @@ Route::prefix('/anggaran')->controller(AnggaranController::class)->group(functio
     Route::get('/edit/{id}', 'edit')->name('anggarans.edit');
     Route::put('/update/{id}', 'update')->name('anggarans.update');
     Route::get('/delete/{id}', 'destroy')->name('anggarans.delete');
+});
+
+Route::prefix('/verifikasi')->controller(VerifikasiController::class)->group(function () {
+    Route::get('/index', 'index')->name('verifikasis.index');
+    Route::get('/create', 'create')->name('verifikasis.create');
+    Route::post('/store', 'store')->name('verifikasis.store');
+    Route::get('/edit/{id}', 'edit')->name('verifikasis.edit');
+    Route::put('/update/{id}', 'update')->name('verifikasis.update');
+    Route::get('/delete/{id}', 'destroy')->name('verifikasis.delete');
 });
 require __DIR__.'/auth.php';
 

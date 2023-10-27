@@ -40,4 +40,9 @@ class Belanja extends Model
         return $this->belongsTo(Kodering::class, 'kodering_id', 'id');
     }
     
+    public function verifikasi()
+    {
+        return $this->hasOne(verifikasi::class, 'belanja_id', 'id');
+    }
+    
 }

@@ -40,6 +40,17 @@
                 </span>
                 <span>Belanja</span>
             </a>
+            <a href="{{route('verifikasis.index')}}"
+                class="flex cursor-pointer items-center truncate rounded-[5px] px-6 py-[0.45rem] text-[0.85rem] text-white outline-none transition duration-300 ease-linear hover:bg-slate-50 hover:text-inherit hover:outline-none focus:bg-slate-50 focus:text-inherit focus:outline-none active:bg-slate-50 active:text-inherit active:outline-none data-[te-sidenav-state-active]:text-inherit data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none"
+                data-te-sidenav-link-ref>
+                <span class="mr-4 [&>svg]:h-3.5 [&>svg]:w-3.5 [&>svg]:fill-gray-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                                  
+                </span>
+                <span>Verifikasi SPJ</span>
+            </a>
         </li>
         <li class="relative pt-4">
             <h3 class="ml-6 mb-2 font-bold text-base text-white">Admin</h3>
