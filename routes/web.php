@@ -129,11 +129,9 @@ Route::prefix('/anggaran')->controller(AnggaranController::class)->group(functio
 
 Route::prefix('/verifikasi')->controller(VerifikasiController::class)->group(function () {
     Route::get('/index', 'index')->name('verifikasis.index');
-    Route::get('/create', 'create')->name('verifikasis.create');
-    Route::post('/store', 'store')->name('verifikasis.store');
-    Route::get('/edit/{id}', 'edit')->name('verifikasis.edit');
-    Route::put('/update/{id}', 'update')->name('verifikasis.update');
-    Route::get('/delete/{id}', 'destroy')->name('verifikasis.delete');
+    Route::get('/form/{belanja_id}', 'showVerifikasiForm')->name('verifikasi.show');
+    Route::post('/form/{belanja_id}', 'verifikasi')->name('verifikasi.submit');
 });
+
 require __DIR__.'/auth.php';
 

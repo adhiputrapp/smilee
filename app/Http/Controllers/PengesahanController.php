@@ -9,22 +9,23 @@ use Illuminate\Support\Str;
 use Illuminate\View\View;
 use App\Models\Belanja;
 use App\Models\Verifikasi;
+use App\Models\Pengesahan;
 
-class VerifikasiController extends Controller
+class PengesahanController extends Controller
 {
     public function index()
     {
-        $unverifiedBelanja = Belanja::whereDoesntHave('verifikasi', function ($query) {
+        $verifiedBelanja = Belanja::whereHas('verifikasi', function ($query) {
             $query->where('verif', 'verified');
         })->get();
 
-        return view('verifikasi.index', compact('unverifiedBelanja'));
+        return view('pengesahan.index', compact('unverifiedBelanja'));
     }
 
     public function showVerifikasiForm($belanja_id)
     {
         $belanja = Belanja::findOrFail($belanja_id);
-        return view('verifikasi.create', compact('belanja'));
+        return view('pengesahan.create', compact('belanja'));
     }
 
     public function verifikasi(Request $request, $belanja_id)
