@@ -12,7 +12,12 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Pengesahan extends Model
 {
-    use HasFactory,HasUuids;
+    use HasFactory, HasUuids;
 
     protected $guarded = ["id"];
+
+    public function belanja()
+    {
+        return $this->belongsTo(Belanja::class, 'belanja_id', 'id');
+    }
 }

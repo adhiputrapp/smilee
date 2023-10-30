@@ -19,7 +19,7 @@ class PengesahanController extends Controller
             $query->where('verif', 'verified');
         })->get();
 
-        return view('pengesahan.index', compact('unverifiedBelanja'));
+        return view('pengesahan.index', compact('verifiedBelanja'));
     }
 
     public function showVerifikasiForm($belanja_id)

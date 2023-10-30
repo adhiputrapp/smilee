@@ -13,6 +13,7 @@ use App\Http\Controllers\PelimpahanController;
 use App\Http\Controllers\BelanjaController;
 use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\VerifikasiController;
+use App\Http\Controllers\PengesahanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -131,6 +132,12 @@ Route::prefix('/verifikasi')->controller(VerifikasiController::class)->group(fun
     Route::get('/index', 'index')->name('verifikasis.index');
     Route::get('/form/{belanja_id}', 'showVerifikasiForm')->name('verifikasi.show');
     Route::post('/form/{belanja_id}', 'verifikasi')->name('verifikasi.submit');
+});
+
+Route::prefix('/pengesahan')->controller(PengesahanController::class)->group(function () {
+    Route::get('/index', 'index')->name('pengesahans.index');
+    Route::get('/form/{belanja_id}', 'showVerifikasiForm')->name('pengesahans.show');
+    Route::post('/form/{belanja_id}', 'verifikasi')->name('pengesahans.submit');
 });
 
 require __DIR__.'/auth.php';

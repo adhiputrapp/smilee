@@ -42,7 +42,12 @@ class Belanja extends Model
     
     public function verifikasi()
     {
-        return $this->hasOne(verifikasi::class, 'belanja_id', 'id');
+        return $this->hasOne(Verifikasi::class, 'belanja_id', 'id');
+    }
+
+    public function pengesahan()
+    {
+        return $this->hasOne(Pengesahan::class, 'belanja_id', 'id');
     }
     
 }

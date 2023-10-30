@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pengesahans', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('belanja_id')->references('id')->on('belanjas')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('verif');
+            $table->string('sah');
             $table->timestamps();
         });
     }
