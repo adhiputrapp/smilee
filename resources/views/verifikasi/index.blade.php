@@ -43,13 +43,30 @@
             var verifikasi = {{ Js::from($unverifiedBelanja) }}
 
             const data = {
-                columns: [{
+                columns: [
+                    {
+                        label: 'Tanggal Belanja',
+                        field: 'tanggal_belanja',
+                    },
+                    {
                         label: 'Biro',
                         field: 'biro'
                     },
                     {
-                        label: 'Tanggal Belanja',
-                        field: 'tanggal',
+                        label: 'Program',
+                        field: 'program',
+                    },
+                    {
+                        label: 'Kegiatan',
+                        field: 'kegiatan',
+                    },
+                    {
+                        label: 'Sub Kegiatan',
+                        field: 'subkegiatan',
+                    },
+                    {
+                        label: 'Kodering',
+                        field: 'kodering',
                     },
                     {
                         label: 'No Urut',
@@ -60,8 +77,12 @@
                         field: 'notbp',
                     },
                     {
-                        label: 'Note',
-                        field: 'note',
+                        label: 'Pengeluaran',
+                        field: 'pengeluaran',
+                    },
+                    {
+                        label: 'Uraian',
+                        field: 'uraian',
                     },
                     {
                         label: 'Verifikasi',
@@ -72,7 +93,11 @@
                     return {
                         ...row,
                         biro: row.biro.nama_biro,
-                        jumlah_pelimpahan: row.jumlah_pelimpahan.toLocaleString(),
+                        program: row.program.nama_program,
+                        kegiatan: row.kegiatan.nama_kegiatan,
+                        subkegiatan: row.subkegiatan.nama_sub_kegiatan,
+                        kodering: row.kodering.nama_kodering,
+                        pengeluaran: row.pengeluaran.toLocaleString(),
                         action: `
                             <a href="{{ url('/verifikasi/form/${row.id}') }}" class="inline-block rounded  bg-gradient-to-l from-green-600 to-green-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] transition duration-150 ease-in-out hover:bg-warning-600 hover:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.3),0_4px_18px_0_rgba(228,161,27,0.2)] focus:bg-warning-600 focus:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.3),0_4px_18px_0_rgba(228,161,27,0.2)] focus:outline-none focus:ring-0 active:bg-warning-700 active:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.3),0_4px_18px_0_rgba(228,161,27,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(228,161,27,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.2),0_4px_18px_0_rgba(228,161,27,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.2),0_4px_18px_0_rgba(228,161,27,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.2),0_4px_18px_0_rgba(228,161,27,0.1)]">Verifikasi</a>
                         `

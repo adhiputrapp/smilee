@@ -15,7 +15,8 @@ class PengesahanController extends Controller
 {
     public function index()
     {
-        $verifiedBelanja = Belanja::whereHas('verifikasi', function ($query) {
+        $verifiedBelanja = Belanja::with('biro','program','kegiatan','subkegiatan','kodering')
+        ->whereHas('verifikasi', function ($query) {
             $query->where('verif', 'verified');
         })->get();
 

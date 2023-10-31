@@ -42,12 +42,12 @@ class BelanjaController extends Controller
     {
         $request->validate([
             'tanggal_belanja' => 'required',
-            'jenis_belanja' => 'required',
             'biro_id' => 'required',
             'program_id' => 'required',
             'kegiatan_id' => 'required',
             'subkegiatan_id' => 'required',
             'kodering_id' => 'required',
+            'jenis_belanja' => 'required',
             'nourut' => 'required',
             'notbp' => 'required',
             'pengeluaran' => 'required',
@@ -56,13 +56,13 @@ class BelanjaController extends Controller
 
         Belanja::create([
             'id' => Str::uuid(),
-            'biro_id' => $request->biro_id,
             'tanggal_belanja' => $request->tanggal_belanja,
-            'jenis_belanja' => $request->jenis_belanja,
+            'biro_id' => $request->biro_id,
             'program_id' => $request->program_id,
             'kegiatan_id' => $request->kegiatan_id,
             'subkegiatan_id' => $request->subkegiatan_id,
             'kodering_id' => $request->kodering_id,
+            'jenis_belanja' => $request->jenis_belanja,
             'nourut' => $request->nourut,
             'notbp' => $request->notbp,
             'pengeluaran' => $request->pengeluaran,
@@ -127,6 +127,6 @@ class BelanjaController extends Controller
         $belankas = Belanja::find($id);
         $belankas->delete();
 
-        return redirect()->route('pelimpahans.index')->with('success', 'Pelimpahan berhasil dihapus.');
+        return redirect()->route('belanjas.index')->with('success', 'Pelimpahan berhasil dihapus.');
     }
 }

@@ -38,7 +38,7 @@
                         <x-input-label for="subkegiatan_id" :value="__('Sub Kegiatan')"/>
                         <select id="nama_subkegiatan_relasi" name="subkegiatan_id" class="block mt-1 w-full" required>
                             @foreach ($subkegiatans as $subkegiatan)
-                            <option value="{{$subkegiatan->id}}">{{$subkegiatan->nama_subkegiatan}}</option>
+                            <option value="{{$subkegiatan->id}}">{{$subkegiatan->nama_sub_kegiatan}}</option>
                             @endforeach
                         </select>
                     </div>

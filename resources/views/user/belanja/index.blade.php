@@ -1,10 +1,10 @@
 <x-app-layout>
-    <h1 class="mb-6 text-3xl font-bold border-b-2">Halaman Pelimpahan</h1>
+    <h1 class="mb-6 text-3xl font-bold border-b-2">Halaman Belanja</h1>
 
     <div class="mb-3 w-full">
         <div class="relative mb-4 mr-2 flex w-full flex-wrap items-stretch">
         <input
-            id="advanced-search-input"
+            id="datatable-search-input"
             type="search"
             class="relative m-0 -mr-0.5 block w-[1px] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
             placeholder="Search"
@@ -30,11 +30,11 @@
             </svg>
         </button>
         </div>
-        <a href="{{route('pelimpahans.create')}}"  
+        <a href="{{route('belanjas.create')}}"  
         data-te-ripple-init
         data-te-ripple-color="light"
         class="inline-block rounded bg-gradient-to-r from-blue-700 to-blue-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
-            Buat Pelimpahan Baru
+            Buat Belanja Baru
         </a>
     </div>
     <div id="datatable"></div>
@@ -84,8 +84,8 @@
                         field: 'pengeluaran',
                     },
                     {
-                        label: 'Note',
-                        field: 'note',
+                        label: 'Uraian',
+                        field: 'uraian',
                     },
                     {
                         label: 'Edit/Hapus',
@@ -100,40 +100,22 @@
                         kegiatan: row.kegiatan.nama_kegiatan,
                         subkegiatan: row.subkegiatan.nama_sub_kegiatan,
                         kodering: row.kodering.nama_kodering,
+                        pengeluaran: row.pengeluaran.toLocaleString(),
                         action: `
-                            <a href="{{ url('/pelimpahan/edit/${row.id}') }}" class="inline-block rounded  bg-gradient-to-l from-yellow-600 to-yellow-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] transition duration-150 ease-in-out hover:bg-warning-600 hover:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.3),0_4px_18px_0_rgba(228,161,27,0.2)] focus:bg-warning-600 focus:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.3),0_4px_18px_0_rgba(228,161,27,0.2)] focus:outline-none focus:ring-0 active:bg-warning-700 active:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.3),0_4px_18px_0_rgba(228,161,27,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(228,161,27,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.2),0_4px_18px_0_rgba(228,161,27,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.2),0_4px_18px_0_rgba(228,161,27,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.2),0_4px_18px_0_rgba(228,161,27,0.1)]">
+                            <a href="{{ url('/belanja/edit/${row.id}') }}" class="inline-block rounded  bg-gradient-to-l from-yellow-600 to-yellow-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] transition duration-150 ease-in-out hover:bg-warning-600 hover:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.3),0_4px_18px_0_rgba(228,161,27,0.2)] focus:bg-warning-600 focus:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.3),0_4px_18px_0_rgba(228,161,27,0.2)] focus:outline-none focus:ring-0 active:bg-warning-700 active:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.3),0_4px_18px_0_rgba(228,161,27,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(228,161,27,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.2),0_4px_18px_0_rgba(228,161,27,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.2),0_4px_18px_0_rgba(228,161,27,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.2),0_4px_18px_0_rgba(228,161,27,0.1)]">
                                 Edit
                             </a>
-                            <a href="javascript:void(0);" onclick="destroyFunction('{{ url('/pelimpahan/delete/${row.id}') }}');" class="inline-block rounded  bg-gradient-to-l from-red-600 to-red-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out hover:bg-danger-600 hover:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] focus:bg-danger-600 focus:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] focus:outline-none focus:ring-0 active:bg-danger-700 active:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(220,76,100,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)]">
+                            <a href="javascript:void(0);" onclick="destroyFunction('{{ url('/belanja/delete/${row.id}') }}');" class="inline-block rounded  bg-gradient-to-l from-red-600 to-red-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out hover:bg-danger-600 hover:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] focus:bg-danger-600 focus:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] focus:outline-none focus:ring-0 active:bg-danger-700 active:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(220,76,100,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)]">
                                 Delete
                             </a>`
                     }
                 })
             }
 
-            const instance = new te.Datatable(document.getElementById('datatable'), data)
-            const advancedSearchInput = document.getElementById('advanced-search-input');
+            const instance = new Datatable(document.getElementById('datatable'), data)
 
-            const search = (value) => {
-                let [phrase, columns] = value.split(" in:").map((str) => str.trim());
-
-                if (columns) {
-                columns = columns.split(",").map((str) => str.toLowerCase().trim());
-                }
-
-                instance.search(phrase, columns);
-            };
-
-            document
-                .getElementById("advanced-search-button")
-                .addEventListener("click", (e) => {
-                search(advancedSearchInput.value);
-                });
-
-            advancedSearchInput.addEventListener("keydown", (e) => {
-                if (e.keyCode === 13) {
-                search(e.target.value);
-                }
+            document.getElementById('datatable-search-input').addEventListener('input', (e) => {
+            instance.search(e.target.value);
             });
         </script>
     @endpush

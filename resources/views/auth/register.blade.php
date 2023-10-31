@@ -16,6 +16,16 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        {{-- Biro --}}
+        <div class="form-group mb-5">
+            <x-input-label for="biro_id" :value="__('Nama Biro')"/>
+            <select id="nama_biro_relasi" name="biro_id" class="block mt-1 w-full" required>
+                @foreach ($biros as $biro)
+                    <option value="{{$biro->id}}">{{$biro->nama_biro}}</option>
+                @endforeach
+            </select>
+        </div>
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />

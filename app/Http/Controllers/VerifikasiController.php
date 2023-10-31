@@ -14,9 +14,11 @@ class VerifikasiController extends Controller
 {
     public function index()
     {
-        $unverifiedBelanja = Belanja::whereDoesntHave('verifikasi', function ($query) {
+        $unverifiedBelanja = Belanja::with('biro','program','kegiatan','subkegiatan','kodering')
+        ->whereDoesntHave('verifikasi', function ($query) {
             $query->where('verif', 'verified');
         })->get();
+        // dd($unverifiedBelanja);
 
         return view('verifikasi.index', compact('unverifiedBelanja'));
     }

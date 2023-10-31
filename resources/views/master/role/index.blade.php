@@ -4,7 +4,7 @@
     <div class="mb-3 w-full">
         <div class="relative mb-4 mr-2 flex w-full flex-wrap items-stretch">
         <input
-            id="advanced-search-input"
+            id="datatable-search-input"
             type="search"
             class="relative m-0 -mr-0.5 block w-[1px] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
             placeholder="Search"
@@ -67,29 +67,11 @@
                 })
             }
 
-            const instance = new te.Datatable(document.getElementById('datatable'), data)
-            const advancedSearchInput = document.getElementById('advanced-search-input');
+           
+            const instance = new Datatable(document.getElementById('datatable'), data)
 
-            const search = (value) => {
-                let [phrase, columns] = value.split(" in:").map((str) => str.trim());
-
-                if (columns) {
-                columns = columns.split(",").map((str) => str.toLowerCase().trim());
-                }
-
-                instance.search(phrase, columns);
-            };
-
-            document
-                .getElementById("advanced-search-button")
-                .addEventListener("click", (e) => {
-                search(advancedSearchInput.value);
-                });
-
-            advancedSearchInput.addEventListener("keydown", (e) => {
-                if (e.keyCode === 13) {
-                search(e.target.value);
-                }
+            document.getElementById('datatable-search-input').addEventListener('input', (e) => {
+            instance.search(e.target.value);
             });
         </script>
     @endpush
