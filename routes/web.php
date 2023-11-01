@@ -38,8 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
 });
-
 Route::prefix('/biro')->controller(BiroController::class)->group(function () {
     Route::get('/index', 'index')->name('biros.index');
     Route::get('/create', 'create')->name('biros.create');

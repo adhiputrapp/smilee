@@ -3,6 +3,10 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Models\User;
+use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class CreateRoutePermission extends Command
 {
@@ -18,7 +22,7 @@ class CreateRoutePermission extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Create A Permission Routes';
 
     /**
      * Execute the console command.
