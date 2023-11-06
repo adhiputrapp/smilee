@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('anggarans', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('dari');
+            $table->foreignUuid('subkegiatan_id')->references('id')->on('sub_kegiatans')->onUpdate('cascade')->onDelete('cascade')->nullable();
+            $table->foreignUuid('kodering_id')->references('id')->on('koderings')->onUpdate('cascade')->onDelete('cascade')->nullable();
+            $table->string('uraian');
             $table->date('tanggal_anggaran');
             $table->integer('jumlah_anggaran');
-            $table->string('note');
             $table->timestamps();
         });
     }

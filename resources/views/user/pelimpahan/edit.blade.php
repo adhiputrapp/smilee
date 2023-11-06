@@ -6,7 +6,10 @@
                 <form action="{{ route('pelimpahans.update', ['id' => $pelimpahans->id]) }}" method="POST">
                     @csrf
                     @method('PUT')
-
+                    <div class="form-group mb-5">
+                        <x-input-label for="nodokumen" :value="__('No Dokumen')"/>
+                        <x-text-input type="text" name="nodokumen" id="nodokumen" class="block mt-1 w-full" required value="{{ $pelimpahans->nodokumen}}"/>
+                    </div>
                     <div class="form-group mb-5">
                         <x-input-label for="tanggal_pelimpahan" :value="__('Tanggal Pelimpahan')"/>
                         <x-text-input type="date" name="tanggal_pelimpahan" id="tanggal_pelimpahan" class="block mt-1 w-full" required value="{{ $pelimpahans->tanggal_pelimpahan }}"/>

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('pelimpahans', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('nodokumen');
             $table->date('tanggal_pelimpahan');
             $table->integer('jumlah_pelimpahan');
             $table->uuid('biro_id');

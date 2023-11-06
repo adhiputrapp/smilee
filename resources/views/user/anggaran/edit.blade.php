@@ -7,9 +7,24 @@
                     @csrf
                     @method('PUT')
 
+                   <!-- Sub Kegiatan -->
+                   <div class="form-group mb-5">
+                        <x-input-label for="subkegiatan_id" :value="__('Sub Kegiatan')"/>
+                        <select id="nama_subkegiatan_relasi" name="subkegiatan_id" class="block mt-1 w-full" required>
+                            @foreach ($subkegiatans as $subkegiatan)
+                                <option value="{{$subkegiatan->id}}" {{ $anggarans->subkegiatan_id == $subkegiatan->id ? 'selected' : '' }}>{{$subkegiatan->nama_subkegiatan}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Kodering -->
                     <div class="form-group mb-5">
-                        <x-input-label for="dari" :value="__('Dari')"/>
-                        <x-text-input type="text" name="dari" id="dari" class="block mt-1 w-full" required value="{{$anggarans->dari}}"/>
+                        <x-input-label for="kodering_id" :value="__('Kodering')"/>
+                        <select id="nama_kodering_relasi" name="kodering_id" class="block mt-1 w-full" required>
+                            @foreach ($koderings as $kodering)
+                                <option value="{{$kodering->id}}" {{ $anggarans->kodering_id == $kodering->id ? 'selected' : '' }}>{{$kodering->nama_kodering}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group mb-5">
                         <x-input-label for="tanggal_anggaran" :value="__('Tanggal')"/>

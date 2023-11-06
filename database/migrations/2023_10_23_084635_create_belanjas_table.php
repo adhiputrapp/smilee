@@ -16,8 +16,7 @@ return new class extends Migration
             $table->date('tanggal_belanja');
             $table->string('jenis_belanja');
             $table->integer('pengeluaran');
-            $table->integer('nourut');
-            $table->integer('notbp');
+            $table->integer('nobukti');
             $table->string('uraian');
             $table->foreignuuid('biro_id')->references('id')->on('biros')->onUpdate('cascade');
             $table->foreignuuid('program_id')->references('id')->on('programs')->onUpdate('cascade');

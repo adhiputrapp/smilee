@@ -112,6 +112,22 @@
                 placeholder: 'Cari nama biro',
                 allowClear: true,
             });
+            $('#nama_program_relasi').select2({
+                placeholder: 'Cari nama program',
+                allowClear: true,
+            });
+            $('#nama_kegiatan_relasi').select2({
+                placeholder: 'Cari nama kegiatan',
+                allowClear: true,
+            });
+            $('#nama_subkegiatan_relasi').select2({
+                placeholder: 'Cari nama subkegiatan',
+                allowClear: true,
+            });
+            $('#nama_kodering_relasi').select2({
+                placeholder: 'Cari nama kodering',
+                allowClear: true,
+            });
         });
     </script>
     @endpush

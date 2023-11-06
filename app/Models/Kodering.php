@@ -24,4 +24,9 @@ class Kodering extends Model
     {
         return $this->hasMany(Belanja::class, 'kodering_id', 'id');
     }
+    
+    public function anggaran()
+    {
+        return $this->hasMany(Anggaran::class, 'subkegiatan_id', 'id');
+    }
 }

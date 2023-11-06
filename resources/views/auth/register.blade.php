@@ -2,6 +2,13 @@
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
+        <!-- NIP -->
+        <div>
+            <x-input-label for="NIP" :value="__('NIP (Nomor Induk Pegawai)')" />
+            <x-text-input id="NIP" class="block mt-1 w-full" type="text" name="NIP" :value="old('NIP')" required autofocus autocomplete="NIP" />
+            <x-input-error :messages="$errors->get('NIP')" class="mt-2" />
+        </div>
+
         <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />
@@ -47,6 +54,27 @@
                             name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
+        {{-- Golongan --}}
+        <div>
+            <x-input-label for="golongan" :value="__('Golongan')" />
+            <x-text-input id="golongan" class="block mt-1 w-full" type="text" name="golongan" :value="old('golongan')" required autofocus autocomplete="golongan" />
+            <x-input-error :messages="$errors->get('golongan')" class="mt-2" />
+        </div>
+
+        {{-- pangkat --}}
+        <div>
+            <x-input-label for="pangkat" :value="__('Pangkat')" />
+            <x-text-input id="pangkat" class="block mt-1 w-full" type="text" name="pangkat" :value="old('pangkat')" required autofocus autocomplete="pangkat" />
+            <x-input-error :messages="$errors->get('pangkat')" class="mt-2" />
+        </div>
+
+        {{-- Jabatan --}}
+        <div>
+            <x-input-label for="jabatan" :value="__('Jabatan')" />
+            <x-text-input id="jabatan" class="block mt-1 w-full" type="text" name="jabatan" :value="old('jabatan')" required autofocus autocomplete="jabatan" />
+            <x-input-error :messages="$errors->get('jabatan')" class="mt-2" />
         </div>
 
         <div class="flex items-center justify-end mt-4">

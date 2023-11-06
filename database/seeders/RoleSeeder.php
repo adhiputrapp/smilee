@@ -5,7 +5,9 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
-use App\Models\Role;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
 
 class RoleSeeder extends Seeder
 {
@@ -15,19 +17,16 @@ class RoleSeeder extends Seeder
      public function run(): void
     {
         // Buat seeder untuk masing-masing peran (role)
-        $roles = [
-            'user',
-            'pengesahan',
-            'verifikator biro',
-            'verifikator',
-            'admin',
-        ];
+        Role::create(['name'=>'admin']);
+        Role::create(['name'=>'user']);
+        Role::create(['name'=>'pengesahan']);
+        Role::create(['name'=>'verifikator']);
+        Role::create(['name'=>'verifikator_biro']);
 
-        foreach ($roles as $role) {
-            Role::create([
-                'id' => Str::uuid(),
-                'name' => $role,
-            ]);
-        }
+        $role = Role::findByname('admin');
+
+        $permissions = Permission::pluck('id', 'id')->all();
+
+        $role->syncPermissions($permissions);
     }
 }

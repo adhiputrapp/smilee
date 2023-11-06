@@ -16,4 +16,14 @@ class Anggaran extends Model
 
     protected $guarded = ["id"];
 
+    public function subkegiatan()
+    {
+        return $this->belongsTo(SubKegiatan::class, 'subkegiatan_id', 'id');
+    }
+
+    public function kodering()
+    {
+        return $this->belongsTo(Kodering::class, 'kodering_id', 'id');
+    }
+
 }

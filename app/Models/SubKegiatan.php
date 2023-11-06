@@ -29,5 +29,10 @@ class SubKegiatan extends Model
     {
         return $this->hasMany(Belanja::class, 'subkegiatan_id', 'id');
     }
+
+    public function anggaran()
+    {
+        return $this->hasMany(Anggaran::class, 'subkegiatan_id', 'id');
+    }
 }
 

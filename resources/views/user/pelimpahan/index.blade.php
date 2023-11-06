@@ -43,7 +43,12 @@
             var pelimpahan = {{ Js::from($pelimpahans) }}
 
             const data = {
-                columns: [{
+                columns: [
+                    {
+                        label: 'No Dokumen ',
+                        field: 'nodokumen'
+                    },
+                    {
                         label: 'Tanggal Pelimpahan ',
                         field: 'tanggal_pelimpahan'
                     },
