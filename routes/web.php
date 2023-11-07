@@ -125,6 +125,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{id}', 'edit')->name('belanjas.edit');
         Route::put('/update/{id}', 'update')->name('belanjas.update');
         Route::get('/delete/{id}', 'destroy')->name('belanjas.delete');
+        Route::get('/export', 'export')->name('belanjas.export');
     });
     
     Route::prefix('/anggaran')->controller(AnggaranController::class)->group(function () {

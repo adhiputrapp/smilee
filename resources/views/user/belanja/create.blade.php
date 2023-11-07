@@ -59,12 +59,8 @@
                         </select>
                     </div>
                     <div class="form-group mb-5">
-                        <x-input-label for="nourut" :value="__('No Urut')"/>
-                        <x-text-input type="text" name="nourut" id="nourut" class="block mt-1 w-full" required/>
-                    </div>
-                    <div class="form-group mb-5">
-                        <x-input-label for="notbp" :value="__('No TBP')"/>
-                        <x-text-input type="text" name="notbp" id="notbp" class="block mt-1 w-full" required/>
+                        <x-input-label for="nobukti" :value="__('No Bukti')"/>
+                        <x-text-input type="number" name="nobukti" id="nobukti" class="block mt-1 w-full" required/>
                     </div>
                     <div class="form-group mb-5">
                         <x-input-label for="pengeluaran" :value="__('Pengeluaran')"/>

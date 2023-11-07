@@ -8,6 +8,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use App\Exports\RincianExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Biro;
 use App\Models\Pelimpahan;
 use App\Models\SubKegiatan;
@@ -48,8 +50,7 @@ class BelanjaController extends Controller
             'subkegiatan_id' => 'required',
             'kodering_id' => 'required',
             'jenis_belanja' => 'required',
-            'nourut' => 'required',
-            'notbp' => 'required',
+            'nobukti' => 'required',
             'pengeluaran' => 'required',
             'uraian' => 'required',
         ]);
@@ -63,8 +64,7 @@ class BelanjaController extends Controller
             'subkegiatan_id' => $request->subkegiatan_id,
             'kodering_id' => $request->kodering_id,
             'jenis_belanja' => $request->jenis_belanja,
-            'nourut' => $request->nourut,
-            'notbp' => $request->notbp,
+            'nobukti' => $request->nobukti,
             'pengeluaran' => $request->pengeluaran,
             'uraian' => $request->uraian,
         ]);
@@ -96,8 +96,7 @@ class BelanjaController extends Controller
             'kegiatan_id' => 'required',
             'subkegiatan_id' => 'required',
             'kodering_id' => 'required',
-            'nourut' => 'required',
-            'notbp' => 'required',
+            'nobukti' => 'required',
             'pengeluaran' => 'required',
             'uraian' => 'required',
         ]);
@@ -112,8 +111,7 @@ class BelanjaController extends Controller
             'kegiatan_id' => $request->kegiatan_id,
             'subkegiatan_id' => $request->subkegiatan_id,
             'kodering_id' => $request->kodering_id,
-            'nourut' => $request->nourut,
-            'notbp' => $request->notbp,
+            'nobukti' => $request->nobukti,
             'pengeluaran' => $request->pengeluaran,
             'uraian' => $request->uraian,
         ]);
@@ -128,5 +126,10 @@ class BelanjaController extends Controller
         $belankas->delete();
 
         return redirect()->route('belanjas.index')->with('success', 'Pelimpahan berhasil dihapus.');
+    }
+
+    public function export() 
+    {
+        return Excel::download(new RincianExport, 'rincian.xlsx');
     }
 }
