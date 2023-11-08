@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use App\Exports\RincianExport;
@@ -130,6 +131,7 @@ class BelanjaController extends Controller
 
     public function export() 
     {
-        return Excel::download(new RincianExport, 'rincian.xlsx');
+        $belanjas = Belanja::all();
+        return Excel::download(new RincianExport($belanjas), 'rincian.xlsx');
     }
 }
