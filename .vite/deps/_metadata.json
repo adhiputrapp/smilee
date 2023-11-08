@@ -1,0 +1,35 @@
+{
+  "hash": "dd9feb0a",
+  "browserHash": "a2e7a041",
+  "optimized": {
+    "alpinejs": {
+      "src": "../../node_modules/alpinejs/dist/module.esm.js",
+      "file": "alpinejs.js",
+      "fileHash": "050a3883",
+      "needsInterop": false
+    },
+    "tw-elements": {
+      "src": "../../node_modules/tw-elements/dist/js/tw-elements.es.min.js",
+      "file": "tw-elements.js",
+      "fileHash": "eced4473",
+      "needsInterop": false
+    },
+    "axios": {
+      "src": "../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "2a51c764",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chart.es-A2JTKPLE": {
+      "file": "chart__es-A2JTKPLE.js"
+    },
+    "chartjs-plugin-datalabels.es-NS6CAF6M": {
+      "file": "chartjs-plugin-datalabels__es-NS6CAF6M.js"
+    },
+    "chunk-V6QTV3EI": {
+      "file": "chunk-V6QTV3EI.js"
+    }
+  }
+}
