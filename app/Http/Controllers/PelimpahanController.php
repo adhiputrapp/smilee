@@ -30,6 +30,7 @@ class PelimpahanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'nodokumen' => 'required',
             'tanggal_pelimpahan' => 'required',
             'jumlah_pelimpahan' => 'required',
             'biro_id' => 'required',
@@ -38,6 +39,7 @@ class PelimpahanController extends Controller
 
         Pelimpahan::create([
             'id' => Str::uuid(),
+            'nodokumen' => $request->nodokumen,
             'tanggal_pelimpahan' => $request->tanggal_pelimpahan,
             'jumlah_pelimpahan' => $request->jumlah_pelimpahan,
             'biro_id' => $request->biro_id,
