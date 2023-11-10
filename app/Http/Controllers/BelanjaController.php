@@ -25,7 +25,7 @@ class BelanjaController extends Controller
     {
         return view('user.belanja.index',[
             'belanjas' => Belanja::orderby('tanggal_belanja', 'ASC')
-            ->with('biro','program','kegiatan','subkegiatan','kodering')
+            ->with('biro','program','kegiatan','subkegiatan','kodering', 'verifikasi')
             ->get()
         ]);
     }
@@ -123,8 +123,8 @@ class BelanjaController extends Controller
 
     public function destroy($id)
     {
-        $belankas = Belanja::find($id);
-        $belankas->delete();
+        $belanjas = Belanja::find($id);
+        $belanjas->delete();
 
         return redirect()->route('belanjas.index')->with('success', 'Pelimpahan berhasil dihapus.');
     }

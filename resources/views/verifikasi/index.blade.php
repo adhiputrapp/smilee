@@ -69,12 +69,8 @@
                         field: 'kodering',
                     },
                     {
-                        label: 'No Urut',
-                        field: 'nourut',
-                    },
-                    {
-                        label: 'No TBP',
-                        field: 'notbp',
+                        label: 'No Bukti',
+                        field: 'nobukti',
                     },
                     {
                         label: 'Pengeluaran',

@@ -23,23 +23,26 @@ class PengesahanController extends Controller
         return view('pengesahan.index', compact('verifiedBelanja'));
     }
 
-    public function showVerifikasiForm($belanja_id)
+    public function showPengesahanForm($belanja_id)
     {
         $belanja = Belanja::findOrFail($belanja_id);
         return view('pengesahan.create', compact('belanja'));
     }
 
-    public function verifikasi(Request $request, $belanja_id)
+    public function pengesahan(Request $request, $belanja_id)
     {
         $request->validate([
-            'verif' => 'required|in:verified,unverified' // Sesuaikan dengan opsi verifikasi
+            'sah' => 'required|in:disetujui,ditolak', // Sesuaikan dengan opsi pengesahan
         ]);
 
-        Verifikasi::updateOrCreate(
+        Pengesahan::updateOrCreate(
             ['belanja_id' => $belanja_id],
-            ['verif' => $request->verif]
+            [
+                'sah' => $request->sah,
+                'uraian' => $request->uraian
+            ]
         );
 
-        return redirect()->route('verifikasis.index')->with('success', 'Verifikasi berhasil disimpan.');
+        return redirect()->route('pengesahan.index')->with('success', 'Pengesahan berhasil disimpan.');
     }
 }

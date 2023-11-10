@@ -14,6 +14,8 @@ use App\Http\Controllers\BelanjaController;
 use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\VerifikasiController;
 use App\Http\Controllers\PengesahanController;
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\BKUController;
 
 /*
 |--------------------------------------------------------------------------
@@ -145,11 +147,21 @@ Route::middleware('auth')->group(function () {
     
     Route::prefix('/pengesahan')->controller(PengesahanController::class)->group(function () {
         Route::get('/index', 'index')->name('pengesahans.index');
-        Route::get('/form/{belanja_id}', 'showVerifikasiForm')->name('pengesahans.show');
-        Route::post('/form/{belanja_id}', 'verifikasi')->name('pengesahans.submit');
+        Route::get('/form/{belanja_id}', 'showPengesahanForm')->name('pengesahans.show');
+        Route::post('/form/{belanja_id}', 'pengesahan')->name('pengesahans.submit');
+    });
+
+    Route::prefix('/laporan')->controller(BKUController::class)->group(function () {
+        Route::get('/index', 'index')->name('laporan.index');
+        Route::get('/export', 'export')->name('laporan.export');
+        // Route::get('/form/{belanja_id}', 'showVerifikasiForm')->name('pengesahans.show');
+        // Route::post('/form/{belanja_id}', 'verifikasi')->name('pengesahans.submit');
     });
 });
 
+// Route::get('/laporan/doc',function () {
+//     return view('user.laporan.bku');
+// });
 
 require __DIR__.'/auth.php';
 
