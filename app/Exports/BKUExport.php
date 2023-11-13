@@ -10,23 +10,32 @@ use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 
-class BKUExport implements FromView, ShouldAutoSize, WithStyles, WithColumnWidths
+class BKUExport implements FromView, ShouldAutoSize, WithColumnWidths, WithStyles
 {
-    protected $belanjas;
+    public $belanjas;
+    public $tahunAnggaran;
+    public $bulanAnggaran;
 
-    public function __construct($belanjas)
+    public function __construct($belanjas, $tahunAnggaran, $bulanAnggaran)
     {
         $this->belanjas = $belanjas;
+        $this->tahunAnggaran = $tahunAnggaran;
+        $this->bulanAnggaran = $bulanAnggaran;
     }
 
     public function view(): View
     {
 
         return view('user.laporan.bku',[
-            'belanjas' => $this->belanjas
+            'belanjas' => $this->belanjas,
+            'tahunAnggaran' => $this->tahunAnggaran,
+            'bulanAnggaran' => $this->bulanAnggaran
         ]);
     }
 
@@ -34,14 +43,14 @@ class BKUExport implements FromView, ShouldAutoSize, WithStyles, WithColumnWidth
     {
         // Sesuaikan lebar kolom sesuai kebutuhan
         return [
-            'A' => 4,29,
+            'A' => 4.29,
             'B' => 18,
             'C' => 26,
-            'D' => 54,71,
+            'D' => 54.71,
             'E' => 19,
-            'F' => 14,86,
-            'G' => 16,14,
-            'H' => 14,14,
+            'F' => 14.86,
+            'G' => 16.14,
+            'H' => 14.14,
             // ... sesuaikan dengan kolom-kolom lain
         ];
     }
@@ -49,5 +58,50 @@ class BKUExport implements FromView, ShouldAutoSize, WithStyles, WithColumnWidth
     public function styles(Worksheet $sheet)
     {
         $sheet->getStyle('A1:H1')->getFont()->setBold(true);
+        
+        $sheet->getStyle('A2:H2')->getFont()->setName('Arial');
+        $sheet->getStyle('A2:H2')->getFont()->setSize('13');
+        
+        $sheet->getStyle('A3:H3')->getFont()->setName('Arial');
+        $sheet->getStyle('A3:H3')->getFont()->setSize('13');
+        
+        $sheet->getStyle('A4:H4')->getFont()->setName('Arial');
+        $sheet->getStyle('A4:H4')->getFont()->setSize('13');
+
+        $sheet->getStyle('A5:H5')->getFont()->setName('Arial');
+        $sheet->getStyle('A5:H5')->getFont()->setSize('26');
+        $sheet->getStyle('A5:H5')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+        $sheet->getStyle('A6:H6')->getFont()->setName('Arial');
+        $sheet->getStyle('A6:H6')->getFont()->setSize('26');
+        $sheet->getStyle('A6:H6')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+     
+        $sheet->getStyle('A7:H7') ->getFont()->setName('Arial');
+        $sheet->getStyle('A7:H7') ->getFont()->setSize('18');
+        $sheet->getStyle('A7:H7')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+        $borders = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['hex' => '#000000'],
+                ]
+            ]
+        ];
+     
+        $sheet->getStyle('A8:H8')->getFont()->setName('Arial');
+        $sheet->getStyle('A8:H8')->getFont()->setBold(true);
+        $sheet->getStyle('A8:H8')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A8:H8')->applyFromArray($borders);
+        
+        $sheet->getRowDimension('9')->setRowHeight(10.5);
+
+        $sheet->getStyle('A9:H9')->getFont()->setName('Arial');
+        $sheet->getStyle('A9:H9')->getFont()->setSize('8');
+        $sheet->getStyle('A9:H9')->getFont()->setBold(true);
+        $sheet->getStyle('A9:H9')->getFont()->setItalic(true);
+        $sheet->getStyle('A9:H9')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A9:H9')->applyFromArray($borders);
+     
     }
 }

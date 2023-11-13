@@ -30,20 +30,24 @@ class PelimpahanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'nodokumen' => 'required',
             'tanggal_pelimpahan' => 'required',
             'jumlah_pelimpahan' => 'required',
             'biro_id' => 'required',
             'note' => 'required',
         ]);
 
+        
         Pelimpahan::create([
             'id' => Str::uuid(),
+            'nodokumen' => $request->nodokumen,
             'tanggal_pelimpahan' => $request->tanggal_pelimpahan,
             'jumlah_pelimpahan' => $request->jumlah_pelimpahan,
             'biro_id' => $request->biro_id,
             'note' => $request->note,
         ]);
-
+        
+        dd($request->all());
         return redirect()->route('pelimpahans.index');
     }
 
@@ -58,6 +62,7 @@ class PelimpahanController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
+            'nodokumen' => 'required',
             'tanggal_pelimpahan' => 'required',
             'jumlah_pelimpahan' => 'required',
             'biro_id' => 'required',
@@ -66,6 +71,7 @@ class PelimpahanController extends Controller
 
         $pelimpahans = Pelimpahan::find($id);
 
+        $pelimpahans->nodokumen = $request->nodokumen;
         $pelimpahans->tanggal_pelimpahan = $request->tanggal_pelimpahan;
         $pelimpahans->jumlah_pelimpahan = $request->jumlah_pelimpahan;
         $pelimpahans->biro_id = $request->biro_id;

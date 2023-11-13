@@ -12,7 +12,7 @@
                     class="block mt-1 w-1/4 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                     <option value="">-</option>
                     @for ($i = 1; $i <= 12; $i++)
-                    <option value="{{ $i }}">{{ date('F', mktime(0, 0, 0, $i, 1)) }}</option>
+                    <option value="{{ date('F', mktime(0, 0, 0, $i, 1)) }}">{{ date('F', mktime(0, 0, 0, $i, 1)) }}</option>
                 @endfor
                 </select>
             </div>
@@ -37,11 +37,11 @@
         <h1 class="mt-3">Sub Kegiatan</h1>
 
                 <div class="relative mb-4 flex w-full gap-x-2">
-                    <select name="sukegiatan_id" id="sukegiatan_id"
+                    <select name="subkegiatan_id" id="subkegiatan_id"
                         class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                         <option value="">-</option>
                         @foreach($subkegiatans as $subkegiatan)
-                            <option value="{{ $subkegiatan->nama }}">{{ $subkegiatan->nama_sub_kegiatan }}</option>
+                            <option value="{{ $subkegiatan->id }}">{{ $subkegiatan->nama_sub_kegiatan }}</option>
                         @endforeach
                     </select>
 

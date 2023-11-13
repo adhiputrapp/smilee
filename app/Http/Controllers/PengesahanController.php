@@ -43,6 +43,6 @@ class PengesahanController extends Controller
             ]
         );
 
-        return redirect()->route('pengesahan.index')->with('success', 'Pengesahan berhasil disimpan.');
+        return redirect()->route('pengesahans.index')->with('success', 'Pengesahan berhasil disimpan.');
     }
 }

@@ -10,6 +10,7 @@ use Illuminate\View\View;
 use App\Models\Belanja;
 use App\Models\SubKegiatan;
 use App\Models\Kodering;
+use App\Models\Pelimpahan;
 use App\Exports\BKUExport;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -32,19 +33,24 @@ class BKUController extends Controller
         $request->validate([
             'bulan' => 'required',
             'tahun' => 'required',
-            'sukegiatan_id' => 'required',
+            'subkegiatan_id' => 'required',
         ]);
 
+        // setlocale(LC_TIME, 'id_ID.utf8');
+
+        $bulanAnggaran = date('m', strtotime($request->bulan));
         // Ambil data belanja berdasarkan filter
         $belanjas = Belanja::whereHas('pengesahan', function ($query) {
                 $query->where('sah', 'disetujui');
             })
             ->with('biro','program','kegiatan','subkegiatan','kodering', 'verifikasi')
-            ->whereMonth('tanggal_belanja', $request->bulan)
+            ->whereMonth('tanggal_belanja', $bulanAnggaran)
             ->whereYear('tanggal_belanja', $request->tahun)
             ->where('subkegiatan_id', $request->subkegiatan_id)
             ->get();
             $tahunAnggaran = $request->tahun;
+            $bulanAnggaran = $request->bulan;
+
             $exportData = $belanjas->map(function ($item) {
                 return [
                     'No' => $item->id,
@@ -62,12 +68,12 @@ class BKUController extends Controller
 
         // $view = view('user.laporan.bku', compact('belanjas', 'request'))->render();
 
-        // return Excel::download(new BKUExport($belanjas), 'BKU.xlsx');
-
-        return view('user.laporan.bku',[
-            'belanjas' => $belanjas,
-            'tahun' => $tahunAnggaran
-        ]);
+        return Excel::download(new BKUExport($belanjas, $tahunAnggaran, $bulanAnggaran), 'BKU.xlsx');
+            // dd($request->subkegiatan_id);
+        // return view('user.laporan.bku',[
+        //     'belanjas' => $belanjas,
+        //     'tahun' => $tahunAnggaran
+        // ]);
     }
 
     

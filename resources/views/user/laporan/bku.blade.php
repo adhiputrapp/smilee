@@ -22,7 +22,7 @@
                 <th colspan="6" class="border p-2" style="border-color: black;">BIRO UMUM SETDA PROVINSI JAWA BARAT</th>  
             </tr>
             <tr>
-                <th colspan="6" class="border p-2" style="border-color: black;" >TAHUN ANGGARAN {{$tahun}}</th>
+                <th colspan="6" class="border p-2" style="border-color: black;" >TAHUN ANGGARAN {{$tahunAnggaran}}</th>
             </tr>
             <tr>
                 <th colspan="8" class="border p-2" style="border-color: black;" >BUKU KAS UMUM</th>
@@ -34,7 +34,7 @@
                 @endforeach</th>
             </tr>
             <tr>
-                <th colspan="8" class="border p-2" style="border-color: black;" >PERIODE : 1 s.d. 30 Juni 2023</th>
+                <th colspan="8" class="border p-2" style="border-color: black;" >PERIODE : {{$bulanAnggaran}} {{$tahunAnggaran}}</th>
             </tr>
             <tr>
                 <th class="border p-2" style="border-color: black;">No</th>
@@ -60,16 +60,16 @@
         <tbody>
             @foreach ($belanjas as $item)
         <tr>
-            <td class="border p-2 text-center" style="border-color: black;">{{ $item->id }}</td>
+            <td class="border border-black p-2 text-center" >{{ $loop->iteration }}</td>
             <td class="border p-2 text-center" style="border-color: black;">{{ $item->tanggal_belanja }}</td>
             <td class="border p-2 text-center" style="border-color: black;">{{ $item->nobukti }}</td>
             <td class="border p-2 text-center" style="border-color: black;">{{ $item->uraian }}</td>
-            <td class="border p-2 text-center" style="border-color: black;">{{ $item->kodering->kode_rekening }}</td>
+            <td class="border p-2 text-center" style="border-color: black;">{{ $item->kodering->nama_kodering }}</td>
             <td class="border p-2 text-center" style="border-color: black;">{{--{{ $item->penerimaan }}--}}test</td>
             <td class="border p-2 text-center" style="border-color: black;">{{ $item->pengeluaran }}</td>
             <td class="border p-2 text-center" style="border-color: black;">{{--{{ $item->saldo }}--}}test</td>
         </tr>
-    @endforeach
+            @endforeach
         </tbody>
     </table>
     
