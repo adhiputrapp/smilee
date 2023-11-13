@@ -21,7 +21,7 @@ class Anggaran extends Model
         return $this->belongsTo(SubKegiatan::class, 'subkegiatan_id', 'id');
     }
 
-    public function kodering()
+    public function kodering() : BelongsTo
     {
         return $this->belongsTo(Kodering::class, 'kodering_id', 'id');
     }

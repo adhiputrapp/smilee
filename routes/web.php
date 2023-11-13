@@ -14,6 +14,7 @@ use App\Http\Controllers\BelanjaController;
 use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\VerifikasiController;
 use App\Http\Controllers\PengesahanController;
+use App\Http\Controllers\RincianObjekController;
 
 /*
 |--------------------------------------------------------------------------
@@ -147,6 +148,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/index', 'index')->name('pengesahans.index');
         Route::get('/form/{belanja_id}', 'showVerifikasiForm')->name('pengesahans.show');
         Route::post('/form/{belanja_id}', 'verifikasi')->name('pengesahans.submit');
+    });
+
+    Route::prefix('/rincian-objek')->controller(RincianObjekController::class, 'index')->group(function () {
+        Route::get('/', 'index')->name('rincian.objek.index');
+        Route::get('/search', 'searchForSubKegiatan')->name('rincian.objek.search');
+        Route::post('/', 'export')->name('rincian.objek.export');
     });
 });
 

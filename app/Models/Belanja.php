@@ -15,6 +15,10 @@ class Belanja extends Model
 
     protected $guarded = ["id"];
 
+    protected $casts = [
+        'tanggal_belanja' => 'date'
+    ];
+
     public function biro()
     {
         return $this->belongsTo(Biro::class, 'biro_id', 'id');
