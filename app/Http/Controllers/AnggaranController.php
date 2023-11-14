@@ -42,7 +42,7 @@ class AnggaranController extends Controller
 
         Anggaran::create([
             'id' => Str::uuid(),
-            'subkgeiatan_id' => $request->subkgeiatan_id,
+            'subkegiatan_id' => $request->subkegiatan_id,
             'kodering_id' => $request->kodering_id,
             'tanggal_anggaran' => $request->tanggal_anggaran,
             'jumlah_anggaran' => $request->jumlah_anggaran,

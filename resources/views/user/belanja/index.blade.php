@@ -51,7 +51,7 @@
             const data = {
                 columns: [{
                         label: 'Tanggal Belanja ',
-                        field: 'tanggal_belanja'
+                        field: 'tanggal',
                     },
                     {
                         label: 'Biro',
@@ -118,6 +118,7 @@
                     
                     return {
                         ...row,
+                        // tanggal : row.tanggal_belanja.toLocaleDateString(),
                         biro: row.biro.nama_biro,
                         program: row.program.nama_program,
                         kegiatan: row.kegiatan.nama_kegiatan,

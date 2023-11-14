@@ -13,7 +13,7 @@
     <table class="text-xs w-full table-auto border-collapse" id="table">
         <thead>
             <tr>
-                <th colspan="2" rowspan="4" class="border p-2" style="border-color: black;">FOTO</th>
+                <th colspan="2" rowspan="4" class="border p-2" style="border-color: black;"></th>
             </tr>
             <tr>       
                 <th colspan="6" class="border p-2" style="border-color: black;">PEMERINTAH PROVINSI JAWA BARAT</th>
@@ -58,19 +58,67 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($belanjas as $item)
-        <tr>
-            <td class="border border-black p-2 text-center" >{{ $loop->iteration }}</td>
-            <td class="border p-2 text-center" style="border-color: black;">{{ $item->tanggal_belanja }}</td>
-            <td class="border p-2 text-center" style="border-color: black;">{{ $item->nobukti }}</td>
-            <td class="border p-2 text-center" style="border-color: black;">{{ $item->uraian }}</td>
-            <td class="border p-2 text-center" style="border-color: black;">{{ $item->kodering->nama_kodering }}</td>
-            <td class="border p-2 text-center" style="border-color: black;">{{--{{ $item->penerimaan }}--}}test</td>
-            <td class="border p-2 text-center" style="border-color: black;">{{ $item->pengeluaran }}</td>
-            <td class="border p-2 text-center" style="border-color: black;">{{--{{ $item->saldo }}--}}test</td>
-        </tr>
-            @endforeach
+            @php
+                $totalPengeluaran = 0;
+            @endphp
+                @foreach ($belanjas as $item)
+            <tr>
+                <td class="border border-black p-2 text-center" >{{ $loop->iteration }}</td>
+                <td class="border p-2 text-center" style="border-color: black;">{{ $item->tanggal_belanja }}</td>
+                <td class="border p-2 text-center" style="border-color: black;">{{ $item->nobukti }}</td>
+                <td class="border p-2 text-center" style="border-color: black;">{{ $item->uraian }}</td>
+                <td class="border p-2 text-center" style="border-color: black;">{{ $item->kodering->nama_kodering }}</td>
+                <td class="border p-2 text-center" style="border-color: black;">{{--{{ $item->penerimaan }}--}}test</td>
+                <td class="border p-2 text-center" style="border-color: black;">{{ $item->pengeluaran }}</td>
+                <td class="border p-2 text-center" style="border-color: black;">{{--{{ $item->saldo }}--}}test</td>
+            </tr>
+            @php
+                $totalPengeluaran += $item->pengeluaran;
+            @endphp
+                @endforeach
         </tbody>
+        <tfoot>
+            <tr>
+                <td class="border border-black"></td>
+                <td class="border border-black"></td>
+                <td class="border border-black"></td>
+                <td class="border border-black"></td>
+                <td class="border border-black text-left">Jumlah</td>
+                <td class="border border-black"></td>
+                <td class="border border-black text-right">
+                    {{ $totalPengeluaran }}
+                </td>
+                <td class="border border-black text-right">
+                    
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="5">&nbsp;</td>
+                <td colspan="3" class="text-center">Bandung, ....................</td>
+            </tr>
+            <tr>
+                <td colspan="8">&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td class="text-center">Disetujui Oleh,</td>
+                <td class="text-center">&nbsp;</td>
+                <td class="text-center">&nbsp;</td>
+                <td colspan="3" class="text-center">Disiapkan oleh,</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td class="text-center">Kuasa Pengguna Anggaran</td>
+                <td class="text-center">&nbsp;</td>
+                <td class="text-center">&nbsp;</td>
+                <td colspan="3" class="text-center whitespace-nowrap">Bendahara Pengeluaran Pembantu,</td>
+            </tr>
+        </tfoot>
     </table>
     
 </body>

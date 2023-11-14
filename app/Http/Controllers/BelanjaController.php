@@ -23,10 +23,13 @@ class BelanjaController extends Controller
 {
     public function index(): View
     {
-        return view('user.belanja.index',[
-            'belanjas' => Belanja::orderby('tanggal_belanja', 'ASC')
-            ->with('biro','program','kegiatan','subkegiatan','kodering', 'verifikasi')
-            ->get()
+        $belanjas = Belanja::orderBy('tanggal_belanja', 'ASC')
+            ->with('biro', 'program', 'kegiatan', 'subkegiatan', 'kodering', 'verifikasi')
+            ->get();
+
+
+        return view('user.belanja.index', [
+            'belanjas' => $belanjas,
         ]);
     }
 

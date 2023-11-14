@@ -25,7 +25,7 @@ class Biro extends Model
         return $this->hasMany(Pelimpahan::class, 'biro_id', 'id');
     }
 
-    public function programs()
+    public function programs() : HasMany
     {
         return $this->hasMany(Program::class, 'nama_biro_relasi', 'nama_biro');
     }

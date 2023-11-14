@@ -47,7 +47,6 @@ class PelimpahanController extends Controller
             'note' => $request->note,
         ]);
         
-        dd($request->all());
         return redirect()->route('pelimpahans.index');
     }
 

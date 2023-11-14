@@ -7,6 +7,7 @@ use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
+use Maatwebsite\Excel\Concerns\WithDrawings;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Events\AfterSheet;
@@ -16,7 +17,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 
-class BKUExport implements FromView, ShouldAutoSize, WithColumnWidths, WithStyles
+class BKUExport implements FromView, ShouldAutoSize, WithColumnWidths, WithStyles, WithDrawings
 {
     public $belanjas;
     public $tahunAnggaran;
@@ -102,6 +103,29 @@ class BKUExport implements FromView, ShouldAutoSize, WithColumnWidths, WithStyle
         $sheet->getStyle('A9:H9')->getFont()->setItalic(true);
         $sheet->getStyle('A9:H9')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle('A9:H9')->applyFromArray($borders);
+
+        $sheet->getStyle("A12:H12")->getAlignment()->setWrapText(true);
+        $sheet->getStyle("A12:H12")->getFont()->setName('Arial');
+        $sheet->getStyle("A12:H12")->getFont()->setSize(12);
+        $sheet->getStyle('A12:H12')->getFont()->setBold(true);
+        $sheet->getStyle('A12:H12')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('A12:H12')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A12:H12')->applyFromArray($borders);
+        // $sheet->getStyle('A15:H15')->applyFromArray($borders);
      
+    }
+
+    public function drawings() {
+        $drawing = new Drawing();
+        $drawing->setName('logo');
+        $drawing->setDescription('logo');
+        $drawing->setPath(public_path('logo.png'));
+        $drawing->setHeight(80.24); // logo height
+        $drawing->setWidth(75.44); // logo width
+        $drawing->setOffsetX(25);
+        $drawing->setOffsetY(8);
+        $drawing->setCoordinates('A1');
+
+        return $drawing;
     }
 }
