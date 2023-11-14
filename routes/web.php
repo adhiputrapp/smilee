@@ -125,6 +125,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('/belanja')->controller(BelanjaController::class)->group(function () {
         Route::get('/index', 'index')->name('belanjas.index');
         Route::get('/create', 'create')->name('belanjas.create');
+        Route::get('/search', 'searchForSubKegiatan')->name('belanjas.search');
         Route::post('/store', 'store')->name('belanjas.store');
         Route::get('/edit/{id}', 'edit')->name('belanjas.edit');
         Route::put('/update/{id}', 'update')->name('belanjas.update');
@@ -135,6 +136,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('/anggaran')->controller(AnggaranController::class)->group(function () {
         Route::get('/index', 'index')->name('anggarans.index');
         Route::get('/create', 'create')->name('anggarans.create');
+        Route::get('/search', 'searchForSubKegiatan')->name('anggarans.search');
         Route::post('/store', 'store')->name('anggarans.store');
         Route::get('/edit/{id}', 'edit')->name('anggarans.edit');
         Route::put('/update/{id}', 'update')->name('anggarans.update');

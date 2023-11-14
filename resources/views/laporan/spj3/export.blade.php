@@ -150,7 +150,7 @@
                 <th class="border border-black"></th>
                 <th class="border border-black"></th>
                 <th class="border border-black"></th>
-                <th class="border border-black">Bandung, {{ date('d F Y') }}</th>
+                <th class="border border-black">Bandung,</th>
                 <th class="border border-black"></th>
             </tr>
             <tr>

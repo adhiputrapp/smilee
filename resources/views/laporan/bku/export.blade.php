@@ -34,7 +34,7 @@
                 @endforeach</th>
             </tr>
             <tr>
-                <th colspan="8" class="border p-2" style="border-color: black;" >PERIODE : {{$bulanAnggaran}} {{$tahunAnggaran}}</th>
+                <th colspan="8" class="border p-2" style="border-color: black;" >Periode : 1 Sd. {{ $bulanAnggaran->endOfMonth()->format('d') }} {{ $bulanAnggaran->locale('id')->monthName }} {{$tahunAnggaran}}</th>
             </tr>
             <tr>
                 <th rowspan="2" class="border p-2" style="border-color: black;">No</th>
@@ -100,7 +100,7 @@
             </tr>
             <tr>
                 <td colspan="5">&nbsp;</td>
-                <td colspan="3" class="text-center">Bandung, ....................</td>
+                <td colspan="3" class="text-center">Bandung,</td>
             </tr>
             <tr>
                 <td colspan="8">&nbsp;</td>

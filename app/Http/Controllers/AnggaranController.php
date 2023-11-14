@@ -8,8 +8,10 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use App\Models\Anggaran;
+use App\Models\Kegiatan;
 use App\Models\SubKegiatan;
 use App\Models\Kodering;
+use Illuminate\Http\JsonResponse;
 
 class AnggaranController extends Controller
 {
@@ -22,18 +24,31 @@ class AnggaranController extends Controller
         ]);
     }
 
-    public function create(): View
+
+    public function create(Request $request): View
     {
+        $program = $request->user()->biro->programs;
+        $kegiatan = Kegiatan::whereIn('nama_program_relasi', $program->pluck('nama_program'))->get();
+        $subKegiatan = SubKegiatan::whereIn('nama_kegiatan_relasi', $kegiatan->pluck('nama_kegiatan'))->get();
+        $kodering = Kodering::whereIn('nama_sub_kegiatan_relasi', $subKegiatan->pluck('nama_sub_kegiatan'))->get();
+
         return view('user.anggaran.create',[
-            'subkegiatans' => SubKegiatan::all(),
-            'koderings' => Kodering::all()
+            'koderings' => $kodering
+        ]);
+    }
+
+    public function searchForSubKegiatan(Request $request) : JsonResponse {
+        $data = Kodering::where('id', $request->kodering)->with('subkegiatan')->first();
+
+        return response()->json([
+            'data' => $data
         ]);
     }
 
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'subkegiatan_id' => 'required',
+            'sub_kegiatan_id' => 'required',
             'kodering_id' => 'required',
             'tanggal_anggaran' => 'required',
             'jumlah_anggaran' => 'required',
@@ -42,7 +57,7 @@ class AnggaranController extends Controller
 
         Anggaran::create([
             'id' => Str::uuid(),
-            'subkegiatan_id' => $request->subkegiatan_id,
+            'subkegiatan_id' => $request->sub_kegiatan_id,
             'kodering_id' => $request->kodering_id,
             'tanggal_anggaran' => $request->tanggal_anggaran,
             'jumlah_anggaran' => $request->jumlah_anggaran,

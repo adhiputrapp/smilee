@@ -43,7 +43,10 @@ class RincianObjekController extends Controller
     }
 
     public function export() {
-        $data = Belanja::where('subkegiatan_id', $this->request->sub_kegiatan_id)
+        $data = Belanja::whereHas('pengesahan', function($query) {
+            $query->where('sah', 'disetujui');
+        })
+            ->where('subkegiatan_id', $this->request->sub_kegiatan_id)
             ->where('kodering_id', $this->request->kodering)
             ->whereMonth('tanggal_belanja', explode('-', $this->request->tanggal)[1])
             ->whereYear('tanggal_belanja', explode('-', $this->request->tanggal)[0])
@@ -64,16 +67,16 @@ class RincianObjekController extends Controller
             Carbon::now()->month(explode('-', $this->request->tanggal)[1]),
         ), 'Rincian Objek.xlsx');
 
-        // return view('laporan.rincian-objek.export', [
-        //     'data' => $data,
-        //     'tahun' => explode('-', $this->request->tanggal)[0],
-        //     'sumLS' => $data->where('jenis_belanja', 'LS')->pluck('pengeluaran')->sum(),
-        //     'sumTU' => $data->where('jenis_belanja', 'TU')->pluck('pengeluaran')->sum(),
-        //     'sumUPGU' => $data->where('jenis_belanja', 'UP/GU')->pluck('pengeluaran')->sum(),
-        //     'kodering' => $kodering,
-        //     'anggaran' => $anggaran,
-        //     'pelimpahan' => $pelimpahan,
-        //     'eom' => Carbon::now()->month(explode('-', $this->request->tanggal)[1])
-        // ]);
+        return view('laporan.rincian-objek.export', [
+            'data' => $data,
+            'tahun' => explode('-', $this->request->tanggal)[0],
+            'sumLS' => $data->where('jenis_belanja', 'LS')->pluck('pengeluaran')->sum(),
+            'sumTU' => $data->where('jenis_belanja', 'TU')->pluck('pengeluaran')->sum(),
+            'sumUPGU' => $data->where('jenis_belanja', 'UP/GU')->pluck('pengeluaran')->sum(),
+            'kodering' => $kodering,
+            'anggaran' => $anggaran,
+            'pelimpahan' => $pelimpahan,
+            'eom' => Carbon::now()->month(explode('-', $this->request->tanggal)[1])
+        ]);
     }
 }

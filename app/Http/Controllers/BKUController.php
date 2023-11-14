@@ -12,6 +12,7 @@ use App\Models\SubKegiatan;
 use App\Models\Kodering;
 use App\Models\Pelimpahan;
 use App\Exports\BKUExport;
+use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 
 class BKUController extends Controller
@@ -19,7 +20,7 @@ class BKUController extends Controller
     public function index()
     {
         $subkegiatans = SubKegiatan::all(); // Mengambil semua subkegiatan
-        return view('user.laporan.index', compact('subkegiatans'));
+        return view('laporan.bku.index', compact('subkegiatans'));
     }
 
     public function search()
@@ -49,7 +50,7 @@ class BKUController extends Controller
             ->where('subkegiatan_id', $request->subkegiatan_id)
             ->get();
             $tahunAnggaran = $request->tahun;
-            $bulanAnggaran = $request->bulan;
+            // $bulanAnggaran = $request->bulan;
 
             $exportData = $belanjas->map(function ($item) {
                 return [
@@ -65,10 +66,16 @@ class BKUController extends Controller
                     // Sesuaikan dengan kolom-kolom lain yang dibutuhkan
                 ];
             });           
+        
+        // dd($bulanAnggaran);
 
         // $view = view('user.laporan.bku', compact('belanjas', 'request'))->render();
 
-        return Excel::download(new BKUExport($belanjas, $tahunAnggaran, $bulanAnggaran), 'BKU.xlsx');
+        return Excel::download(new BKUExport(
+            $belanjas,
+            $tahunAnggaran,
+            Carbon::now()->month($bulanAnggaran)
+            ), 'BKU.xlsx');
             // dd($request->subkegiatan_id);
         // return view('user.laporan.bku',[
         //     'belanjas' => $belanjas,
