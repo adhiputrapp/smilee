@@ -108,11 +108,11 @@ class RincianObjekExport implements FromView, WithDrawings, WithStyles, WithColu
         $sheet->getStyle("F21:H21")->getFont()->setSize(12);
         $sheet->getStyle('F21:H21')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         
-        $sheet->getStyle("C23:G24")->getFont()->setName('Arial');
-        $sheet->getStyle("C23:G24")->getFont()->setSize(12);
-        $sheet->getStyle('C23:G24')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-
         $highestRow = $sheet->getHighestRow();
+        
+        $sheet->getStyle('C'.($highestRow - 3).':G'.($highestRow))->getFont()->setName('Arial');
+        $sheet->getStyle('C'.($highestRow - 3).':G'.($highestRow))->getFont()->setSize(12);
+        $sheet->getStyle('C'.($highestRow - 3).':G'.($highestRow))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
         $sheet->getStyle('D'.($highestRow - 5).':H'.($highestRow - 5))->getFont()->setBold(true);
         $sheet->getStyle('D'.($highestRow - 5).':G'.($highestRow - 5))->getFont()->setName('Arial');
