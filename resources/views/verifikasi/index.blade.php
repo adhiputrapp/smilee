@@ -88,6 +88,7 @@
                 rows: verifikasi.map((row) => {
                     return {
                         ...row,
+                        tanggal_belanja: new Date(row.tanggal_belanja).toLocaleDateString(),
                         biro: row.biro.nama_biro,
                         program: row.program.nama_program,
                         kegiatan: row.kegiatan.nama_kegiatan,

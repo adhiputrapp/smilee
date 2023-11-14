@@ -17,6 +17,7 @@ use App\Http\Controllers\PengesahanController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\BKUController;
 use App\Http\Controllers\RincianObjekController;
+use App\Http\Controllers\SPJ3Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -163,6 +164,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'index')->name('rincian.objek.index');
         Route::get('/search', 'searchForSubKegiatan')->name('rincian.objek.search');
         Route::post('/', 'export')->name('rincian.objek.export');
+    });
+
+    Route::prefix('/spj3')->controller(SPJ3Controller::class, 'index')->group(function () {
+        Route::get('/', 'index')->name('spj3.index');
+        Route::post('/', 'export')->name('spj3.export');
     });
 });
 

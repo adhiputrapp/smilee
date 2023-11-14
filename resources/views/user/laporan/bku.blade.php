@@ -37,14 +37,17 @@
                 <th colspan="8" class="border p-2" style="border-color: black;" >PERIODE : {{$bulanAnggaran}} {{$tahunAnggaran}}</th>
             </tr>
             <tr>
-                <th class="border p-2" style="border-color: black;">No</th>
-                <th class="border p-2" style="border-color: black;">Tanggal</th>
-                <th class="border p-2" style="border-color: black;">No. Bukti</th>
-                <th class="border p-2" style="border-color: black;">Uraian</th>
-                <th class="border p-2" style="border-color: black;">Kode Rekening</th>
-                <th class="border p-2" style="border-color: black;">Penerimaan</th>
-                <th class="border p-2" style="border-color: black;">Pengeluaran</th>
-                <th class="border p-2" style="border-color: black;">Saldo</th>
+                <th rowspan="2" class="border p-2" style="border-color: black;">No</th>
+                <th rowspan="2" class="border p-2" style="border-color: black;">Tanggal</th>
+                <th rowspan="2" class="border p-2" style="border-color: black;">No. Bukti</th>
+                <th rowspan="2" class="border p-2" style="border-color: black;">Uraian</th>
+                <th rowspan="2" class="border p-2" style="border-color: black;">Kode Rekening</th>
+                <th rowspan="2" class="border p-2" style="border-color: black;">Penerimaan</th>
+                <th rowspan="2" class="border p-2" style="border-color: black;">Pengeluaran</th>
+                <th rowspan="2" class="border p-2" style="border-color: black;">Saldo</th>
+            </tr>
+            <tr>
+
             </tr>
             <tr>
                 <th class="border p-2" style="border-color: black;">1</th>
@@ -64,7 +67,7 @@
                 @foreach ($belanjas as $item)
             <tr>
                 <td class="border border-black p-2 text-center" >{{ $loop->iteration }}</td>
-                <td class="border p-2 text-center" style="border-color: black;">{{ $item->tanggal_belanja }}</td>
+                <td class="border p-2 text-center" style="border-color: black;">{{ $item->tanggal_belanja->format('j F Y') }}</td>
                 <td class="border p-2 text-center" style="border-color: black;">{{ $item->nobukti }}</td>
                 <td class="border p-2 text-center" style="border-color: black;">{{ $item->uraian }}</td>
                 <td class="border p-2 text-center" style="border-color: black;">{{ $item->kodering->nama_kodering }}</td>
@@ -82,8 +85,8 @@
                 <td class="border border-black"></td>
                 <td class="border border-black"></td>
                 <td class="border border-black"></td>
-                <td class="border border-black"></td>
                 <td class="border border-black text-left">Jumlah</td>
+                <td class="border border-black"></td>
                 <td class="border border-black"></td>
                 <td class="border border-black text-right">
                     {{ $totalPengeluaran }}
