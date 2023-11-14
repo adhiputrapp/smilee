@@ -3,8 +3,8 @@
 namespace App\Exports;
 
 use App\Models\Belanja;
-use Maatwebsite\Excel\Concerns\FromArray;
-use Maatwebsite\Excel\Concerns\FromQuery;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
 class RincianExport implements FromArray, WithMapping
@@ -27,7 +27,7 @@ class RincianExport implements FromArray, WithMapping
     {
         return $this->data->toArray();    
     }
-
+    
     public function map($row): array
     {
         return [

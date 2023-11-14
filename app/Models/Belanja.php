@@ -53,5 +53,10 @@ class Belanja extends Model
     {
         return $this->hasOne(Pengesahan::class, 'belanja_id', 'id');
     }
+
+    public function saldo()
+    {
+        return $this->hasOne(Saldo::class, 'belanja_id', 'id');
+    }
     
 }

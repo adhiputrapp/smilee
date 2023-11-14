@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('verifikasis', function (Blueprint $table) {
+        Schema::create('saldos', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('belanja_id')->references('id')->on('belanjas')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('verif');
-            $table->string('uraian')->nullable();
+            $table->foreignuuid('belanja_id')->references('id')->on('belanjas')->onUpdate('cascade');
+            $table->foreignuuid('pelimpahan_id')->references('id')->on('pelimpahans')->onUpdate('cascade');
+            $table->integer('saldo');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('verikasis');
+        Schema::dropIfExists('saldos');
     }
 };

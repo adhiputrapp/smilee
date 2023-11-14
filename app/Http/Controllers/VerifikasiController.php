@@ -32,12 +32,15 @@ class VerifikasiController extends Controller
     public function verifikasi(Request $request, $belanja_id)
     {
         $request->validate([
-            'verif' => 'required|in:verified,unverified' // Sesuaikan dengan opsi verifikasi
+            'verif' => 'required|in:verified,unverified', // Sesuaikan dengan opsi verifikasi
         ]);
 
         Verifikasi::updateOrCreate(
             ['belanja_id' => $belanja_id],
-            ['verif' => $request->verif]
+            [
+                'verif' => $request->verif,
+                'uraian' => $request->uraian
+            ]
         );
 
         return redirect()->route('verifikasis.index')->with('success', 'Verifikasi berhasil disimpan.');

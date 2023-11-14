@@ -1,114 +1,88 @@
 <x-app-layout>
-    <h1 class="mb-6 text-3xl font-bold border-b-2">Halaman Pelimpahan</h1>
+    <h1 class="mb-6 text-3xl font-bold border-b-2">Laporan BKU</h1>
+
 
     <div class="mb-3 w-full">
-        <div class="relative mb-4 mr-2 flex w-full flex-wrap items-stretch">
-        <input
-            id="advanced-search-input"
-            type="search"
-            class="relative m-0 -mr-0.5 block w-[1px] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
-            placeholder="Search"
-            aria-label="Search"
-            aria-describedby="button-addon1" />
+
+        <form action="{{route('laporan.export')}}" method="GET">
+            @csrf
+            <div class="relative mb-4 flex w-full gap-x-2">
+                <h1 class="mt-3 mr-1">Bulan</h1>
+                <select name="bulan" id="bulan"
+                    class="block mt-1 w-1/4 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                    <option value="">-</option>
+                    @for ($i = 1; $i <= 12; $i++)
+                    <option value="{{ date('F', mktime(0, 0, 0, $i, 1)) }}">{{ date('F', mktime(0, 0, 0, $i, 1)) }}</option>
+                @endfor
+                </select>
+            </div>
     
-        <!--Search button-->
-        <button
-            class="relative z-[2] bg-gradient-to-r from-blue-700 to-blue-500 flex items-center rounded-r bg-primary px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
-            type="button"
-            id="advanced-search-button"
-            data-te-ripple-init
-            data-te-ripple-color="light">
-            <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            class="h-5 w-5">
-            <path
-                fill-rule="evenodd"
-                d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                clip-rule="evenodd" />
-            </svg>
-        </button>
-        </div>
-        <a href="{{route('pelimpahans.create')}}"  
-        data-te-ripple-init
-        data-te-ripple-color="light"
-        class="inline-block rounded bg-gradient-to-r from-blue-700 to-blue-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
-            Buat Pelimpahan Baru
-        </a>
+            <div class="relative mb-4 flex w-full gap-x-2">
+                <h1 class="mt-3">Tahun</h1>
+                <select name="tahun" id="tahun"
+                    class="block mt-1 w-1/4 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                    <option value="">-</option>
+                    @php
+                    $currentYear = date('Y');
+                    $startYear = 2020;
+                    @endphp
+                    @for ($year = $currentYear; $year >= $startYear; $year--)
+                        <option value="{{ $year }}">{{ $year }}</option>
+                    @endfor
+                </select>
+            </div>
     </div>
-    <div id="datatable"></div>
+
+    <div class="mb-3 w-full">
+        <h1 class="mt-3">Sub Kegiatan</h1>
+
+                <div class="relative mb-4 flex w-full gap-x-2">
+                    <select name="subkegiatan_id" id="subkegiatan_id"
+                        class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                        <option value="">-</option>
+                        @foreach($subkegiatans as $subkegiatan)
+                            <option value="{{ $subkegiatan->id }}">{{ $subkegiatan->nama_sub_kegiatan }}</option>
+                        @endforeach
+                    </select>
+
+                    <button type="submit"
+                        class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
+                        Export</button>
+                </div>
+            </form>
+
+    </div>
+    
     @push('script')
-        <script>
-            var pelimpahan = {{ Js::from($pelimpahans) }}
-
-            const data = {
-                columns: [
-                    {
-                        label: 'No Dokumen ',
-                        field: 'nodokumen'
-                    },
-                    {
-                        label: 'Tanggal Pelimpahan ',
-                        field: 'tanggal_pelimpahan'
-                    },
-                    {
-                        label: 'Jumlah Pelimpahan',
-                        field: 'jumlah_pelimpahan',
-                    },
-                    {
-                        label: 'Nama Biro',
-                        field: 'biro',
-                    },
-                    {
-                        label: 'Note',
-                        field: 'note',
-                    },
-                    {
-                        label: 'Edit/Hapus',
-                        field: 'action'
-                    }
-                ],
-                rows: pelimpahan.map((row) => {
-                    return {
-                        ...row,
-                        biro: row.biro.nama_biro,
-                        jumlah_pelimpahan: row.jumlah_pelimpahan.toLocaleString(),
-                        action: `
-                            <a href="{{ url('/pelimpahan/edit/${row.id}') }}" class="inline-block rounded  bg-gradient-to-l from-yellow-600 to-yellow-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] transition duration-150 ease-in-out hover:bg-warning-600 hover:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.3),0_4px_18px_0_rgba(228,161,27,0.2)] focus:bg-warning-600 focus:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.3),0_4px_18px_0_rgba(228,161,27,0.2)] focus:outline-none focus:ring-0 active:bg-warning-700 active:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.3),0_4px_18px_0_rgba(228,161,27,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(228,161,27,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.2),0_4px_18px_0_rgba(228,161,27,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.2),0_4px_18px_0_rgba(228,161,27,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.2),0_4px_18px_0_rgba(228,161,27,0.1)]">
-                                Edit
-                            </a>
-                            <a href="javascript:void(0);" onclick="destroyFunction('{{ url('/pelimpahan/delete/${row.id}') }}');" class="inline-block rounded  bg-gradient-to-l from-red-600 to-red-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out hover:bg-danger-600 hover:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] focus:bg-danger-600 focus:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] focus:outline-none focus:ring-0 active:bg-danger-700 active:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(220,76,100,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)]">
-                                Delete
-                            </a>`
-                    }
-                })
-            }
-
-            const instance = new te.Datatable(document.getElementById('datatable'), data)
-            const advancedSearchInput = document.getElementById('advanced-search-input');
-
-            const search = (value) => {
-                let [phrase, columns] = value.split(" in:").map((str) => str.trim());
-
-                if (columns) {
-                columns = columns.split(",").map((str) => str.toLowerCase().trim());
-                }
-
-                instance.search(phrase, columns);
-            };
-
-            document
-                .getElementById("advanced-search-button")
-                .addEventListener("click", (e) => {
-                search(advancedSearchInput.value);
-                });
-
-            advancedSearchInput.addEventListener("keydown", (e) => {
-                if (e.keyCode === 13) {
-                search(e.target.value);
-                }
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {{-- <script>
+        $(document).ready(function() 
+        {
+            // Isi dropdown bulan
+            const months = [
+                'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+            ];
+            const monthDropdown = $('#bulan');
+            months.forEach((month, index) => {
+                monthDropdown.append($('<option></option>').attr('value', index + 1).text(month));
             });
-        </script>
+    
+            // Isi dropdown tahun (contoh tahun dari 2020 hingga 2030)
+            const currentYear = new Date().getFullYear();
+            const yearDropdown = $('#tahun');
+            for (let year = currentYear; year >= 2020; year--) {
+                yearDropdown.append($('<option></option>').attr('value', year).text(year));
+            };
+        });
+    </script> --}}
+    <script>
+        $(document).ready(function() {
+        $('#sukegiatan_id').select2({
+                placeholder: 'Cari Nama Subkegiatan',
+                allowClear: true,
+            });
+        });
+    </script>
     @endpush
 </x-app-layout>
