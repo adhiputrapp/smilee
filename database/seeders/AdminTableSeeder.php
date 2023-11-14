@@ -29,5 +29,29 @@ class AdminTableSeeder extends Seeder
         ]);
         $user->assignRole('admin');
 
+        // $npc = User::create([
+        //     'name' => 'fulan',
+        //     'email' => 'fulan@gmail.com',
+        //     'password' => bcrypt('12345678'),
+        //     'golongan' => ('user'),
+        //     'pangkat' => ('user'),
+        //     'jabatan' => ('user'),
+        //     'nip' => ('6789'),
+        //     'biro_id' =>  null,
+        // ]);
+        // $npc->assignRole('mwehe');
+
+        // $appun = User::create([
+        //     'name' => 'appun',
+        //     'email' => 'appun@gmail.com',
+        //     'password' => bcrypt('12345678'),
+        //     'golongan' => ('user'),
+        //     'pangkat' => ('user'),
+        //     'jabatan' => ('user'),
+        //     'nip' => ('3445'),
+        //     'biro_id' =>  null,
+        // ]);
+        // $appun->assignRole('test');
+
     }
 }
