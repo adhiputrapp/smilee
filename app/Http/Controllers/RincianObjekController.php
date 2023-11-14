@@ -61,7 +61,7 @@ class RincianObjekController extends Controller
             $kodering,
             $anggaran,
             $pelimpahan,
-            Carbon::now()->month(explode('-', $this->request->tanggal)[1])->endOfMonth(),
+            Carbon::now()->month(explode('-', $this->request->tanggal)[1]),
         ), 'Rincian Objek.xlsx');
 
         // return view('laporan.rincian-objek.export', [
@@ -73,7 +73,7 @@ class RincianObjekController extends Controller
         //     'kodering' => $kodering,
         //     'anggaran' => $anggaran,
         //     'pelimpahan' => $pelimpahan,
-        //     'eom' => Carbon::now()->month(explode('-', $this->request->tanggal)[1])->endOfMonth()
+        //     'eom' => Carbon::now()->month(explode('-', $this->request->tanggal)[1])
         // ]);
     }
 }

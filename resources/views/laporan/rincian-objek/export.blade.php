@@ -51,7 +51,7 @@
                 <th colspan="8" class="whitespace-nowrap">BUKU PEMBANTU SUB RINCIAN OBJEK BELANJA</th>
             </tr>
             <tr>
-                <th colspan="8" class="whitespace-nowrap">Periode : 1 sd. {{ explode(' ', explode('-', $eom)[2])[0] }} {{ date('F Y') }}</th>
+                <th colspan="8" class="whitespace-nowrap">Periode : 1 sd. {{ explode(' ', explode('-', $eom->endOfMonth())[2])[0] }} {{ $eom->locale('id')->monthName }} {{ $eom->locale('id')->get('year') }}</th>
             </tr>
             <tr>
                 <th colspan="8">&nbsp;</th>
