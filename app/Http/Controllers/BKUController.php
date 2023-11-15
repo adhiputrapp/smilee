@@ -60,11 +60,11 @@ class BKUController extends Controller
                     'Kode Rekening' => $item->kodering->kode_rekening,
                     // 'Penerimaan' => $item->penerimaan,
                     'Pengeluaran' => $item->pengeluaran,
-                    'Sub Kegiatan' => $item->subKegiatan->nama_sub_kegiatan, 
+                    'Sub Kegiatan' => $item->subKegiatan->nama_sub_kegiatan,
                     // 'Saldo' => $item->saldo,
                     // Sesuaikan dengan kolom-kolom lain yang dibutuhkan
                 ];
-            });           
+            });
 
         // $view = view('user.laporan.bku', compact('belanjas', 'request'))->render();
 
@@ -76,7 +76,7 @@ class BKUController extends Controller
         // ]);
     }
 
-    
+
 
     // public function export()
     // {

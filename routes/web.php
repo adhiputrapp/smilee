@@ -15,7 +15,6 @@ use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\VerifikasiController;
 use App\Http\Controllers\PengesahanController;
 use Spatie\Permission\Middleware\PermissionMiddleware;
-
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\BKUController;
 use App\Http\Controllers\RincianObjekController;
@@ -123,7 +122,6 @@ Route::middleware('auth')->group(function () {
     });
 
 
-
     Route::prefix('/pelimpahan')->controller(PelimpahanController::class)->group(function () {
         Route::get('/index', 'index')->name('pelimpahans.index')->middleware('permission:pelimpahans.index');
         Route::get('/create', 'create')->name('pelimpahans.create')->middleware('permission:pelimpahans.create');
@@ -159,11 +157,34 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('/pengesahan')->controller(PengesahanController::class)->group(function () {
+        Route::get('/index', 'index')->name('pengesahans.index')->middleware('permission:pengesahans.index');
+        Route::get('/form/{belanja_id}', 'showVerifikasiForm')->name('pengesahans.show')->middleware('permission:pengesahans.show');
+        Route::post('/form/{belanja_id}', 'verifikasi')->name('pengesahans.submit')->middleware('permission:pengesahans.submit');
         Route::get('/index', 'index')->name('pengesahans.index');
-        Route::get('/form/{belanja_id}', 'showVerifikasiForm')->name('pengesahans.show');
-        Route::post('/form/{belanja_id}', 'verifikasi')->name('pengesahans.submit');
+        Route::get('/form/{belanja_id}', 'showPengesahanForm')->name('pengesahans.show');
+        Route::post('/form/{belanja_id}', 'pengesahan')->name('pengesahans.submit');
+    });
+
+    Route::prefix('/laporan')->controller(BKUController::class)->group(function () {
+        Route::get('/index', 'index')->name('laporan.index');
+        Route::get('/export', 'export')->name('laporan.export');
+        // Route::get('/form/{belanja_id}', 'showVerifikasiForm')->name('pengesahans.show');
+        // Route::post('/form/{belanja_id}', 'verifikasi')->name('pengesahans.submit');
+    });
+
+    Route::prefix('/rincian-objek')->controller(RincianObjekController::class, 'index')->group(function () {
+        Route::get('/', 'index')->name('rincian.objek.index');
+        Route::get('/search', 'searchForSubKegiatan')->name('rincian.objek.search');
+        Route::post('/', 'export')->name('rincian.objek.export');
+    });
+
+    Route::prefix('/spj3')->controller(SPJ3Controller::class, 'index')->group(function () {
+        Route::get('/', 'index')->name('spj3.index');
+        Route::post('/', 'export')->name('spj3.export');
     });
 });
+
+
 
 // Route::get('/laporan/doc',function () {
 //     return view('user.laporan.bku');
