@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('belanja_id')->references('id')->on('belanjas')->onUpdate('cascade')->onDelete('cascade');
             $table->string('sah');
-            $table->string('uraian');
+            $table->string('uraian')->nullable();
             $table->timestamps();
         });
     }

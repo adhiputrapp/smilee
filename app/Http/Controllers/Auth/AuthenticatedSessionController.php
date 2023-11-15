@@ -43,7 +43,22 @@ class AuthenticatedSessionController extends Controller
 
 
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        if (Auth::user()->hasRole('mwehe')) {
+            return redirect()->to('/kegiatan/index');
+        }
+
+        if (Auth::user()->hasRole('admin')) {
+            return redirect()->to('/role/index');
+        }
+
+        if(Auth::user()->hasRole('test')) {
+            return redirect()->to('/anggaran/index');
+        }
+
+
+
+        // return redirect()->intended(RouteServiceProvider::HOME);
+        return redirect()->route('anggarans.index');
     }
 
     /**

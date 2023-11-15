@@ -15,6 +15,10 @@ class Belanja extends Model
 
     protected $guarded = ["id"];
 
+    protected $casts = [
+        'tanggal_belanja' => 'date'
+    ];
+
     public function biro()
     {
         return $this->belongsTo(Biro::class, 'biro_id', 'id');
@@ -48,6 +52,11 @@ class Belanja extends Model
     public function pengesahan()
     {
         return $this->hasOne(Pengesahan::class, 'belanja_id', 'id');
+    }
+
+    public function saldo()
+    {
+        return $this->hasOne(Saldo::class, 'belanja_id', 'id');
     }
     
 }

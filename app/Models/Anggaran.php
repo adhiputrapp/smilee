@@ -16,12 +16,20 @@ class Anggaran extends Model
 
     protected $guarded = ["id"];
 
+    // protected $fillable = [
+    //     'subkegiatan_id',
+    //     'kodering_id',
+    //     'uraian',
+    //     'tanggal_anggaran',
+    //     'jumlah_anggaran',
+    // ];
+
     public function subkegiatan()
     {
         return $this->belongsTo(SubKegiatan::class, 'subkegiatan_id', 'id');
     }
 
-    public function kodering()
+    public function kodering() : BelongsTo
     {
         return $this->belongsTo(Kodering::class, 'kodering_id', 'id');
     }

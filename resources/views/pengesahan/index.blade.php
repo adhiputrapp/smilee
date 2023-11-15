@@ -70,12 +70,8 @@
                         field: 'kodering',
                     },
                     {
-                        label: 'No Urut',
-                        field: 'nourut',
-                    },
-                    {
-                        label: 'No TBP',
-                        field: 'notbp',
+                        label: 'No Bukti',
+                        field: 'nobukti',
                     },
                     {
                         label: 'Pengeluaran',
@@ -93,6 +89,7 @@
                 rows: pengesahan.map((row) => {
                     return {
                         ...row,
+                        tanggal_belanja: new Date(row.tanggal_belanja).toLocaleDateString(),
                         biro: row.biro.nama_biro,
                         program: row.program.nama_program,
                         kegiatan: row.kegiatan.nama_kegiatan,

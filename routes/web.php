@@ -16,6 +16,10 @@ use App\Http\Controllers\VerifikasiController;
 use App\Http\Controllers\PengesahanController;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\BKUController;
+use App\Http\Controllers\RincianObjekController;
+use App\Http\Controllers\SPJ3Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -155,12 +159,15 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('/pengesahan')->controller(PengesahanController::class)->group(function () {
-        Route::get('/index', 'index')->name('pengesahans.index')->middleware('permission:pengesahans.index');
-        Route::get('/form/{belanja_id}', 'showVerifikasiForm')->name('pengesahans.show')->middleware('permission:pengesahans.show');
-        Route::post('/form/{belanja_id}', 'verifikasi')->name('pengesahans.submit')->middleware('permission:pengesahans.submit');
+        Route::get('/index', 'index')->name('pengesahans.index');
+        Route::get('/form/{belanja_id}', 'showVerifikasiForm')->name('pengesahans.show');
+        Route::post('/form/{belanja_id}', 'verifikasi')->name('pengesahans.submit');
     });
 });
 
+// Route::get('/laporan/doc',function () {
+//     return view('user.laporan.bku');
+// });
 
 require __DIR__.'/auth.php';
 

@@ -9,24 +9,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Kodering extends Model
+class Saldo extends Model
 {
     use HasFactory, HasUuids;
 
     protected $guarded = ["id"];
 
-    public function subkegiatan() : BelongsTo
-    {
-        return $this->belongsTo(SubKegiatan::class, 'nama_sub_kegiatan_relasi', 'nama_sub_kegiatan');
-    }
-
     public function belanja()
     {
-        return $this->hasMany(Belanja::class, 'kodering_id', 'id');
+        return $this->belongsTo(Belanja::class, 'belanja_id', 'id');
     }
-    
-    public function anggaran() : HasMany
+
+    public function pelimpahan()
     {
-        return $this->hasMany(Anggaran::class, 'subkegiatan_id', 'id');
+        return $this->belongsTo(Pelimpahan::class, 'pelimpahan_id', 'id');
     }
 }

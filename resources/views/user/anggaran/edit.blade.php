@@ -12,7 +12,7 @@
                         <x-input-label for="subkegiatan_id" :value="__('Sub Kegiatan')"/>
                         <select id="nama_subkegiatan_relasi" name="subkegiatan_id" class="block mt-1 w-full" required>
                             @foreach ($subkegiatans as $subkegiatan)
-                                <option value="{{$subkegiatan->id}}" {{ $anggarans->subkegiatan_id == $subkegiatan->id ? 'selected' : '' }}>{{$subkegiatan->nama_subkegiatan}}</option>
+                                <option value="{{$subkegiatan->id}}" {{ $anggarans->subkegiatan_id == $subkegiatan->id ? 'selected' : '' }}>{{$subkegiatan->nama_sub_kegiatan}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -35,8 +35,8 @@
                         <x-text-input type="number" name="jumlah_anggaran" id="jumlah_anggaran" class="block mt-1 w-full" required value="{{$anggarans->jumlah_anggaran}}"/>
                     </div>
                     <div class="form-group mb-5">
-                        <x-input-label for="note" :value="__('Note')"/>
-                        <x-text-input type="text" name="note" id="note" class="block mt-1 w-full" required value="{{$anggarans->note}}"/>
+                        <x-input-label for="uraian" :value="__('Uraian')"/>
+                        <x-text-input type="uraian" name="uraian" id="uraian" class="block mt-1 w-full" required value="{{$anggarans->uraian}}"/>
                     </div>
 
                     <button type="submit" class="btn btn-primary inline-block rounded bg-gradient-to-r from-blue-700 to-blue-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
