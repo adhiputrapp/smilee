@@ -136,6 +136,7 @@ class BKUExport implements FromView, ShouldAutoSize, WithColumnWidths, WithStyle
             $sheet->getStyle("A{$i}:H{$i}")->getFont()->setSize(12);
             $sheet->getStyle("A{$i}:H{$i}")->getAlignment()->setWrapText(true);
             $sheet->getStyle("A{$i}:H{$i}")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle("A{$i}:H{$i}")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
             $sheet->getStyle("A{$i}")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle("B{$i}")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);        

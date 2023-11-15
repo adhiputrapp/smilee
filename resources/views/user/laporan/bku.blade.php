@@ -100,7 +100,7 @@
             </tr>
             <tr>
                 <td colspan="5">&nbsp;</td>
-                <td colspan="3" class="text-center">Bandung, ....................</td>
+                <td colspan="3" class="text-left">Bandung,</td>
             </tr>
             <tr>
                 <td colspan="8">&nbsp;</td>

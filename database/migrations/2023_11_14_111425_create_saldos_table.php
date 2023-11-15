@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignuuid('belanja_id')->references('id')->on('belanjas')->onUpdate('cascade');
             $table->foreignuuid('pelimpahan_id')->references('id')->on('pelimpahans')->onUpdate('cascade');
+            $table->foreignuuid('biro_id')->references('id')->on('biros')->onUpdate('cascade');
             $table->integer('saldo');
             $table->timestamps();
         });
