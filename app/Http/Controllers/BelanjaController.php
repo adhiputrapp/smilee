@@ -18,6 +18,7 @@ use App\Models\Kegiatan;
 use App\Models\Program;
 use App\Models\Kodering;
 use App\Models\Belanja;
+use Illuminate\Http\JsonResponse;
 
 class BelanjaController extends Controller
 {
@@ -33,14 +34,24 @@ class BelanjaController extends Controller
         ]);
     }
 
-    public function create(): View
+    public function create(Request $request): View
     {
+        $biro = $request->user()->biro;
+        $program = $biro->programs;
+        $kegiatan = Kegiatan::whereIn('nama_program_relasi', $program->pluck('nama_program'))->get();
+        $subKegiatan = SubKegiatan::whereIn('nama_kegiatan_relasi', $kegiatan->pluck('nama_kegiatan'))->get();
+        $kodering = Kodering::whereIn('nama_sub_kegiatan_relasi', $subKegiatan->pluck('nama_sub_kegiatan'))->get();
+
         return view('user.belanja.create',[
-            'biros' => Biro::all(),
-            'programs' => Program::all(),
-            'kegiatans' => Kegiatan::all(),
-            'subkegiatans' => SubKegiatan::all(),
-            'koderings' => Kodering::all()
+            'koderings' => $kodering
+        ]);
+    }
+
+    public function searchForSubKegiatan(Request $request) : JsonResponse {
+        $data = Kodering::where('id', $request->kodering)->with('subkegiatan.kegiatan.program.biro')->first();
+
+        return response()->json([
+            'data' => $data
         ]);
     }
 
@@ -51,7 +62,7 @@ class BelanjaController extends Controller
             'biro_id' => 'required',
             'program_id' => 'required',
             'kegiatan_id' => 'required',
-            'subkegiatan_id' => 'required',
+            'sub_kegiatan_id' => 'required',
             'kodering_id' => 'required',
             'jenis_belanja' => 'required',
             'nobukti' => 'required',
@@ -65,7 +76,7 @@ class BelanjaController extends Controller
             'biro_id' => $request->biro_id,
             'program_id' => $request->program_id,
             'kegiatan_id' => $request->kegiatan_id,
-            'subkegiatan_id' => $request->subkegiatan_id,
+            'subkegiatan_id' => $request->sub_kegiatan_id,
             'kodering_id' => $request->kodering_id,
             'jenis_belanja' => $request->jenis_belanja,
             'nobukti' => $request->nobukti,

@@ -33,7 +33,7 @@ class BKUExport implements FromView, ShouldAutoSize, WithColumnWidths, WithStyle
     public function view(): View
     {
 
-        return view('user.laporan.bku',[
+        return view('laporan.bku.export',[
             'belanjas' => $this->belanjas,
             'tahunAnggaran' => $this->tahunAnggaran,
             'bulanAnggaran' => $this->bulanAnggaran
@@ -70,15 +70,15 @@ class BKUExport implements FromView, ShouldAutoSize, WithColumnWidths, WithStyle
         $sheet->getStyle('A4:H4')->getFont()->setSize('13');
 
         $sheet->getStyle('A5:H5')->getFont()->setName('Arial');
-        $sheet->getStyle('A5:H5')->getFont()->setSize('26');
+        $sheet->getStyle('A5:H5')->getFont()->setSize('16');
         $sheet->getStyle('A5:H5')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
         $sheet->getStyle('A6:H6')->getFont()->setName('Arial');
-        $sheet->getStyle('A6:H6')->getFont()->setSize('26');
+        $sheet->getStyle('A6:H6')->getFont()->setSize('16');
         $sheet->getStyle('A6:H6')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
      
         $sheet->getStyle('A7:H7') ->getFont()->setName('Arial');
-        $sheet->getStyle('A7:H7') ->getFont()->setSize('18');
+        $sheet->getStyle('A7:H7') ->getFont()->setSize('14');
         $sheet->getStyle('A7:H7')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
         $borders = [
@@ -107,7 +107,7 @@ class BKUExport implements FromView, ShouldAutoSize, WithColumnWidths, WithStyle
         $sheet->getRowDimension('9')->setRowHeight(22.5);
 
         $sheet->getStyle('A10:H10')->getFont()->setName('Arial');
-        $sheet->getStyle('A10:H10')->getFont()->setSize('12');
+        $sheet->getStyle('A10:H10')->getFont()->setSize(8);
         $sheet->getStyle('A10:H10')->getFont()->setBold(true);
         $sheet->getStyle('A10:H10')->getFont()->setItalic(true);
         $sheet->getStyle('A10:H10')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);

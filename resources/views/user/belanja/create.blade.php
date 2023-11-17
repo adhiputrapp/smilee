@@ -10,43 +10,56 @@
                         <x-input-label for="tanggal_belanja" :value="__('Tanggal Belanja')"/>
                         <x-text-input type="date" name="tanggal_belanja" id="tanggal_belanja" class="block mt-1 w-full" required/>
                     </div>
-                    <div class="form-group mb-5">
-                        <x-input-label for="biro_id" :value="__('Biro')"/>
-                        <select id="nama_biro_relasi" name="biro_id" class="block mt-1 w-full" required>
-                            @foreach ($biros as $biro)
-                            <option value="{{$biro->id}}">{{$biro->nama_biro}}</option>
-                            @endforeach
-                        </select>
+                    <div class="form-group mb-5 flex gap-x-2">
+                        <div class="flex-grow">
+                            <x-input-label for="kode_biro" :value="__('Kode Biro')"/>
+                            <x-text-input type="text" name="kode_biro" id="kode_biro" class="block mt-1 w-full" required readonly/>
+                        </div>
+                        <div class="flex-grow">
+                            <x-input-label for="nama_biro" :value="__('Nama Biro')"/>
+                            <x-text-input type="text" name="nama_biro" id="nama_biro" class="block mt-1 w-full" required readonly/>
+                        </div>
+                        <x-text-input type="hidden" name="biro_id" id="biro_id" class="block mt-1 w-full" required readonly/>
+                    </div>
+                    <div class="form-group mb-5 flex gap-x-2">
+                        <div class="flex-grow">
+                            <x-input-label for="kode_program" :value="__('Kode Program')"/>
+                            <x-text-input type="text" name="kode_program" id="kode_program" class="block mt-1 w-full" required readonly/>
+                        </div>
+                        <div class="flex-grow">
+                            <x-input-label for="nama_program" :value="__('Nama Program')"/>
+                            <x-text-input type="text" name="nama_program" id="nama_program" class="block mt-1 w-full" required readonly/>
+                        </div>
+                        <x-text-input type="hidden" name="program_id" id="program_id" class="block mt-1 w-full" required readonly/>
+                    </div>
+                    <div class="form-group mb-5 flex gap-x-2">
+                        <div class="flex-grow">
+                            <x-input-label for="kode_kegiatan" :value="__('Kode Kegiatan')"/>
+                            <x-text-input type="text" name="kode_kegiatan" id="kode_kegiatan" class="block mt-1 w-full" required readonly/>
+                        </div>
+                        <div class="flex-grow">
+                            <x-input-label for="nama_kegiatan" :value="__('Nama Kegiatan')"/>
+                            <x-text-input type="text" name="nama_kegiatan" id="nama_kegiatan" class="block mt-1 w-full" required readonly/>
+                        </div>
+                        <x-text-input type="hidden" name="kegiatan_id" id="kegiatan_id" class="block mt-1 w-full" required readonly/>
+                    </div>
+                    <div class="form-group mb-5 flex gap-x-2">
+                        <div class="flex-grow">
+                            <x-input-label for="kode_sub_kegiatan" :value="__('Kode Sub Kegiatan')"/>
+                            <x-text-input type="text" name="kode_sub_kegiatan" id="kode_sub_kegiatan" class="block mt-1 w-full" required readonly/>
+                        </div>
+                        <div class="flex-grow">
+                            <x-input-label for="nama_sub_kegiatan" :value="__('Nama Sub Kegiatan')"/>
+                            <x-text-input type="text" name="nama_sub_kegiatan" id="nama_sub_kegiatan" class="block mt-1 w-full" required readonly/>
+                        </div>
+                        <x-text-input type="hidden" name="sub_kegiatan_id" id="sub_kegiatan_id" class="block mt-1 w-full" required readonly/>
                     </div>
                     <div class="form-group mb-5">
-                        <x-input-label for="program_id" :value="__('Program')"/>
-                        <select id="nama_prgoram_relasi" name="program_id" class="block mt-1 w-full" required>
-                            @foreach ($programs as $program)
-                            <option value="{{$program->id}}">{{$program->nama_program}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group mb-5">
-                        <x-input-label for="kegiatan_id" :value="__('Kegiatan')"/>
-                        <select id="nama_kegiatan_relasi" name="kegiatan_id" class="block mt-1 w-full" required>
-                            @foreach ($kegiatans as $kegiatan)
-                            <option value="{{$kegiatan->id}}">{{$kegiatan->nama_kegiatan}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group mb-5">
-                        <x-input-label for="subkegiatan_id" :value="__('Sub Kegiatan')"/>
-                        <select id="nama_subkegiatan_relasi" name="subkegiatan_id" class="block mt-1 w-full" required>
-                            @foreach ($subkegiatans as $subkegiatan)
-                            <option value="{{$subkegiatan->id}}">{{$subkegiatan->nama_sub_kegiatan}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group mb-5">
-                        <x-input-label for="kodering_id" :value="__('Kodering')"/>
+                        <x-input-label for="nama_kodering_relasi" :value="__('Kodering')"/>
                         <select id="nama_kodering_relasi" name="kodering_id" class="block mt-1 w-full" required>
+                            <option value="">-</option>
                             @foreach ($koderings as $kodering)
-                            <option value="{{$kodering->id}}">{{$kodering->nama_kodering}}</option>
+                                <option value="{{$kodering->id}}">{{ $kodering->kode_kodering }} | {{$kodering->nama_kodering}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -80,30 +93,45 @@
     @push('script')
     <script>
         $(document).ready(function() {
-            $('#nama_biro_relasi').select2({
-                placeholder: 'Cari nama biro',
-                allowClear: true,
-            });
-
-            $('#nama_prgoram_relasi').select2({
-                placeholder: 'Cari nama program',
-                allowClear: true,
-            });
-
-            $('#nama_kegiatan_relasi').select2({
-                placeholder: 'Cari nama kegiatan',
-                allowClear: true,
-            });
-
-            $('#nama_subkegiatan_relasi').select2({
-                placeholder: 'Cari nama sub kegiatan',
-                allowClear: true,
-            });
-
             $('#nama_kodering_relasi').select2({
                 placeholder: 'Cari nama kodering',
                 allowClear: true,
             });
+
+            $('#nama_kodering_relasi').on('select2:select', function(e) {
+                e.preventDefault()
+
+                e.preventDefault()
+
+                $.ajax({
+                    url: "{{ route('belanjas.search') }}",
+                    type: "GET",
+                    dataType: 'JSON',
+                    data: {
+                        kodering: e.target.value
+                    },
+                    success: (res) => {
+                        $("#kode_sub_kegiatan").val(res.data.subkegiatan.kode_sub_kegiatan)
+                        $("#nama_sub_kegiatan").val(res.data.subkegiatan.nama_sub_kegiatan)
+                        $("#sub_kegiatan_id").val(res.data.subkegiatan.id)
+                        
+                        $("#kode_kegiatan").val(res.data.subkegiatan.kegiatan.kode_kegiatan)
+                        $("#nama_kegiatan").val(res.data.subkegiatan.kegiatan.nama_kegiatan)
+                        $("#kegiatan_id").val(res.data.subkegiatan.kegiatan.id)
+                        
+                        $("#kode_program").val(res.data.subkegiatan.kegiatan.program.kode_program)
+                        $("#nama_program").val(res.data.subkegiatan.kegiatan.program.nama_program)
+                        $("#program_id").val(res.data.subkegiatan.kegiatan.program.id)
+                        
+                        $("#kode_biro").val(res.data.subkegiatan.kegiatan.program.biro.kode_biro)
+                        $("#nama_biro").val(res.data.subkegiatan.kegiatan.program.biro.nama_biro)
+                        $("#biro_id").val(res.data.subkegiatan.kegiatan.program.biro.id)
+                    },
+                    error: (error) => {
+                        console.log(error);
+                    }
+                })
+            })
         });
         
     </script>

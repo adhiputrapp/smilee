@@ -6,17 +6,23 @@
 
                 <form action="{{ route('anggarans.store') }}" method="POST">
                     @csrf
-                    <div class="form-group mb-5">
-                        <x-input-label for="subkegiatan_id" :value="__('Nama Sub Kegiatan')"/>
-                        <select id="subkegiatan_id" name="subkegiatan_id" class="block mt-1 w-full" required>
-                            @foreach ($subkegiatans as $subkegiatan)
-                                <option value="{{$subkegiatan->id}}">{{$subkegiatan->nama_sub_kegiatan}}</option>
-                            @endforeach
-                        </select>
+                    <div class="form-group mb-5 flex gap-x-2">
+                        <div class="flex-grow">
+                            <x-input-label for="kode_sub_kegiatan" class="mb-2" :value="__('Kode Sub Kegiatan')"/>
+                            <x-text-input type="text" name="kode_sub_kegiatan" id="kode_sub_kegiatan" class="block mt-1 w-full" value="{{ old('kode_sub_kegiatan') }}" required readonly/>
+                        </div>
+                        <div class="flex-grow">
+                            <x-input-label for="nama_sub_kegiatan" class="mb-2" :value="__('Nama Sub Kegiatan')"/>
+                            <x-text-input type="text" name="nama_sub_kegiatan" id="nama_sub_kegiatan" class="block mt-1 w-full" value="{{ old('nama_sub_kegiatan') }}" required readonly/>
+                        </div>
+                        <div>
+                            <x-text-input type="hidden" name="sub_kegiatan_id" id="sub_kegiatan_id" class="block mt-1 w-full" value="{{ old('sub_kegiatan_id') }}" required readonly/>
+                        </div>
                     </div>
                     <div class="form-group mb-5">
                         <x-input-label for="kodering_id" :value="__('Nama Kodering')"/>
                         <select id="kodering_id" name="kodering_id" class="block mt-1 w-full" required>
+                            <option value="">-</option>
                             @foreach ($koderings as $kodering)
                                 <option value="{{$kodering->id}}">{{$kodering->nama_kodering}}</option>
                             @endforeach
@@ -43,14 +49,31 @@
     @push('script')
         <script>
         $(document).ready(function() {
-            $('#subkegiatan_id').select2({
-                placeholder: 'Cari nama subkegiatan',
-                allowClear: true,
-            });
             $('#kodering_id').select2({
                 placeholder: 'Cari nama subkegiatan',
                 allowClear: true,
             });
+
+            $('#kodering_id').on('select2:select', function(e) {
+                e.preventDefault()
+
+                $.ajax({
+                    url: "{{ route('anggarans.search') }}",
+                    type: "GET",
+                    dataType: "JSON",
+                    data: {
+                        kodering: e.target.value
+                    },
+                    success: (res) => {
+                        $('#kode_sub_kegiatan').val(res.data.subkegiatan.kode_sub_kegiatan)
+                        $('#nama_sub_kegiatan').val(res.data.subkegiatan.nama_sub_kegiatan)
+                        $('#sub_kegiatan_id').val(res.data.subkegiatan.id)
+                    },
+                    error: (error) => {
+                        console.log(error);
+                    }
+                })
+            })
         });
         </script>
     @endpush

@@ -120,7 +120,7 @@
                         @endif
                     </td>
                     <td class="border border-black text-right">
-                        {{ $pelimpahan->jumlah_pelimpahan - $item->pengeluaran }}
+                        
                     </td>
                 </tr>
             @endforeach
@@ -155,7 +155,7 @@
             </tr>
             <tr>
                 <td colspan="5">&nbsp;</td>
-                <td colspan="3" class="text-center">Bandung, {{ date('d F Y') }}</td>
+                <td colspan="3" class="text-center">Bandung,</td>
             </tr>
             <tr>
                 <td colspan="8">&nbsp;</td>

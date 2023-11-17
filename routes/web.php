@@ -134,6 +134,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('/belanja')->controller(BelanjaController::class)->group(function () {
         Route::get('/index', 'index')->name('belanjas.index')->middleware('permission:belanjas.index');
         Route::get('/create', 'create')->name('belanjas.create')->middleware('permission:belanjas.create');
+        Route::get('/search', 'searchForSubKegiatan')->name('belanjas.search')->middleware('permission:belanjas.search');
         Route::post('/store', 'store')->name('belanjas.store')->middleware('permission:belanjas.store');
         Route::get('/edit/{id}', 'edit')->name('belanjas.edit')->middleware('permission:belanjas.edit');
         Route::put('/update/{id}', 'update')->name('belanjas.update')->middleware('permission:belanjas.update');
