@@ -17,7 +17,7 @@ class PengesahanController extends Controller
 {
     public function index()
     {
-        $verifiedBelanja = Belanja::with('biro','program','kegiatan','subkegiatan','kodering')
+        $verifiedBelanja = Belanja::with('biro','program','kegiatan','subkegiatan','kodering', 'pengesahan')
         ->whereHas('verifikasi', function ($query) {
             $query->where('verif', 'verified');
         })->get();
@@ -59,6 +59,7 @@ class PengesahanController extends Controller
                     $query->where('belanja_id', $belanja_id)
                     ->orWhere('pelimpahan_id', optional($pelimpahan)->id);
                 })
+                ->latest()
                 ->first();
                 
                 // Jika sudah ada saldo, buat data saldo baru
