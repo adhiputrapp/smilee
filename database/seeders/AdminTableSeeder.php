@@ -17,28 +17,28 @@ class AdminTableSeeder extends Seeder
     public function run(): void
     {
 
-        // $user = User::create([
-        //     'name' => 'Admin',
-        //     'email' => 'admin@gmail.com',
-        //     'password' => bcrypt('mwNVmoqmNo'),
-        //     'golongan' => ('admin'),
-        //     'pangkat' => ('admin'),
-        //     'jabatan' => ('admin'),
-        //     'nip' => ('12345'),
-        //     'biro_id' =>  null,
-        // ]);
-        // $user->assignRole('admin');
-
-        User::create([
-            'name' => 'fulan',
-            'email' => 'fulan@gmail.com',
-            'password' => bcrypt('12345678'),
-            'golongan' => ('user'),
-            'pangkat' => ('user'),
-            'jabatan' => ('user'),
-            'nip' => ('3527'),
+        $user = User::create([
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('mwNVmoqmNo'),
+            'golongan' => ('admin'),
+            'pangkat' => ('admin'),
+            'jabatan' => ('admin'),
+            'nip' => ('12345'),
             'biro_id' =>  null,
         ]);
+        $user->assignRole('admin');
+
+        // User::create([
+        //     'name' => 'fulan',
+        //     'email' => 'fulan@gmail.com',
+        //     'password' => bcrypt('12345678'),
+        //     'golongan' => ('user'),
+        //     'pangkat' => ('user'),
+        //     'jabatan' => ('user'),
+        //     'nip' => ('3527'),
+        //     'biro_id' =>  null,
+        // ]);
         // $npc->assignRole('mwehe');
 
         // $appun = User::create([
