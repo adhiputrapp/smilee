@@ -18,7 +18,7 @@
                 </svg>
             </button>
         </div>
-        @if (Auth::user()->can('belajans.create'))
+        @if (Auth::user()->can('belanjas.create'))
             <a href="{{ route('belanjas.create') }}" data-te-ripple-init data-te-ripple-color="light"
                 class="inline-block rounded bg-gradient-to-r from-blue-700 to-blue-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
                 Buat Belanja Baru
@@ -92,7 +92,7 @@
                     let deleteButton = '';
 
                     // Tombol Edit
-                    if (row.verifikasi && row.verifikasi.verif === 'unverified') {
+                    if (row.verifikasi == null) {
                         editButton = `
                         @if (Auth::user()->can('belanjas.edit'))
 
@@ -103,14 +103,12 @@
                     }
 
                     // Tombol Delete
-                    if (row.verifikasi && row.verifikasi.verif === 'verified') {
                         deleteButton = `
                         @if (Auth::user()->can('belanjas.delete'))
                         <a href="javascript:void(0);" onclick="destroyFunction('{{ url('/belanja/delete/${row.id}') }}');" class="inline-block rounded  bg-gradient-to-l from-red-600 to-red-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out hover:bg-danger-600 hover:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] focus:bg-danger-600 focus:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] focus:outline-none focus:ring-0 active:bg-danger-700 active:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(220,76,100,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)]">
                             Delete
                         </a>
                         @endif`;
-                    }
 
                     return {
                         ...row,

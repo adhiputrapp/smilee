@@ -45,44 +45,44 @@ class PengesahanController extends Controller
             ]
         );
 
-        // if ($pengesahan->sah === 'disetujui') {
-        //     try {
-        //         // Pastikan bahwa belanja dengan ID yang sesuai benar-benar ada
-        //         $belanja = Belanja::findOrFail($belanja_id);
-    
-        //         // Cek apakah ada pelimpahan terkait
-        //         $pelimpahan = Pelimpahan::where('belanja_id', $belanja_id)->first();
-    
-        //         // Periksa apakah sudah ada saldo untuk biro yang bersangkutan
-        //         $existingSaldo = Saldo::where('biro_id', $belanja->biro_id)
-        //             ->where(function ($query) use ($belanja_id, $pelimpahan) {
-        //                 $query->where('belanja_id', $belanja_id)
-        //                     ->orWhere('pelimpahan_id', optional($pelimpahan)->id);
-        //             })
-        //             ->first();
-    
-        //         // Jika sudah ada saldo, buat data saldo baru
-        //         if ($existingSaldo) {
-        //             Saldo::create([
-        //                 'belanja_id' => $belanja_id,
-        //                 'biro_id' => $belanja->biro_id,
-        //                 'pelimpahan_id' => optional($pelimpahan)->id,
-        //                 'saldo' => $existingSaldo->saldo - $belanja->pengeluaran,
-        //             ]);
-        //         } else {
-        //             // Jika belum ada saldo, buat saldo baru
-        //             Saldo::create([
-        //                 'belanja_id' => $belanja_id,
-        //                 'biro_id' => $belanja->biro_id,
-        //                 'saldo' => -$belanja->pengeluaran,
-        //                 'pelimpahan_id' => optional($pelimpahan)->id,
-        //             ]);
-        //         }
-        //     } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-        //         // Tangani kesalahan jika belanja tidak ditemukan
-        //         return redirect()->back()->with('error', 'Belanja tidak ditemukan.');
-        //     }
-        // }
+        if ($pengesahan->sah === 'disetujui') {
+            try {
+                // Pastikan bahwa belanja dengan ID yang sesuai benar-benar ada
+                $belanja = Belanja::findOrFail($belanja_id);
+                
+                // Cek apakah ada pelimpahan terkait
+                $pelimpahan = Pelimpahan::where('biro_id', $belanja->biro_id)->first();
+                
+                // Periksa apakah sudah ada saldo untuk biro yang bersangkutan
+                $existingSaldo = Saldo::where('biro_id', $belanja->biro_id)
+                ->where(function ($query) use ($belanja_id, $pelimpahan) {
+                    $query->where('belanja_id', $belanja_id)
+                    ->orWhere('pelimpahan_id', optional($pelimpahan)->id);
+                })
+                ->first();
+                
+                // Jika sudah ada saldo, buat data saldo baru
+                if ($existingSaldo) {
+                    Saldo::create([
+                        'belanja_id' => $belanja_id,
+                        'biro_id' => $belanja->biro_id,
+                        'pelimpahan_id' => optional($pelimpahan)->id,
+                        'saldo' => $existingSaldo->saldo - $belanja->pengeluaran,
+                    ]);
+                } else {
+                    // Jika belum ada saldo, buat saldo baru
+                    Saldo::create([
+                        'belanja_id' => $belanja_id,
+                        'biro_id' => $belanja->biro_id,
+                        'saldo' => $pelimpahan->jumlah_pelimpahan - $belanja->pengeluaran,
+                        'pelimpahan_id' => optional($pelimpahan)->id,
+                    ]);
+                }
+            } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+                // Tangani kesalahan jika belanja tidak ditemukan
+                return redirect()->back()->with('error', 'Belanja tidak ditemukan.');
+            }
+        }
     
 
         return redirect()->route('pengesahans.index')->with('success', 'Pengesahan berhasil disimpan.');
