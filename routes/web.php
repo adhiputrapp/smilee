@@ -56,7 +56,7 @@ Route::middleware('auth')->group(function () {
 
 
 
-    Route::middleware(['auth','verified','role:admin'])->group(function () {
+    // Route::middleware(['auth','verified','role:admin'])->group(function () {
         Route::prefix('/biro')->controller(BiroController::class)->group(function () {
             Route::get('/index', 'index')->name('biros.index')->middleware('permission:biros.index');
             Route::get('/create', 'create')->name('biros.create')->middleware('permission:biros.create');
@@ -119,7 +119,7 @@ Route::middleware('auth')->group(function () {
             Route::put('/update/{id}', 'update')->name('users.update')->middleware('permission:users.update');
             Route::get('/delete/{id}', 'destroy')->name('users.delete')->middleware('permission:users.delete');
         });
-    });
+    // });
 
 
     Route::prefix('/pelimpahan')->controller(PelimpahanController::class)->group(function () {
@@ -152,8 +152,8 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('/verifikasi')->controller(VerifikasiController::class)->group(function () {
         Route::get('/index', 'index')->name('verifikasis.index')->middleware('permission:verifikasis.index');
-        Route::get('/form/{belanja_id}', 'showVerifikasiForm')->name('verifikasi.show')->middleware('permission:verifikasis.show');
-        Route::post('/form/{belanja_id}', 'verifikasi')->name('verifikasi.submit')->middleware('permission:verifikasis.submit');
+        Route::get('/form/{belanja_id}', 'showVerifikasiForm')->name('verifikasi.show')->middleware('permission:verifikasi.show');
+        Route::post('/form/{belanja_id}', 'verifikasi')->name('verifikasi.submit')->middleware('permission:verifikasi.submit');
     });
 
     Route::prefix('/pengesahan')->controller(PengesahanController::class)->group(function () {

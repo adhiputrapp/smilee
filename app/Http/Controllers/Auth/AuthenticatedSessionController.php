@@ -28,22 +28,24 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-        // if (Auth::user()->hasRole('mwehe')) {
-        //     return redirect()->to('/kegiatan/index');
-        // }
 
-        // if (Auth::user()->hasRole('admin')) {
-        //     return redirect()->to('/role/index');
-        // }
+        if (Auth::user()->hasRole('user')) {
+            return redirect()->to('/laporan/index');
+        }
 
-        // if(Auth::user()->hasRole('test')) {
-        //     return redirect()->to('/anggaran/index');
-        // }
+        if (Auth::user()->hasRole('pengesahan')) {
+            return redirect()->to('/pengesahan/index');
+        }
 
-
-
+        if(Auth::user()->hasRole('verifikator')) {
+            return redirect()->to('/verifikasi/index');
+        }
+        if(Auth::user()->hasRole('verifikator_biro')) {
+            return redirect()->to('/verifikasi/index');
+        } else {
         // return redirect()->intended(RouteServiceProvider::HOME);
         return redirect()->route('anggarans.index');
+        }
     }
 
     /**

@@ -100,8 +100,8 @@ class RoleController extends Controller
     }
 
     public function addRoleCreate(Request $request) {
-        $userId = $request->name;
-        $selectedRole = $request->roles;
+        $userId = $request->input('name'); // Updated to match the form input name
+        $selectedRole = $request->input('roles'); // Updated to match the form input name
 
         // Retrieve the user from the database
         $user = User::find($userId);
@@ -115,4 +115,5 @@ class RoleController extends Controller
         // Redirect back or wherever you want
         return back();
     }
+
 }
