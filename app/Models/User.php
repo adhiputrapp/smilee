@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -59,4 +61,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class, 'role_id', 'id');
     }
+
+    // public function permission(): BelongsTo {
+    //     return $this->belongsTo(Permission::class, 'permission_id', 'id');
+    // }
 }

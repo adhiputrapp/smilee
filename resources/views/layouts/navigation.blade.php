@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                   
+
                      <!-- Toggler -->
                      <button
                      class="inline-block rounded bg-gradient-to-r from-blue-700 to-blue-400 px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
@@ -21,11 +21,11 @@
                      </span>
                  </button>
                  <!-- Toggler -->
-                
+
                 </div>
 
                 <!-- Navigation Links -->
-                
+
             </div>
 
             <!-- Settings Dropdown -->
@@ -49,6 +49,8 @@
                         </x-dropdown-link>
 
                         <!-- Authentication -->
+
+                        @if (Auth::user()->can('logout'))
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
@@ -58,6 +60,7 @@
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
+                        @endif
                     </x-slot>
                 </x-dropdown>
             </div>

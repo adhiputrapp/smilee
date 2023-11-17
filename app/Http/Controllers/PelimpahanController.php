@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\View\View;
 use App\Models\Biro;
 use App\Models\Pelimpahan;
+use App\Models\Saldo;
 
 class PelimpahanController extends Controller
 {
@@ -38,7 +39,7 @@ class PelimpahanController extends Controller
         ]);
 
         
-        Pelimpahan::create([
+        $pelimpahan = Pelimpahan::create([
             'id' => Str::uuid(),
             'nodokumen' => $request->nodokumen,
             'tanggal_pelimpahan' => $request->tanggal_pelimpahan,
@@ -47,6 +48,24 @@ class PelimpahanController extends Controller
             'note' => $request->note,
         ]);
         
+         // Periksa apakah sudah ada saldo untuk biro yang bersangkutan
+        $existingSaldo = Saldo::where('biro_id', $request->biro_id)->first();
+
+        // Jika sudah ada, tambahkan jumlah pelimpahan ke saldo yang sudah ada
+        if ($existingSaldo) {
+            $existingSaldo->saldo += $request->jumlah_pelimpahan;
+            $existingSaldo->save();
+        } else {
+            // Jika belum ada, buat saldo baru
+            $saldo = Saldo::create([
+                'id' => Str::uuid(),
+                'belanja_id' => null,
+                'pelimpahan_id' => $pelimpahan->id,
+                'biro_id' => $request->biro_id,
+                'saldo' => $request->jumlah_pelimpahan,
+            ]);
+        }
+
         return redirect()->route('pelimpahans.index');
     }
 
