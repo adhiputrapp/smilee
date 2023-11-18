@@ -44,7 +44,7 @@ class BKUController extends Controller
         $belanjas = Belanja::whereHas('pengesahan', function ($query) {
                 $query->where('sah', 'disetujui');
             })
-            ->with('biro','program','kegiatan','subkegiatan','kodering', 'verifikasi')
+            ->with('biro','program','kegiatan','subkegiatan','kodering', 'verifikasi', 'saldo.pelimpahan')
             ->whereMonth('tanggal_belanja', $bulanAnggaran)
             ->whereYear('tanggal_belanja', $request->tahun)
             ->where('subkegiatan_id', $request->subkegiatan_id)
@@ -59,10 +59,10 @@ class BKUController extends Controller
                     'Nobukti' => $item->nobukti,
                     'Uraian' => $item->uraian,
                     'Kode Rekening' => $item->kodering->kode_rekening,
-                    // 'Penerimaan' => $item->penerimaan,
+                    'Penerimaan' => optional($item->saldo)->pelimpahan->jumlah_pengeluaran ?? 0,
                     'Pengeluaran' => $item->pengeluaran,
                     'Sub Kegiatan' => $item->subKegiatan->nama_sub_kegiatan,
-                    // 'Saldo' => $item->saldo,
+                    'Saldo' => optional($item->saldo)->saldo ?? 0
                     // Sesuaikan dengan kolom-kolom lain yang dibutuhkan
                 ];
             });

@@ -71,9 +71,9 @@
                 <td class="border p-2 text-center" style="border-color: black;">{{ $item->nobukti }}</td>
                 <td class="border p-2 text-center" style="border-color: black;">{{ $item->uraian }}</td>
                 <td class="border p-2 text-center" style="border-color: black;">{{ $item->kodering->nama_kodering }}</td>
-                <td class="border p-2 text-center" style="border-color: black;">{{--{{ $item->penerimaan }}--}}test</td>
+                <td class="border p-2 text-center" style="border-color: black;">{{ optional($item->saldo)->pelimpahan->jumlah_pengeluaran ?? 0 }}</td>
                 <td class="border p-2 text-center" style="border-color: black;">{{ $item->pengeluaran }}</td>
-                <td class="border p-2 text-center" style="border-color: black;">{{--{{ $item->saldo }}--}}test</td>
+                <td class="border p-2 text-center" style="border-color: black;">{{ optional($item->saldo)->saldo ?? 0}}</td>
             </tr>
             @php
                 $totalPengeluaran += $item->pengeluaran;
