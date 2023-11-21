@@ -147,6 +147,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/create', 'create')->name('anggarans.create')->middleware('permission:anggarans.create');
         Route::post('/store', 'store')->name('anggarans.store')->middleware('permission:anggarans.store');
         Route::get('/edit/{id}', 'edit')->name('anggarans.edit')->middleware('permission:anggarans.edit');
+        Route::get('/search', 'searchForSubKegiatan')->name('anggarans.search');
         Route::put('/update/{id}', 'update')->name('anggarans.update')->middleware('permission:anggarans.update');
         Route::get('/delete/{id}', 'destroy')->name('anggarans.delete')->middleware('permission:anggarans.delete');
     });

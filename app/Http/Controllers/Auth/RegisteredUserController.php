@@ -38,16 +38,24 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'golongan' => ['required', 'string', 'max:255'],
+            'pangkat' => ['required', 'string', 'max:255'],
+            'NIP' => ['required', 'string', 'max:255'],
+            'jabatan' => ['required', 'string', 'max:255'],
         ]);
 
-        $user = User::create([
+       $user = User::create([
             'id' => Str::uuid(),
             'name' => $request->name,
             'email' => $request->email,
             'biro_id' => $request->biro_id,
             'password' => Hash::make($request->password),
+            'golongan' => $request->golongan,
+            'pangkat' => $request->pangkat,
+            'NIP' => $request->NIP,
+            'jabatan' => $request->jabatan,
         ]);
-
+        
         event(new Registered($user));
 
         // Auth::login($user);

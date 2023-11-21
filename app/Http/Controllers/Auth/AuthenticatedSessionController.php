@@ -29,23 +29,23 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        if (Auth::user()->hasRole('user')) {
-            return redirect()->to('/laporan/index');
-        }
+        // if (Auth::user()->hasRole('user')) {
+        //     return redirect()->to('/laporan/index');
+        // }
 
-        if (Auth::user()->hasRole('pengesahan')) {
-            return redirect()->to('/pengesahan/index');
-        }
+        // if (Auth::user()->hasRole('pengesahan')) {
+        //     return redirect()->to('/pengesahan/index');
+        // }
 
-        if(Auth::user()->hasRole('verifikator')) {
-            return redirect()->to('/verifikasi/index');
-        }
-        if(Auth::user()->hasRole('verifikator_biro')) {
-            return redirect()->to('/verifikasi/index');
-        } else {
+        // if(Auth::user()->hasRole('verifikator')) {
+        //     return redirect()->to('/verifikasi/index');
+        // }
+        // if(Auth::user()->hasRole('verifikator_biro')) {
+        //     return redirect()->to('/verifikasi/index');
+        // } else {
         // return redirect()->intended(RouteServiceProvider::HOME);
-        return redirect()->route('anggarans.index');
-        }
+        return redirect()->route('dashboard');
+        // }
     }
 
     /**
