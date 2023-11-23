@@ -89,8 +89,9 @@ class BelanjaController extends Controller
 
     public function edit($id)
     {
-        $belanja = Belanja::find($id);
-
+        $belanja = Belanja::with('kodering', 'subkegiatan', 'program', 'kegiatan', 'biro')
+        ->find($id);
+ 
         return view('user.belanja.edit', [
             'belanja' => $belanja,
             'biros' => Biro::all(),
@@ -105,12 +106,12 @@ class BelanjaController extends Controller
     {
         $request->validate([
             'tanggal_belanja' => 'required',
-            'jenis_belanja' => 'required',
             'biro_id' => 'required',
             'program_id' => 'required',
             'kegiatan_id' => 'required',
-            'subkegiatan_id' => 'required',
+            'sub_kegiatan_id' => 'required',
             'kodering_id' => 'required',
+            'jenis_belanja' => 'required',
             'nobukti' => 'required',
             'pengeluaran' => 'required',
             'uraian' => 'required',
@@ -119,13 +120,13 @@ class BelanjaController extends Controller
         $belanja = Belanja::find($id);
 
         $belanja->update([
-            'biro_id' => $request->biro_id,
             'tanggal_belanja' => $request->tanggal_belanja,
-            'jenis_belanja' => $request->jenis_belanja,
+            'biro_id' => $request->biro_id,
             'program_id' => $request->program_id,
             'kegiatan_id' => $request->kegiatan_id,
-            'subkegiatan_id' => $request->subkegiatan_id,
+            'sub_kegiatan_id' => $request->sub_kegiatan_id,
             'kodering_id' => $request->kodering_id,
+            'jenis_belanja' => $request->jenis_belanja,
             'nobukti' => $request->nobukti,
             'pengeluaran' => $request->pengeluaran,
             'uraian' => $request->uraian,

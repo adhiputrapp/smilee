@@ -2,10 +2,10 @@
     class="absolute left-0 top-0 z-[1035] h-full w-60 -translate-x-full overflow-hidden  bg-gradient-to-b from-blue-400 to-blue-700  shadow-[0_4px_12px_0_rgba(0,0,0,0.07),_0_2px_4px_rgba(0,0,0,0.05)] data-[te-sidenav-hidden='true']:translate-x-0"
     data-te-sidenav-init data-te-sidenav-hidden="false" data-te-sidenav-position="absolute"
     data-te-sidenav-accordion="true">
-    <a class="mb-3 flex items-center justify-center font-bold border-b-2 border-dotted border-blue-600 py-6 outline-none"
-        href="#!" data-te-ripple-init data-te-ripple-color="primary">
-
-        <span>SMILE</span>
+    <a class="mb-3 flex items-left justify-left font-bold border-b-2 border-dotted border-blue-600 py-6 outline-none"
+        href="{{route('dashboard')}}" data-te-ripple-init data-te-ripple-color="primary">
+        <img src="logo.png" class="ml-5 w-10 h-10 fill-current text-gray-500" />
+        <span class="ml-4 mt-2 font-bold text-base text-white">SMILE</span>
     </a>
     <ul class="relative m-0 list-none px-[0.2rem] pb-12" data-te-sidenav-menu-ref>
         <li class="relative">

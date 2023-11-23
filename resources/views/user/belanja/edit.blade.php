@@ -10,11 +10,11 @@
                     <!-- Tanggal Belanja -->
                     <div class="form-group mb-5">
                         <x-input-label for="tanggal_belanja" :value="__('Tanggal Belanja')"/>
-                        <x-text-input type="date" name="tanggal_belanja" id="tanggal_belanja" class="block mt-1 w-full" required value="{{ $belanja->tanggal_belanja }}"/>
+                        <x-text-input type="date" name="tanggal_belanja" id="tanggal_belanja" class="block mt-1 w-full" required value="{{ $belanja->tanggal_belanja->format('d-m-y') }}"/>
                     </div>
 
                     <!-- Biro -->
-                    <div class="form-group mb-5">
+                    {{-- <div class="form-group mb-5">
                         <x-input-label for="biro_id" :value="__('Biro')"/>
                         <select id="nama_biro_relasi" name="biro_id" class="block mt-1 w-full" required>
                             @foreach ($biros as $biro)
@@ -41,16 +41,63 @@
                                 <option value="{{$kegiatan->id}}" {{ $belanja->kegiatan_id == $kegiatan->id ? 'selected' : '' }}>{{$kegiatan->nama_kegiatan}}</option>
                             @endforeach
                         </select>
+                    </div> --}}
+                    
+                    <div class="form-group mb-5 flex gap-x-2">
+                        <div class="flex-grow">
+                            <x-input-label for="kode_biro" :value="__('Kode Biro')"/>
+                            <x-text-input type="text" name="kode_biro" id="kode_biro" class="block mt-1 w-full" required readonly value="{{ $belanja->biro->kode_biro }}"/>
+                        </div>
+                        <div class="flex-grow">
+                            <x-input-label for="nama_biro" :value="__('Nama Biro')"/>
+                            <x-text-input type="text" name="nama_biro" id="nama_biro" class="block mt-1 w-full" required readonly value="{{ $belanja->biro->nama_biro }}"/>
+                        </div>
+                        <x-text-input type="hidden" name="biro_id" id="biro_id" class="block mt-1 w-full" value="{{ $belanja->biro->id }}" required readonly/>
+                    </div>
+                    
+                    <div class="form-group mb-5 flex gap-x-2">
+                        <div class="flex-grow">
+                            <x-input-label for="kode_program" :value="__('Kode Program')"/>
+                            <x-text-input type="text" name="kode_program" id="kode_program" class="block mt-1 w-full" required readonly value="{{ $belanja->program->kode_program }}"/>
+                        </div>
+                        <div class="flex-grow">
+                            <x-input-label for="nama_program" :value="__('Nama Program')"/>
+                            <x-text-input type="text" name="nama_program" id="nama_program" class="block mt-1 w-full" required readonly value="{{ $belanja->program->nama_program }}"/>
+                        </div>
+                        <x-text-input type="hidden" name="program_id" id="program_id" class="block mt-1 w-full" required readonly value="{{ $belanja->program->id }}"/>
+                    </div>
+
+                    <div class="form-group mb-5 flex gap-x-2">
+                        <div class="flex-grow">
+                            <x-input-label for="kode_kegiatan" :value="__('Kode Kegiatan')"/>
+                            <x-text-input type="text" name="kode_kegiatan" id="kode_kegiatan" class="block mt-1 w-full" required readonly value="{{ $belanja->kegiatan->kode_kegiatan }}"/>
+                        </div>
+                        <div class="flex-grow">
+                            <x-input-label for="nama_kegiatan" :value="__('Nama Kegiatan')"/>
+                            <x-text-input type="text" name="nama_kegiatan" id="nama_kegiatan" class="block mt-1 w-full" required readonly value="{{ $belanja->kegiatan->nama_kegiatan }}"/>
+                        </div>
+                        <x-text-input type="hidden" name="kegiatan_id" id="kegiatan_id" class="block mt-1 w-full" required readonly value="{{ $belanja->kegiatan->id }}"/>
                     </div>
 
                     <!-- Sub Kegiatan -->
-                    <div class="form-group mb-5">
+                    {{-- <div class="form-group mb-5">
                         <x-input-label for="subkegiatan_id" :value="__('Sub Kegiatan')"/>
                         <select id="nama_subkegiatan_relasi" name="subkegiatan_id" class="block mt-1 w-full" required>
                             @foreach ($subkegiatans as $subkegiatan)
                                 <option value="{{$subkegiatan->id}}" {{ $belanja->subkegiatan_id == $subkegiatan->id ? 'selected' : '' }}>{{$subkegiatan->nama_sub_kegiatan}}</option>
                             @endforeach
                         </select>
+                    </div> --}}
+                    <div class="form-group mb-5 flex gap-x-2">
+                        <div class="flex-grow">
+                            <x-input-label for="kode_sub_kegiatan" :value="__('Kode Sub Kegiatan')"/>
+                            <x-text-input type="text" name="kode_sub_kegiatan" id="kode_sub_kegiatan" class="block mt-1 w-full" required readonly value="{{ $belanja->subkegiatan->kode_sub_kegiatan }}"/>
+                        </div>
+                        <div class="flex-grow">
+                            <x-input-label for="nama_sub_kegiatan" :value="__('Nama Sub Kegiatan')"/>
+                            <x-text-input type="text" name="nama_sub_kegiatan" id="nama_sub_kegiatan" class="block mt-1 w-full" required readonly value="{{ $belanja->subkegiatan->nama_sub_kegiatan }}"/>
+                        </div>
+                        <x-text-input type="hidden" name="sub_kegiatan_id" id="sub_kegiatan_id" class="block mt-1 w-full" required readonly value="{{ $belanja->subkegiatan->id }}"/>
                     </div>
 
                     <!-- Kodering -->
@@ -73,16 +120,9 @@
                         </select>
                     </div>
 
-                    <!-- No Urut -->
                     <div class="form-group mb-5">
-                        <x-input-label for="nourut" :value="__('No Urut')"/>
-                        <x-text-input type="text" name="nourut" id="nourut" class="block mt-1 w-full" required value="{{ $belanja->nourut }}"/>
-                    </div>
-
-                    <!-- No TBP -->
-                    <div class="form-group mb-5">
-                        <x-input-label for="notbp" :value="__('No TBP')"/>
-                        <x-text-input type="text" name="notbp" id="notbp" class="block mt-1 w-full" required value="{{ $belanja->notbp }}"/>
+                        <x-input-label for="nobukti" :value="__('No Bukti')"/>
+                        <x-text-input type="number" name="nobukti" id="nobukti" class="block mt-1 w-full" required value="{{ $belanja->nobukti}}"/>
                     </div>
 
                     <!-- No Urut -->
@@ -108,26 +148,62 @@
     @push('script')
     <script>
         $(document).ready(function() {
-            $('#nama_biro_relasi').select2({
-                placeholder: 'Cari nama biro',
-                allowClear: true,
-            });
-            $('#nama_program_relasi').select2({
-                placeholder: 'Cari nama program',
-                allowClear: true,
-            });
-            $('#nama_kegiatan_relasi').select2({
-                placeholder: 'Cari nama kegiatan',
-                allowClear: true,
-            });
-            $('#nama_subkegiatan_relasi').select2({
-                placeholder: 'Cari nama subkegiatan',
-                allowClear: true,
-            });
+            // $('#nama_biro_relasi').select2({
+            //     placeholder: 'Cari nama biro',
+            //     allowClear: true,
+            // });
+            // $('#nama_program_relasi').select2({
+            //     placeholder: 'Cari nama program',
+            //     allowClear: true,
+            // });
+            // $('#nama_kegiatan_relasi').select2({
+            //     placeholder: 'Cari nama kegiatan',
+            //     allowClear: true,
+            // });
+            // $('#nama_subkegiatan_relasi').select2({
+            //     placeholder: 'Cari nama subkegiatan',
+            //     allowClear: true,
+            // });
             $('#nama_kodering_relasi').select2({
                 placeholder: 'Cari nama kodering',
                 allowClear: true,
             });
+
+            
+            $('#nama_kodering_relasi').on('select2:select', function(e) {
+                e.preventDefault()
+
+                e.preventDefault()
+
+                $.ajax({
+                    url: "{{ route('belanjas.search') }}",
+                    type: "GET",
+                    dataType: 'JSON',
+                    data: {
+                        kodering: e.target.value
+                    },
+                    success: (res) => {
+                        $("#kode_sub_kegiatan").val(res.data.subkegiatan.kode_sub_kegiatan)
+                        $("#nama_sub_kegiatan").val(res.data.subkegiatan.nama_sub_kegiatan)
+                        $("#sub_kegiatan_id").val(res.data.subkegiatan.id)
+                        
+                        $("#kode_kegiatan").val(res.data.subkegiatan.kegiatan.kode_kegiatan)
+                        $("#nama_kegiatan").val(res.data.subkegiatan.kegiatan.nama_kegiatan)
+                        $("#kegiatan_id").val(res.data.subkegiatan.kegiatan.id)
+                        
+                        $("#kode_program").val(res.data.subkegiatan.kegiatan.program.kode_program)
+                        $("#nama_program").val(res.data.subkegiatan.kegiatan.program.nama_program)
+                        $("#program_id").val(res.data.subkegiatan.kegiatan.program.id)
+                        
+                        $("#kode_biro").val(res.data.subkegiatan.kegiatan.program.biro.kode_biro)
+                        $("#nama_biro").val(res.data.subkegiatan.kegiatan.program.biro.nama_biro)
+                        $("#biro_id").val(res.data.subkegiatan.kegiatan.program.biro.id)
+                    },
+                    error: (error) => {
+                        console.log(error);
+                    }
+                })
+            })
         });
     </script>
     @endpush
