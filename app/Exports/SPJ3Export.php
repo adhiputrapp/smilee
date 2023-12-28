@@ -3,36 +3,63 @@
 namespace App\Exports;
 
 use Illuminate\View\View;
-use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithDrawings;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Maatwebsite\Excel\Events\AfterSheet;
 
-class SPJ3Export implements FromView, WithDrawings, WithColumnWidths, WithStyles
+class SPJ3Export implements FromCollection, WithDrawings, WithColumnWidths, WithStyles, WithEvents
 {
+    public $data;
     public $tahun;
-    public $subKegiatan;
-    public $kegiatan;
-    public $program;
+    // public $subKegiatan;
+    // public $kegiatan;
+    // public $program;
 
-    public function __construct($tahun, $subKegiatan, $kegiatan, $program) {
+    public function __construct($data, $tahun) 
+    {
+        $this->data = $data;
         $this->tahun = $tahun;
-        $this->subKegiatan = $subKegiatan;
-        $this->kegiatan = $kegiatan;
-        $this->program = $program;
+        // $this->subKegiatan = $subKegiatan;
+        // $this->kegiatan = $kegiatan;
+        // $this->program = $program;
     }
 
-    public function view() : View {
-        return view('laporan.spj3.export', [
-            'tahun' => $this->tahun,
-            'subKegiatan' => $this->subKegiatan,
-            'kegiatan' => $this->kegiatan,
-            'program' => $this->program
-        ]);
+    public function collection() 
+    {
+        return collect($this->data)->map(function($item, $index)
+        {
+            return [
+                'data' => $item->pengeluaran,
+                'nama sub kegiatan' => $item->subkegiatan->nama_sub_kegiatan,
+                'kode sub kegiatan' => $item->subkegiatan->kode_sub_kegiatan,
+            ];
+        });
     }
+
+    public function registerEvents(): array{
+        return
+        [
+            AfterSheet::class => function (AfterSheet $event) {
+            foreach ($this->data as $item){
+                $event->sheet->setCellValue('B4', $item->pengeluaran);
+            }
+        }];
+    }
+
+    // public function view() : View {
+    //     return view('laporan.spj3.export', [
+    //         'tahun' => $this->tahun,
+    //         'subKegiatan' => $this->subKegiatan,
+    //         'kegiatan' => $this->kegiatan,
+    //         'program' => $this->program
+    //     ]);
+    // }
 
     public function styles(Worksheet $sheet) {
         $sheet->getStyle("B1")->getFont()->setName('Arial');

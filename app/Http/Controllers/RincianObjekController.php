@@ -66,17 +66,17 @@ class RincianObjekController extends Controller
             $pelimpahan,
             Carbon::now()->month(explode('-', $this->request->tanggal)[1]),
         ), 'Rincian Objek.xlsx');
-
-        return view('laporan.rincian-objek.export', [
-            'data' => $data,
-            'tahun' => explode('-', $this->request->tanggal)[0],
-            'sumLS' => $data->where('jenis_belanja', 'LS')->pluck('pengeluaran')->sum(),
-            'sumTU' => $data->where('jenis_belanja', 'TU')->pluck('pengeluaran')->sum(),
-            'sumUPGU' => $data->where('jenis_belanja', 'UP/GU')->pluck('pengeluaran')->sum(),
-            'kodering' => $kodering,
-            'anggaran' => $anggaran,
-            'pelimpahan' => $pelimpahan,
-            'eom' => Carbon::now()->month(explode('-', $this->request->tanggal)[1])
-        ]);
+        
+        // return view('laporan.rincian-objek.export', [
+        //     'data' => $data,
+        //     'tahun' => explode('-', $this->request->tanggal)[0],
+        //     'sumLS' => $data->where('jenis_belanja', 'LS')->pluck('pengeluaran')->sum(),
+        //     'sumTU' => $data->where('jenis_belanja', 'TU')->pluck('pengeluaran')->sum(),
+        //     'sumUPGU' => $data->where('jenis_belanja', 'UP/GU')->pluck('pengeluaran')->sum(),
+        //     'kodering' => $kodering,
+        //     'anggaran' => $anggaran,
+        //     'pelimpahan' => $pelimpahan,
+        //     'eom' => Carbon::now()->month(explode('-', $this->request->tanggal)[1])
+        // ]);
     }
 }

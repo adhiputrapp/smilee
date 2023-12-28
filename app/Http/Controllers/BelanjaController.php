@@ -138,10 +138,17 @@ class BelanjaController extends Controller
 
     public function destroy($id)
     {
-        $belanjas = Belanja::find($id);
-        $belanjas->delete();
+        $belanjas = Belanja::with('verifikasi', 'pengesahan')->find($id);
+        // dd($belanjas);
+        if ($belanjas->pengesahan->sah == 'disetujui' && $belanjas->verifikasi->verif == 'verified') {
+            // Hapus entitas jika pengesahan sudah dilakukan dan verifikasi sudah diverifikasi
+            $belanjas->delete();
+    
+            return redirect()->route('belanjas.index')->with('success', 'Pelimpahan berhasil dihapus.');
+        } else {
+            return redirect()->route('belanjas.index')->with('error', 'Tidak dapat menghapus pelimpahan yang belum diverifikasi atau belum disahkan.');
+        }
 
-        return redirect()->route('belanjas.index')->with('success', 'Pelimpahan berhasil dihapus.');
     }
 
     public function export() 

@@ -4,7 +4,7 @@
     data-te-sidenav-accordion="true">
     <a class="mb-3 flex items-left justify-left font-bold border-b-2 border-dotted border-blue-600 py-6 outline-none"
         href="{{route('dashboard')}}" data-te-ripple-init data-te-ripple-color="primary">
-        <img src="logo.png" class="ml-5 w-10 h-10 fill-current text-gray-500" />
+        <img src="logo.png" class="ml-7 w-10 h-10 fill-current text-gray-500" />
         <span class="ml-4 mt-2 font-bold text-base text-white">SMILE</span>
     </a>
     <ul class="relative m-0 list-none px-[0.2rem] pb-12" data-te-sidenav-menu-ref>
