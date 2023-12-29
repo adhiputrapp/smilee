@@ -174,13 +174,13 @@ Route::middleware('auth')->group(function () {
         // Route::post('/form/{belanja_id}', 'verifikasi')->name('pengesahans.submit');
     });
 
-    Route::prefix('/rincian-objek')->controller(RincianObjekController::class, 'index')->group(function () {
+    Route::prefix('/rincian-objek')->controller(RincianObjekController::class)->group(function () {
         Route::get('/', 'index')->name('rincian.objek.index');
         Route::get('/search', 'searchForSubKegiatan')->name('rincian.objek.search');
         Route::post('/', 'export')->name('rincian.objek.export');
     });
 
-    Route::prefix('/spj3')->controller(SPJ3Controller::class, 'index')->group(function () {
+    Route::prefix('/spj3')->controller(SPJ3Controller::class)->group(function () {
         Route::get('/', 'index')->name('spj3.index');
         Route::post('/', 'export')->name('spj3.export');
     });

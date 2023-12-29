@@ -25,7 +25,7 @@ class RincianObjekExport implements FromCollection, WithDrawings, WithStyles, Wi
     public $kodering;
     public $anggaran;
     public $pelimpahan;
-    public $eom;
+    public $eom; 
 
     public function __construct($data, $tahun, $sumLS, $sumTU, $sumUPGU, $kodering, $anggaran, $pelimpahan, $eom) {
         $this->data = $data;

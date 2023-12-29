@@ -30,11 +30,11 @@ class SPJ3Controller extends Controller
     }
 
     public function export() {
-        $data = Belanja::whereHas('pengesahan', function($query) {
+        $spj = Belanja::whereHas('pengesahan', function($query) {
             $query->where('sah', 'disetujui');
         })
+            ->with('biro','program','kegiatan','subkegiatan','kodering', 'verifikasi', 'saldo.pelimpahan')
             ->where('subkegiatan_id', $this->request->sub_kegiatan_id)
-            ->where('kodering_id', $this->request->kodering)
             ->whereMonth('tanggal_belanja', explode('-', $this->request->tanggal)[1])
             ->whereYear('tanggal_belanja', explode('-', $this->request->tanggal)[0])
             ->get();
@@ -42,8 +42,10 @@ class SPJ3Controller extends Controller
         // $subKegiatan = SubKegiatan::with('kegiatan')->find($this->request->sub_kegiatan);
         // $kegiatan = Kegiatan::with('program')->find($subKegiatan->kegiatan->id);
 
+        // dd($spj);
+
         return Excel::download(new SPJ3Export(
-            $data,
+            $spj,
             $tahun,
             // explode('-', $this->request->tanggal)[0],
             // $data->where('jenis_belanja', 'LS')->pluck('subkegiatan_id')->sum('pengeluaran'),

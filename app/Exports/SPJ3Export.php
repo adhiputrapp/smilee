@@ -15,16 +15,18 @@ use Maatwebsite\Excel\Events\AfterSheet;
 
 class SPJ3Export implements FromCollection, WithDrawings, WithColumnWidths, WithStyles, WithEvents
 {
-    public $data;
+    public $spj;
     public $tahun;
+    // public $tahun;
     // public $subKegiatan;
     // public $kegiatan;
     // public $program;
 
-    public function __construct($data, $tahun) 
+    public function __construct($spj, $tahun) 
     {
-        $this->data = $data;
+        $this->spj = $spj;
         $this->tahun = $tahun;
+        // $this->tahun = $tahun;
         // $this->subKegiatan = $subKegiatan;
         // $this->kegiatan = $kegiatan;
         // $this->program = $program;
@@ -32,10 +34,12 @@ class SPJ3Export implements FromCollection, WithDrawings, WithColumnWidths, With
 
     public function collection() 
     {
-        return collect($this->data)->map(function($item, $index)
+        return collect($this->spj)->map(function($item, $index)
         {
+            $tahun = $this->tahun;
             return [
-                'data' => $item->pengeluaran,
+                'spj' => $item->pengeluaran,
+                'tahun' => $tahun,
                 'nama sub kegiatan' => $item->subkegiatan->nama_sub_kegiatan,
                 'kode sub kegiatan' => $item->subkegiatan->kode_sub_kegiatan,
             ];
@@ -46,9 +50,102 @@ class SPJ3Export implements FromCollection, WithDrawings, WithColumnWidths, With
         return
         [
             AfterSheet::class => function (AfterSheet $event) {
-            foreach ($this->data as $item){
-                $event->sheet->setCellValue('B4', $item->pengeluaran);
-            }
+                //START HEADER
+                $event->sheet->mergeCells('A1:A4');
+                $event->sheet->setCellValue('A1', "");
+                $event->sheet->mergeCells('B1:C1');
+                $event->sheet->setCellValue('B1', "PEMERINTAH PPROVINSI JAWA BARAT");
+                $event->sheet->mergeCells('B2:C2');
+                $event->sheet->setCellValue('B2', "BIRO UMUM SETDA PROVINSI JAWA BARAT");
+                $event->sheet->mergeCells('B3:C3');
+                $event->sheet->setCellValue('B3', "TAHUN ANGGARAN ". $this->tahun);
+                $event->sheet->mergeCells('A5:P5');
+                $event->sheet->setCellValue('A5', "LAPORAN PERTANGGUNGJAWABAN BENDAHARA PENGELUARAN PEMBANTU");
+                $event->sheet->mergeCells('A6:P6');
+                $event->sheet->mergeCells('A7:P7');
+                $event->sheet->setCellValue('A7', "Bulan : ". $this->tahun->locale('id')->monthName. " ". $this->tahun->locale("id")->year);
+                //END HEADER
+                //START RINCIAN 
+                $event->sheet->mergeCells('A8:B8');
+                $event->sheet->setCellValue('A8', "Kuasa Pengguna Anggaran ");
+                $event->sheet->setCellValue('C8', ": ");
+                $event->sheet->mergeCells('A9:B9');
+                $event->sheet->setCellValue('A9', "Bendahara Pengeluaran Pembantu ");
+                $event->sheet->setCellValue('C9', ": ");
+                $event->sheet->mergeCells('A10:B10');
+                $event->sheet->setCellValue('A10', "Program ");
+                $event->sheet->setCellValue('C10', ": ". $this->spj->program->kode_program. " ". $this->spj->program->nama_program);
+                $event->sheet->mergeCells('A11:B11');
+                $event->sheet->setCellValue('A11', "Kegiatan ");
+                $event->sheet->setCellValue('C11', ": ". $this->spj->kegiatan->kode_kegiatan. " ". $this->spj->kegiatan->nama_kegiatan);
+                $event->sheet->mergeCells('A12:B12');
+                $event->sheet->setCellValue('A12', "Sub Kegiatan ");
+                $event->sheet->setCellValue('C12', ": ". $this->spj->subkegiatan->kode_sub_kegiatan. " ". $this->spj->subkegiatan->nama_sub_kegiatan);
+                $event->sheet->mergeCells('A13:B13');
+                $event->sheet->setCellValue('A13', "Tahun Anggaran ");
+                $event->sheet->setCellValue('C13', ": ". $this->tahun);
+                //END RINCIAN
+                //START TABLE
+                //START TABLE HEADER
+                $event->sheet->mergeCells('A15:A17');
+                $event->sheet->setCellValue('A15', "KODE REKENING");
+                $event->sheet->setCellValue('A18', "1");
+                $event->sheet->mergeCells('B15:C17');
+                $event->sheet->setCellValue('B15', "URAIAN");
+                $event->sheet->setCellValue('B18', "2");
+                $event->sheet->mergeCells('D15:D17');
+                $event->sheet->setCellValue('D15', "JUMLAH ANGGARAN");
+                $event->sheet->setCellValue('D18', "3");
+                //ROW SPJ LS GAJI
+                $event->sheet->mergeCells('F15:H15');
+                $event->sheet->setCellValue('F15', "SPJ - LS GAJI");
+                $event->sheet->setCellValue('F16', "S.d BULAN");
+                $event->sheet->setCellValue('F17', "LALU");
+                $event->sheet->setCellValue('F18', "4");
+                $event->sheet->mergeCells('G16:G17');
+                $event->sheet->setCellValue('G16', "BULAN INI");
+                $event->sheet->setCellValue('G18', "5");
+                $event->sheet->setCellValue('H16', "S.d BULAN");
+                $event->sheet->setCellValue('H17', "INI");
+                $event->sheet->setCellValue('H18', "6");
+                //END ROW SPJ LS GAJI
+                //ROW SPJ BARANG JASA
+                $event->sheet->mergeCells('I15:K15');
+                $event->sheet->setCellValue('I15', "SPJ - LS BARANG & JASA");
+                $event->sheet->setCellValue('I16', "S.d BULAN");
+                $event->sheet->setCellValue('I17', "LALU");
+                $event->sheet->setCellValue('I18', "7");
+                $event->sheet->mergeCells('J16:JI17');
+                $event->sheet->setCellValue('J16', "BULAN INI");
+                $event->sheet->setCellValue('J18', "8");
+                $event->sheet->setCellValue('H16', "S.d BULAN");
+                $event->sheet->setCellValue('H17', "INI");
+                $event->sheet->setCellValue('H18', "9");
+                //END ROW SPJ BARANG JASA
+                //ROW SPJ UP/GU/TU
+                $event->sheet->mergeCells('L15:N15');
+                $event->sheet->setCellValue('L15', "SPJ - UP/GU/TU");
+                $event->sheet->setCellValue('L16', "S.d BULAN");
+                $event->sheet->setCellValue('L17', "LALU");
+                $event->sheet->setCellValue('L18', "10");
+                $event->sheet->mergeCells('M16:MI17');
+                $event->sheet->setCellValue('M16', "BULAN INI");
+                $event->sheet->setCellValue('M18', "11");
+                $event->sheet->setCellValue('N16', "S.d BULAN");
+                $event->sheet->setCellValue('N17', "INI");
+                $event->sheet->setCellValue('N18', "12");
+                //END ROW SPJ UP/GU/TU
+                $event->sheet->setCellValue('O15', "JUMLAH SPJ");
+                $event->sheet->setCellValue('O16', "(LS+IP+GU+TU)");
+                $event->sheet->setCellValue('O17', "S.d BULAN INI");
+                $event->sheet->mergeCells('P15:P17');
+                $event->sheet->setCellValue('P17', "SISA PAGU ANGGARAN");
+                //END TABLE HEADER
+                $row = 19;
+                foreach ($this->spj as $item){
+                    $event->sheet->setCellValue('A'.$row, $item->kodering->kode_kodering);
+                    $event->sheet->setCellValue('B'.$row, $item->kodering->nama_kodering);
+                }
         }];
     }
 

@@ -8,7 +8,7 @@
                 
                 <div class="mb-4">
                     <x-input-label for="sub_kegiatan" class="mb-2" :value="__('Sub Kegiatan')"/>
-                    <select name="sub_kegiatan" id="sub_kegiatan">
+                    <select name="sub_kegiatan_id" id="sub_kegiatan_id">
                         <option value="">-</option>
                         @foreach ($subKegiatan as $item)
                             <option value="{{ $item->id }}" {{ old('sub_kegiatan') == $item->id ? 'selected' : '' }}>{{ $item->kode_sub_kegiatan }} | {{ $item->nama_sub_kegiatan }}</option>
@@ -16,7 +16,8 @@
                     </select>
                 </div>
                 <div class="mb-4">
-                        <x-input-label for="tanggal" class="mb-2" :value="__('Tanggal')"/>
+                        <x-input-label for="tanggal" class="mb
+                        -2" :value="__('Tanggal')"/>
                         <x-text-input type="month" name="tanggal" id="tanggal" class="block mt-1 w-full" value="{{ old('tanggal') }}" required/>
                     </div>
                 </div>

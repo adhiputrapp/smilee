@@ -55,6 +55,8 @@ class RincianObjekController extends Controller
         $anggaran = Anggaran::where('kodering_id', $kodering->id)->first();
         $pelimpahan = Pelimpahan::where('biro_id', $this->request->user()->biro->id)->first();
 
+        // dd($data);
+
         return Excel::download(new RincianObjekExport(
             $data, 
             explode('-', $this->request->tanggal)[0],
