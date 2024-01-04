@@ -38,7 +38,20 @@ class SPJ3Controller extends Controller
             ->whereMonth('tanggal_belanja', explode('-', $this->request->tanggal)[1])
             ->whereYear('tanggal_belanja', explode('-', $this->request->tanggal)[0])
             ->get();
-        $tahun = explode('-', $this->request->tanggal);
+        $eom = Carbon::createFromDate(explode('-', $this->request->tanggal)[0], 
+        explode('-', $this->request->tanggal)[1], 
+        1 );
+        $total = $spj->groupBy('kodering_id', 'jenis_belanja')->map(function ($items) {
+            return $items->pluck('pengeluaran')->sum();
+        });
+        // $total = $spj->groupBy(['kodering_id', 'jenis_belanja'])->map(function ($items) {
+        //     // $koderingId = $items->first()->kodering_id;
+        //   return[
+        //         'total_pengeluaran' => $items->pluck('pengeluaran')->sum(),
+        //         // 'kodering_id' => $items->first()->kodering_id, // Mengambil kodering_id dari salah satu item
+        //     ];
+        // });
+        // $tahun = explode('-', $this->request->tanggal);
         // $subKegiatan = SubKegiatan::with('kegiatan')->find($this->request->sub_kegiatan);
         // $kegiatan = Kegiatan::with('program')->find($subKegiatan->kegiatan->id);
 
@@ -46,15 +59,17 @@ class SPJ3Controller extends Controller
 
         return Excel::download(new SPJ3Export(
             $spj,
-            $tahun,
+            $eom,
+            $total
             // explode('-', $this->request->tanggal)[0],
+            // Carbon::now()->month(explode('-', $this->request->tanggal)[1]),
+            // $tahun,
             // $data->where('jenis_belanja', 'LS')->pluck('subkegiatan_id')->sum('pengeluaran'),
             // $data->where('jenis_belanja', 'TU')->pluck('subkegiatan_id')->sum('pengeluaran'),
             // $data->where('jenis_belanja', 'UP/GU')->pluck('subkegiatan_id')->sum('pengeluaran'),
             // $subKegiatan,
             // $kegiatan,
             // $kegiatan->program,
-            // Carbon::now()->month(explode('-', $this->request->tanggal)[1]),
         ), 'SPJ3.xlsx');
 
     //     dd($data);

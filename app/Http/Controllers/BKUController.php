@@ -68,7 +68,7 @@ class BKUController extends Controller
             });
 
         // $view = view('user.laporan.bku', compact('belanjas', 'request'))->render();
-        dd($belanjas);
+        // dd($belanjas);
         return Excel::download(new BKUExport(
             $belanjas,
             $tahunAnggaran,

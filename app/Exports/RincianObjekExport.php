@@ -57,7 +57,7 @@ class RincianObjekExport implements FromCollection, WithDrawings, WithStyles, Wi
 
     public function registerEvents(): array
     {
-        return [
+        return [ 
             AfterSheet::class => function (AfterSheet $event) {
                 $event->sheet->mergeCells('A1:B5');
                 $event->sheet->setCellValue('A1', " ");
@@ -130,11 +130,30 @@ class RincianObjekExport implements FromCollection, WithDrawings, WithStyles, Wi
                         $event->sheet->setCellValue("G".$row, $item->pengeluaran);
                     }
                     $event->sheet->setCellValue("H".$row, ($item->saldo ? $item->saldo->saldo : 0));
+                    //Styling
+                    $event->sheet->getStyle('A' . $row.":H".$row)
+                        ->getAlignment()
+                        ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER)
+                        ->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                    $event->sheet->getStyle('A' . $row.":H".$row)
+                        ->getBorders()
+                        ->getAllBorders()
+                        ->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+                    $event->sheet->getStyle('A' . ($row + 1) . ":H" . ($row + 1))
+                        ->getAlignment()
+                        ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT)
+                        ->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                    $event->sheet->getStyle('A' . ($row+1).":H".($row+1))
+                        ->getBorders()
+                        ->getAllBorders()
+                        ->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
                     
                     $number++;
                     $row++;
                 }
-                $event->sheet->setCellValue("D".($row + 2), "Jumlah");
+                $event->sheet->getStyle('D' . $row)->getFont()->setBold(true);
+                $event->sheet->setCellValue("D".($row ), "Jumlah");
+
                 $event->sheet->setCellValue("C".($row + 5), "Disetujui Oleh,");
                 $event->sheet->setCellValue("C".($row + 6), "Kuasa Pengguna Anggaran");
             

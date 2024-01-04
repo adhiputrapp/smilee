@@ -112,7 +112,15 @@ class BKUExport implements FromCollection, ShouldAutoSize, WithColumnWidths, Wit
                 $event->sheet->setCellValue('F'.$row, ($item->saldo ? $item->saldo->pelimpahan->jumlah_pengeluaran : 0));
                 $event->sheet->setCellValue('G'.$row, $item->pengeluaran);
                 $event->sheet->setCellValue('H'.$row, ($item->saldo ? $item->saldo->saldo : 0));
-
+                //Styling
+                $event->sheet->getStyle('A' . $row.":H".$row)
+                    ->getAlignment()
+                    ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER)
+                    ->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                $event->sheet->getStyle('A' . $row.":H".$row)
+                    ->getBorders()
+                    ->getAllBorders()
+                    ->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
                 
                 $number++;
                 $row++;
@@ -197,6 +205,7 @@ class BKUExport implements FromCollection, ShouldAutoSize, WithColumnWidths, Wit
             'font' => [
                 'name' => 'Arial',
                 'bold' => true,
+                'italic' => true,
                 'size' => 8,
             ],
             'alignment' => [
@@ -213,7 +222,7 @@ class BKUExport implements FromCollection, ShouldAutoSize, WithColumnWidths, Wit
     
         // Set row height for specific rows
         $sheet->getRowDimension('8')->setRowHeight(40);
-        $sheet->getRowDimension('9')->setRowHeight(10.5);
+        $sheet->getRowDimension('9')->setRowHeight(9.5);
     
         // Set style for data rows
         $highestRow = $sheet->getHighestRow();
