@@ -11,6 +11,7 @@ import {
     Collapse,
     Tab,
     Popconfirm,
+    Chart,
 } from "tw-elements";
 
 window.Alpine = Alpine;
@@ -25,6 +26,7 @@ initTE({
     Collapse, 
     Tab, 
     Popconfirm,
+    Chart,
 });
 
 const instansi = document.getElementById('datatable')

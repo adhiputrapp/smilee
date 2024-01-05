@@ -44,6 +44,17 @@ class SPJ3Controller extends Controller
         $total = $spj->groupBy('kodering_id', 'jenis_belanja')->map(function ($items) {
             return $items->pluck('pengeluaran')->sum();
         });
+        $koderingId = $this->request->input('kodering_id');
+        $saldoBulanLalu = $spj->filter(function ($item) use ($koderingId) {
+            return $item->kodering_id == $koderingId &&
+                Carbon::parse($item->tanggal_belanja)->month < explode('-', $this->request->tanggal)[1] &&
+                Carbon::parse($item->tanggal_belanja)->year == explode('-', $this->request->tanggal)[0];
+        })->sum('pengeluaran');
+        // $saldoBulanLalu = $spj->where('subkegiatan_id', $this->request->sub_kegiatan_id)
+        // ->where('kodering_id', $this->request->koderingId) // Sesuaikan dengan id kodering yang diinginkan
+        // ->whereMonth('tanggal_belanja', '<', explode('-', $this->request->tanggal)[1])
+        // ->whereYear('tanggal_belanja', explode('-', $this->request->tanggal)[0])
+        // ->sum('pengeluaran');
         // $total = $spj->groupBy(['kodering_id', 'jenis_belanja'])->map(function ($items) {
         //     // $koderingId = $items->first()->kodering_id;
         //   return[
@@ -60,7 +71,8 @@ class SPJ3Controller extends Controller
         return Excel::download(new SPJ3Export(
             $spj,
             $eom,
-            $total
+            $total,
+            $saldoBulanLalu,
             // explode('-', $this->request->tanggal)[0],
             // Carbon::now()->month(explode('-', $this->request->tanggal)[1]),
             // $tahun,

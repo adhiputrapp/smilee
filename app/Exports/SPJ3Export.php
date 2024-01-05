@@ -18,16 +18,17 @@ class SPJ3Export implements FromCollection, WithDrawings, WithColumnWidths, With
     public $spj;
     public $eom;
     public $total;
-    // public $tahun;
+    public $saldoBulanLalu;
     // public $subKegiatan;
     // public $kegiatan;
     // public $program;
 
-    public function __construct($spj, $eom, $total) 
+    public function __construct($spj, $eom, $total, $saldoBulanLalu) 
     {
         $this->spj = $spj;
         $this->eom = $eom;
         $this->total = $total;
+        $this->saldoBulanLalu = $saldoBulanLalu;
         // $this->tahun = $tahun;
         // $this->subKegiatan = $subKegiatan;
         // $this->kegiatan = $kegiatan;
@@ -156,7 +157,7 @@ class SPJ3Export implements FromCollection, WithDrawings, WithColumnWidths, With
                     $event->sheet->setCellValue('D'.$row, $item->saldo->pelimpahan->jumlah_pelimpahan);
                     foreach ($this->total as $total){
                         if ($item->jenis_belanja == "LS") {
-                            $event->sheet->setCellValue('E'.$row, $item->saldo->saldo);
+                            $event->sheet->setCellValue('E'.$row, $this->saldoBulanLalu);
                             $event->sheet->setCellValue('F'.$row, $total);
                             $nilaiE = $event->sheet->getCell('E'.$row)->getValue();
                             $nilaiF = $event->sheet->getCell('F'.$row)->getValue();
@@ -164,7 +165,7 @@ class SPJ3Export implements FromCollection, WithDrawings, WithColumnWidths, With
                             $event->sheet->setCellValue('G'.$row, $hasilTambah);
                         }
                         if ($item->jenis_belanja == "TU") {
-                            $event->sheet->setCellValue('H'.$row, $item->saldo->saldo);
+                            $event->sheet->setCellValue('H'.$row, $this->saldoBulanLalu);
                             $event->sheet->setCellValue('I'.$row, $total);
                             $nilaiH = $event->sheet->getCell('H'.$row)->getValue();
                             $nilaiI = $event->sheet->getCell('I'.$row)->getValue();
@@ -172,10 +173,10 @@ class SPJ3Export implements FromCollection, WithDrawings, WithColumnWidths, With
                             $event->sheet->setCellValue('J'.$row, $hasilTambah);
                         }
                         if ($item->jenis_belanja == "UP/GU") {
-                            $event->sheet->setCellValue('K'.$row, $item->saldo->saldo);
+                            $event->sheet->setCellValue('K'.$row, $this->saldoBulanLalu);
                             $event->sheet->setCellValue('L'.$row, $total);
-                            $nilaiK = $event->sheet->getCell('K'.$row)->getValue();
                             $event->sheet->mergeCells('L'.$row.':M'.$row);
+                            $nilaiK = $event->sheet->getCell('K'.$row)->getValue();
                             $nilaiL = $event->sheet->getCell('L'.$row)->getValue();
                             $hasilTambah = $nilaiK + $nilaiL;
                             $event->sheet->setCellValue('N'.$row, $hasilTambah);
@@ -185,6 +186,11 @@ class SPJ3Export implements FromCollection, WithDrawings, WithColumnWidths, With
                         $jumlahspj3 = $event->sheet->getCell('N'.$row)->getValue();
                         $totalspj = $jumlahspj1 + $jumlahspj2 + $jumlahspj3;
                         $event->sheet->setCellValue('O'.$row, $totalspj);
+                        $jumlahspj4 = $event->sheet->getCell('D'.$row)->getValue();
+                        $jumlahspj5 = $event->sheet->getCell('O'.$row)->getValue();
+                        $totalspj1 = $jumlahspj4 - $jumlahspj5;
+                        $event->sheet->setCellValue('P'.$row, $totalspj1);
+
                     }
                 //END DATA
                 //FOOTER

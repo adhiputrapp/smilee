@@ -15,7 +15,7 @@ use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\VerifikasiController;
 use App\Http\Controllers\PengesahanController;
 use Spatie\Permission\Middleware\PermissionMiddleware;
-use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BKUController;
 use App\Http\Controllers\RincianObjekController;
 use App\Http\Controllers\SPJ3Controller;
@@ -31,9 +31,10 @@ use App\Http\Controllers\SPJ3Controller;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard')->middleware('permission:dashboard');
+Route::get('/',[DashboardController::class, 'index'])
+->middleware(['auth', 'verified'])
+->name('dashboard')
+->middleware('permission:dashboard');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
