@@ -15,7 +15,7 @@ use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\VerifikasiController;
 use App\Http\Controllers\PengesahanController;
 use Spatie\Permission\Middleware\PermissionMiddleware;
-use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BKUController;
 use App\Http\Controllers\RincianObjekController;
 use App\Http\Controllers\SPJ3Controller;
@@ -31,9 +31,10 @@ use App\Http\Controllers\SPJ3Controller;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard')->middleware('permission:dashboard');
+Route::get('/',[DashboardController::class, 'index'])
+->middleware(['auth', 'verified'])
+->name('dashboard')
+->middleware('permission:dashboard');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -174,13 +175,13 @@ Route::middleware('auth')->group(function () {
         // Route::post('/form/{belanja_id}', 'verifikasi')->name('pengesahans.submit');
     });
 
-    Route::prefix('/rincian-objek')->controller(RincianObjekController::class, 'index')->group(function () {
+    Route::prefix('/rincian-objek')->controller(RincianObjekController::class)->group(function () {
         Route::get('/', 'index')->name('rincian.objek.index');
         Route::get('/search', 'searchForSubKegiatan')->name('rincian.objek.search');
         Route::post('/', 'export')->name('rincian.objek.export');
     });
 
-    Route::prefix('/spj3')->controller(SPJ3Controller::class, 'index')->group(function () {
+    Route::prefix('/spj3')->controller(SPJ3Controller::class)->group(function () {
         Route::get('/', 'index')->name('spj3.index');
         Route::post('/', 'export')->name('spj3.export');
     });

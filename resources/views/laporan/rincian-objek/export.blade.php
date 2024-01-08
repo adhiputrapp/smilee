@@ -123,13 +123,12 @@
                         
                     </td>
                 </tr>
-            @endforeach
-        </tbody>
-        <tfoot>
-            <tr>
-                <td class="border border-black"></td>
-                <td class="border border-black"></td>
-                <td class="border border-black"></td>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td class="border border-black"></td>
+                    <td class="border border-black"></td>
+                    <td class="border border-black"></td>
                 <td class="border border-black text-left">Jumlah</td>
                 <td class="border border-black text-right">
                     @if ($item->jenis_belanja == 'LS')
@@ -177,6 +176,7 @@
                 <td colspan="3" class="text-center whitespace-nowrap">Bendahara Pengeluaran Pembantu,</td>
             </tr>
         </tfoot>
+        @endforeach
     </table>
 </body>
 </html>

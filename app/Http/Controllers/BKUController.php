@@ -36,7 +36,7 @@ class BKUController extends Controller
             'tahun' => 'required',
             'subkegiatan_id' => 'required',
         ]);
-
+ 
         // setlocale(LC_TIME, 'id_ID.utf8');
 
         $bulanAnggaran = date('m', strtotime($request->bulan));
@@ -68,7 +68,7 @@ class BKUController extends Controller
             });
 
         // $view = view('user.laporan.bku', compact('belanjas', 'request'))->render();
-
+        // dd($belanjas);
         return Excel::download(new BKUExport(
             $belanjas,
             $tahunAnggaran,
