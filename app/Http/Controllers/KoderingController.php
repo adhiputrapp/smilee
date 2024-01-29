@@ -4,12 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
-use App\Models\Biro;
-use App\Models\Program;
-use App\Models\Kegiatan;
 use App\Models\SubKegiatan;
 use App\Models\Kodering;
 
@@ -19,7 +15,7 @@ class KoderingController extends Controller
     public function index(): View
     {
         return view('master.kodering.index',[
-            'koderings' => Kodering::orderby('kode_kodering','ASC')->with('subkegiatan.kegiatan.program.biro')->get()
+            'koderings' => Kodering::orderby('kode_kodering','ASC')->get()
         ]);
     }
 
@@ -34,15 +30,13 @@ class KoderingController extends Controller
     {
         $request->validate([
             'nama_kodering' => 'required',
-            'kode_kodering' => 'required',
-            'nama_sub_kegiatan_relasi' => 'required'
+            'kode_kodering' => 'required'
         ]);
 
         Kodering::create([
             'id' => Str::uuid(),
             'nama_kodering' => $request->nama_kodering,
             'kode_kodering' => $request->kode_kodering,
-            'nama_sub_kegiatan_relasi' => $request->nama_sub_kegiatan_relasi
         ]);
 
         return redirect()->route('koderings.index');
@@ -60,15 +54,13 @@ class KoderingController extends Controller
     {
         $request->validate([
             'nama_kodering' => 'required',
-            'kode_kodering' => 'required',
-            'nama_sub_kegiatan_relasi' => 'required'
+            'kode_kodering' => 'required'
         ]);
     
         $koderings = Kodering::find($id);
 
         $koderings->kode_kodering = $request->kode_kodering;
         $koderings->nama_kodering = $request->nama_kodering;
-        $koderings->nama_sub_kegiatan_relasi = $request->nama_sub_kegiatan_relasi;
 
         $koderings->save();
 

@@ -7,17 +7,23 @@
                 <form action="{{ route('anggarans.store') }}" method="POST">
                     @csrf
                     <div class="form-group mb-5 flex gap-x-2">
+                        
                         <div class="flex-grow">
-                            <x-input-label for="kode_sub_kegiatan" class="mb-2" :value="__('Kode Sub Kegiatan')"/>
-                            <x-text-input type="text" name="kode_sub_kegiatan" id="kode_sub_kegiatan" class="block mt-1 w-full" value="{{ old('kode_sub_kegiatan') }}" required readonly/>
+                            <x-input-label for="sub_kegiatan_id" :value="__('Nama Sub Kegiatan')"/>
+                            <select id="sub_kegiatan_id" name="sub_kegiatan_id" class="block mt-1 w-full" required>
+                                <option value="">-</option>
+                                @foreach ($subkegiatans as $subkegiatan)
+                                    <option value="{{$subkegiatan->id}}">{{$subkegiatan->nama_sub_kegiatan}}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="flex-grow">
+                        {{-- <div class="flex-grow">
                             <x-input-label for="nama_sub_kegiatan" class="mb-2" :value="__('Nama Sub Kegiatan')"/>
                             <x-text-input type="text" name="nama_sub_kegiatan" id="nama_sub_kegiatan" class="block mt-1 w-full" value="{{ old('nama_sub_kegiatan') }}" required readonly/>
                         </div>
                         <div>
                             <x-text-input type="hidden" name="sub_kegiatan_id" id="sub_kegiatan_id" class="block mt-1 w-full" value="{{ old('sub_kegiatan_id') }}" required readonly/>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="form-group mb-5">
                         <x-input-label for="kodering_id" :value="__('Nama Kodering')"/>
@@ -46,7 +52,7 @@
             </div>
         </div>
     </div>   
-    @push('script')
+    {{-- @push('script')
         <script>
         $(document).ready(function() {
             $('#kodering_id').select2({
@@ -76,5 +82,5 @@
             })
         });
         </script>
-    @endpush
+    @endpush --}}
 </x-app-layout>

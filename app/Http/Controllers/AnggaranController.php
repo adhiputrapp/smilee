@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Program;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -24,21 +25,22 @@ class AnggaranController extends Controller
         ]);
     }
 
-
     public function create(Request $request): View
     {
-        $program = $request->user()->biro->programs;
+        $user = $request->user()->biro;
+        $program = Program::latest()->get();
         $kegiatan = Kegiatan::whereIn('nama_program_relasi', $program->pluck('nama_program'))->get();
         $subKegiatan = SubKegiatan::whereIn('nama_kegiatan_relasi', $kegiatan->pluck('nama_kegiatan'))->get();
-        $kodering = Kodering::whereIn('nama_sub_kegiatan_relasi', $subKegiatan->pluck('nama_sub_kegiatan'))->get();
+        $kodering = Kodering::latest()->get();
 
         return view('user.anggaran.create',[
-            'koderings' => $kodering
+            'koderings' => $kodering,
+            'subkegiatans' => $subKegiatan
         ]);
     }
 
     public function searchForSubKegiatan(Request $request) : JsonResponse {
-        $data = Kodering::where('id', $request->kodering)->with('subkegiatan')->first();
+        $data = SubKegiatan::where('id', $request->nama_sub_kegiatan)->first();
 
         return response()->json([
             'data' => $data
@@ -66,7 +68,6 @@ class AnggaranController extends Controller
 
         return redirect()->route('anggarans.index');
     }
-    
 
     public function edit($id): View
     {

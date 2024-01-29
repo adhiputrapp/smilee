@@ -154,7 +154,8 @@ class SPJ3Export implements FromCollection, WithDrawings, WithColumnWidths, With
                     $event->sheet->setCellValue('A'.$row, $item->kodering->kode_kodering);
                     $event->sheet->mergeCells('B'.$row.':C'.$row);
                     $event->sheet->setCellValue('B'.$row, $item->kodering->nama_kodering);
-                    $event->sheet->setCellValue('D'.$row, $item->saldo->pelimpahan->jumlah_pelimpahan);
+                    $event->sheet->setCellValue('D'.$row, $item->saldo->pelimpahan->jumlah_pelimpahan ?? 0);
+                    // $event->sheet->setCellValue('D'.$row, $item->saldo->pelimpahan->jumlah_pelimpahan);
                     foreach ($this->total as $total){
                         if ($item->jenis_belanja == "LS") {
                             $event->sheet->setCellValue('E'.$row, $this->saldoBulanLalu);

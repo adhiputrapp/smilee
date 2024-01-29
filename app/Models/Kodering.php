@@ -15,9 +15,9 @@ class Kodering extends Model
 
     protected $guarded = ["id"];
 
-    public function subkegiatan() : BelongsTo
+    public function subkegiatan() : HasMany
     {
-        return $this->belongsTo(SubKegiatan::class, 'nama_sub_kegiatan_relasi', 'nama_sub_kegiatan');
+        return $this->hasMany(SubKegiatan::class, 'nama_sub_kegiatan_relasi', 'nama_sub_kegiatan');
     }
 
     public function belanja()

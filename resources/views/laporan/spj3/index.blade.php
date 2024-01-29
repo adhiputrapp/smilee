@@ -16,6 +16,15 @@
                     </select>
                 </div>
                 <div class="mb-4">
+                    <x-input-label for="kodering_id" class="mb-2" :value="__('Kodering')"/>
+                    <select name="kodering_id" id="kodering_id">
+                        <option value="">-</option>
+                        @foreach ($koderings as $item)
+                            <option value="{{ $item->id }}" {{ old('kodering') == $item->id ? 'selected' : '' }}>{{ $item->kode_kodering }} | {{ $item->nama_kodering }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mb-4">
                     <x-input-label for="tanggal" class="mb-2" :value="__('Tanggal')"/>
                     <x-text-input type="month" name="tanggal" id="tanggal" class="block mt-1 w-full" value="{{ old('tanggal') }}" required/>
                 </div>
@@ -30,8 +39,12 @@
     @push('script')
         <script>
             $(document).ready(function() {
-                $('#sub_kegiatan').select2({
+                $('#sub_kegiatan_id').select2({
                     placeholder: 'Cari nama sub kegiatan',
+                    allowClear: true,
+                });
+                $('#kodering_id').select2({
+                    placeholder: 'Cari nama kodering',
                     allowClear: true,
                 });
             })

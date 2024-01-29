@@ -13,13 +13,13 @@
                     <div class="form-group mb-5 flex gap-x-2">
                         <div class="flex-grow">
                             <x-input-label for="kode_biro" :value="__('Kode Biro')"/>
-                            <x-text-input type="text" name="kode_biro" id="kode_biro" class="block mt-1 w-full" required readonly/>
+                            <x-text-input type="text" name="kode_biro" id="kode_biro" value="{{$biros->kode_biro}}" class="block mt-1 w-full" required readonly/>
                         </div>
                         <div class="flex-grow">
                             <x-input-label for="nama_biro" :value="__('Nama Biro')"/>
-                            <x-text-input type="text" name="nama_biro" id="nama_biro" class="block mt-1 w-full" required readonly/>
+                            <x-text-input type="text" name="nama_biro" id="nama_biro" value="{{$biros->nama_biro}}" class="block mt-1 w-full" required readonly/>
                         </div>
-                        <x-text-input type="hidden" name="biro_id" id="biro_id" class="block mt-1 w-full" required readonly/>
+                        <x-text-input type="hidden" name="biro_id" id="biro_id" value="{{$biros->id}}" class="block mt-1 w-full" required readonly/>
                     </div>
                     <div class="form-group mb-5 flex gap-x-2">
                         <div class="flex-grow">
@@ -44,15 +44,21 @@
                         <x-text-input type="hidden" name="kegiatan_id" id="kegiatan_id" class="block mt-1 w-full" required readonly/>
                     </div>
                     <div class="form-group mb-5 flex gap-x-2">
-                        <div class="flex-grow">
+                        {{-- <div class="flex-grow">
                             <x-input-label for="kode_sub_kegiatan" :value="__('Kode Sub Kegiatan')"/>
                             <x-text-input type="text" name="kode_sub_kegiatan" id="kode_sub_kegiatan" class="block mt-1 w-full" required readonly/>
-                        </div>
+                        </div> --}}
                         <div class="flex-grow">
                             <x-input-label for="nama_sub_kegiatan" :value="__('Nama Sub Kegiatan')"/>
-                            <x-text-input type="text" name="nama_sub_kegiatan" id="nama_sub_kegiatan" class="block mt-1 w-full" required readonly/>
+                            {{-- <x-text-input type="text" name="nama_sub_kegiatan" id="nama_sub_kegiatan" class="block mt-1 w-full" required readonly/> --}}
+                            <select id="nama_sub_kegiatan" name="sub_kegiatan_id" class="block mt-1 w-full" required>
+                                <option value="">-</option>
+                                @foreach ($subkegiatans as $subkegiatan)
+                                    <option value="{{$subkegiatan->id}}">{{ $subkegiatan->kode_sub_kegiatan }} | {{$subkegiatan->nama_sub_kegiatan}}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <x-text-input type="hidden" name="sub_kegiatan_id" id="sub_kegiatan_id" class="block mt-1 w-full" required readonly/>
+                        {{-- <x-text-input type="hidden" name="sub_kegiatan_id" id="sub_kegiatan_id" class="block mt-1 w-full" required readonly/> --}}
                     </div>
                     <div class="form-group mb-5">
                         <x-input-label for="nama_kodering_relasi" :value="__('Kodering')"/>
@@ -93,12 +99,12 @@
     @push('script')
     <script>
         $(document).ready(function() {
-            $('#nama_kodering_relasi').select2({
-                placeholder: 'Cari nama kodering',
+            $('#nama_sub_kegiatan').select2({
+                placeholder: 'Cari nama SubKegiatan',
                 allowClear: true,
             });
 
-            $('#nama_kodering_relasi').on('select2:select', function(e) {
+            $('#nama_sub_kegiatan').on('select2:select', function(e) {
                 e.preventDefault()
 
                 e.preventDefault()
@@ -108,24 +114,24 @@
                     type: "GET",
                     dataType: 'JSON',
                     data: {
-                        kodering: e.target.value
+                        sub_kegiatan_id: e.target.value
                     },
                     success: (res) => {
-                        $("#kode_sub_kegiatan").val(res.data.subkegiatan.kode_sub_kegiatan)
-                        $("#nama_sub_kegiatan").val(res.data.subkegiatan.nama_sub_kegiatan)
-                        $("#sub_kegiatan_id").val(res.data.subkegiatan.id)
+                        // $("#kode_sub_kegiatan").val(res.data.subkegiatan.kode_sub_kegiatan)
+                        // $("#nama_sub_kegiatan").val(res.data.subkegiatan.nama_sub_kegiatan)
+                        // $("#sub_kegiatan_id").val(res.data.subkegiatan.id)
                         
-                        $("#kode_kegiatan").val(res.data.subkegiatan.kegiatan.kode_kegiatan)
-                        $("#nama_kegiatan").val(res.data.subkegiatan.kegiatan.nama_kegiatan)
-                        $("#kegiatan_id").val(res.data.subkegiatan.kegiatan.id)
+                        $("#kode_kegiatan").val(res.data.kegiatan.kode_kegiatan)
+                        $("#nama_kegiatan").val(res.data.kegiatan.nama_kegiatan)
+                        $("#kegiatan_id").val(res.data.kegiatan.id)
                         
-                        $("#kode_program").val(res.data.subkegiatan.kegiatan.program.kode_program)
-                        $("#nama_program").val(res.data.subkegiatan.kegiatan.program.nama_program)
-                        $("#program_id").val(res.data.subkegiatan.kegiatan.program.id)
+                        $("#kode_program").val(res.data.kegiatan.program.kode_program)
+                        $("#nama_program").val(res.data.kegiatan.program.nama_program)
+                        $("#program_id").val(res.data.kegiatan.program.id)
                         
-                        $("#kode_biro").val(res.data.subkegiatan.kegiatan.program.biro.kode_biro)
-                        $("#nama_biro").val(res.data.subkegiatan.kegiatan.program.biro.nama_biro)
-                        $("#biro_id").val(res.data.subkegiatan.kegiatan.program.biro.id)
+                        // $("#kode_biro").val(res.data.kegiatan.program.biro.kode_biro)
+                        // $("#nama_biro").val(res.data.kegiatan.program.biro.nama_biro)
+                        // $("#biro_id").val(res.data.kegiatan.program.biro.id)
                     },
                     error: (error) => {
                         console.log(error);
