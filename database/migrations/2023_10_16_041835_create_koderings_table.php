@@ -15,9 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('kode_kodering');
             $table->string('nama_kodering');
-            $table->string('nama_sub_kegiatan_relasi');
-            $table->index('nama_sub_kegiatan_relasi');
-            $table->foreign('nama_sub_kegiatan_relasi')->references('nama_sub_kegiatan')->on('sub_kegiatans')->onUpdate('cascade');
+            $table->index('nama_kodering');
             $table->timestamps();
         });
     }

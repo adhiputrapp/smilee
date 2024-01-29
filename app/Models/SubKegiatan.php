@@ -20,9 +20,9 @@ class SubKegiatan extends Model
         return $this->belongsTo(Kegiatan::class, 'nama_kegiatan_relasi', 'nama_kegiatan');
     }
 
-    public function kodering() : HasMany
+    public function kodering() : BelongsTo
     {
-        return $this->hasMany(Kodering::class, 'nama_sub_kegiatan_relasi', 'nama_sub_kegiatan');
+        return $this->belongsTo(Kodering::class, 'nama_sub_kegiatan_relasi', 'nama_sub_kegiatan');
     }
 
     public function belanja()

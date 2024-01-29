@@ -4,15 +4,11 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use App\Exports\RincianExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Biro;
-use App\Models\Pelimpahan;
 use App\Models\SubKegiatan;
 use App\Models\Kegiatan;
 use App\Models\Program;
@@ -37,18 +33,20 @@ class BelanjaController extends Controller
     public function create(Request $request): View
     {
         $biro = $request->user()->biro;
-        $program = $biro->programs;
+        $program = Program::latest()->get();
         $kegiatan = Kegiatan::whereIn('nama_program_relasi', $program->pluck('nama_program'))->get();
         $subKegiatan = SubKegiatan::whereIn('nama_kegiatan_relasi', $kegiatan->pluck('nama_kegiatan'))->get();
-        $kodering = Kodering::whereIn('nama_sub_kegiatan_relasi', $subKegiatan->pluck('nama_sub_kegiatan'))->get();
+        $kodering = Kodering::latest()->get();
 
         return view('user.belanja.create',[
-            'koderings' => $kodering
+            'koderings' => $kodering,
+            'subkegiatans' => $subKegiatan,
+            'biros' => $biro
         ]);
     }
 
     public function searchForSubKegiatan(Request $request) : JsonResponse {
-        $data = Kodering::where('id', $request->kodering)->with('subkegiatan.kegiatan.program.biro')->first();
+        $data = SubKegiatan::where('id', $request->sub_kegiatan_id)->with('kegiatan.program')->first();
 
         return response()->json([
             'data' => $data
@@ -134,7 +132,6 @@ class BelanjaController extends Controller
 
         return redirect()->route('belanjas.index')->with('success', 'Belanja berhasil diperbarui.');
     }
-
 
     public function destroy($id)
     {

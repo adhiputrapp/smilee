@@ -8,6 +8,7 @@ use App\Models\Belanja;
 use App\Models\Kegiatan;
 use App\Models\Kodering;
 use App\Models\Pelimpahan;
+use App\Models\Program;
 use App\Models\SubKegiatan;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -24,18 +25,21 @@ class RincianObjekController extends Controller
     }
 
     public function index() : View {
-        $program = $this->request->user()->biro->programs;
+        $user = $this->request->user()->biro;
+        $program = Program::latest()->get();
         $kegiatan = Kegiatan::whereIn('nama_program_relasi', $program->pluck('nama_program'))->get();
         $subKegiatan = SubKegiatan::whereIn('nama_kegiatan_relasi', $kegiatan->pluck('nama_kegiatan'))->get();
-        $kodering = Kodering::whereIn('nama_sub_kegiatan_relasi', $subKegiatan->pluck('nama_sub_kegiatan'))->get();
+        $kodering = Kodering::latest()->get();
 
         return view('laporan.rincian-objek.index', [
-            'koderings' => $kodering
+            'koderings' => $kodering,
+            'subkegiatans' => $subKegiatan,
+            'user' => $user
         ]);
     }
 
     public function searchForSubKegiatan() : JsonResponse {
-        $data = Kodering::where('id', $this->request->kodering)->with('subkegiatan')->first();
+        $data = Kodering::where('id', $this->request->kodering)->first();
 
         return response()->json([
             'data' => $data

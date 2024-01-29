@@ -112,6 +112,8 @@ class BKUExport implements FromCollection, ShouldAutoSize, WithColumnWidths, Wit
                 $event->sheet->setCellValue('F'.$row, ($item->saldo ? $item->saldo->pelimpahan->jumlah_pengeluaran : 0));
                 $event->sheet->setCellValue('G'.$row, $item->pengeluaran);
                 $event->sheet->setCellValue('H'.$row, ($item->saldo ? $item->saldo->saldo : 0));
+                
+                $event->sheet->setCellValue('E'.($row + 1), "Jumlah");
                 //Styling
                 $event->sheet->getStyle('A' . $row.":H".$row)
                     ->getAlignment()
@@ -121,20 +123,29 @@ class BKUExport implements FromCollection, ShouldAutoSize, WithColumnWidths, Wit
                     ->getBorders()
                     ->getAllBorders()
                     ->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-                
+                $event->sheet->getStyle('A' . ($row+1).":H".($row+1))
+                    ->getBorders()
+                    ->getAllBorders()
+                    ->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+                $event->sheet->getStyle('A' .($row+1).":H".($row+1))
+                    ->getFont()
+                    ->setBold(true);
                 $number++;
                 $row++;
 
                 }
-            $event->sheet->setCellValue('E'.($row + 2), "Jumlah");
             $event->sheet->setCellValue('C'.($row + 6), "Disetujui Oleh,");
             $event->sheet->setCellValue('C'.($row + 7), "Kuasa Pengguna Anggaran");
+            $event->sheet->mergeCells("F".($row + 5).":H".($row + 5));
+            $event->sheet->setCellValue('F'.($row + 5), "Bandung, ");
             $event->sheet->mergeCells("F".($row + 6).":H".($row + 6));
-            $event->sheet->setCellValue('F'.($row + 6), "Bandung, ");
+            $event->sheet->setCellValue('F'.($row + 6), "Disiapkan Oleh,");
             $event->sheet->mergeCells("F".($row + 7).":H".($row + 7));
-            $event->sheet->setCellValue('F'.($row + 7), "Disiapkan Oleh,");
-            $event->sheet->mergeCells("F".($row + 8).":H".($row + 8));
-            $event->sheet->setCellValue('F'.($row + 8), "Bendahara Pengeluaran Pembantu,");
+            $event->sheet->setCellValue('F'.($row + 7), "Bendahara Pengeluaran Pembantu,");
+            $event->sheet->getStyle("A".($row + 5).":H".($row + 7))
+            ->getAlignment()
+            ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER)
+            ->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
             }];
     }
 

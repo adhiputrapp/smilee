@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Exports\SPJ3Export;
 use App\Models\Kegiatan;
 use App\Models\Belanja;
+use App\Models\Kodering;
 use App\Models\SubKegiatan;
+use App\Models\Program;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
@@ -20,12 +22,16 @@ class SPJ3Controller extends Controller
     }
 
     public function index() : View {
-        $program = $this->request->user()->biro->programs;
+        $user = $this->request->user()->biro;
+        $program = Program::latest()->get();
         $kegiatan = Kegiatan::whereIn('nama_program_relasi', $program->pluck('nama_program'))->get();
         $subKegiatan = SubKegiatan::whereIn('nama_kegiatan_relasi', $kegiatan->pluck('nama_kegiatan'))->get();
+        $kodering = Kodering::latest()->get();
 
         return view('laporan.spj3.index', [
-            'subKegiatan' => $subKegiatan
+            'koderings' => $kodering,
+            'subKegiatan' => $subKegiatan,
+            'user' => $user
         ]);
     }
 
@@ -35,6 +41,7 @@ class SPJ3Controller extends Controller
         })
             ->with('biro','program','kegiatan','subkegiatan','kodering', 'verifikasi', 'saldo.pelimpahan')
             ->where('subkegiatan_id', $this->request->sub_kegiatan_id)
+            ->where('kodering_id', $this->request->kodering_id)
             ->whereMonth('tanggal_belanja', explode('-', $this->request->tanggal)[1])
             ->whereYear('tanggal_belanja', explode('-', $this->request->tanggal)[0])
             ->get();

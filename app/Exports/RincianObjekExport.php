@@ -120,13 +120,13 @@ class RincianObjekExport implements FromCollection, WithDrawings, WithStyles, Wi
                     $event->sheet->setCellValue("B".$row, $item->tanggal_belanja->format('j F Y'));
                     $event->sheet->setCellValue("C".$row, $item->nobukti);
                     $event->sheet->setCellValue("D".$row, $item->uraian);
-                    if ($item->type == "jenis_belanja == 'LS'") {
+                    if ($item->jenis_belanja == 'LS') {
                         $event->sheet->setCellValue("E".$row, $item->pengeluaran);
                     }
-                    if ($item->type == "jenis_belanja == 'TU'") {
+                    if ($item->jenis_belanja == 'TU') {
                         $event->sheet->setCellValue("F".$row, $item->pengeluaran);
                     }
-                    if ($item->type == "jenis_belanja == 'UP/GU'") {
+                    if ($item->jenis_belanja == 'UP/GU') {
                         $event->sheet->setCellValue("G".$row, $item->pengeluaran);
                     }
                     $event->sheet->setCellValue("H".$row, ($item->saldo ? $item->saldo->saldo : 0));

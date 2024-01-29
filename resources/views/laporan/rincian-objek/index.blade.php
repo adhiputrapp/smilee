@@ -7,19 +7,13 @@
                 @csrf
                 
                 <div class="mb-4">
-                    <div class="flex gap-x-2">
-                        <div>
-                            <x-input-label for="kode_sub_kegiatan" class="mb-2" :value="__('Kode Sub Kegiatan')"/>
-                            <x-text-input type="text" name="kode_sub_kegiatan" id="kode_sub_kegiatan" class="block mt-1 w-full" value="{{ old('kode_sub_kegiatan') }}" required readonly/>
-                        </div>
-                        <div>
-                            <x-input-label for="nama_sub_kegiatan" class="mb-2" :value="__('Nama Sub Kegiatan')"/>
-                            <x-text-input type="text" name="nama_sub_kegiatan" id="nama_sub_kegiatan" class="block mt-1 w-full" value="{{ old('nama_sub_kegiatan') }}" required readonly/>
-                        </div>
-                        <div>
-                            <x-text-input type="hidden" name="sub_kegiatan_id" id="sub_kegiatan_id" class="block mt-1 w-full" value="{{ old('sub_kegiatan_id') }}" required readonly/>
-                        </div>
-                    </div>
+                    <x-input-label for="sub_kegiatan_id" class="mb-2" :value="__('Sub Kegiatan')"/>
+                    <select name="sub_kegiatan_id" id="sub_kegiatan_id">
+                        <option value="">-</option>
+                        @foreach ($subkegiatans as $item)
+                            <option value="{{ $item->id }}" {{ old('kodering') == $item->id ? 'selected' : '' }}>{{ $item->kode_sub_kegiatan }} | {{ $item->nama_sub_kegiatan }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="mb-4">
                     <x-input-label for="kodering" class="mb-2" :value="__('Kodering')"/>
