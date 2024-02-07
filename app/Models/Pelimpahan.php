@@ -20,4 +20,8 @@ class Pelimpahan extends Model
         return $this->belongsTo(Biro::class, 'biro_id', 'id');
     }
     
+    public function subkegiatan(): BelongsTo
+    {
+        return $this->belongsTo(SubKegiatan::class, 'subkegiatan_id', 'id');
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\SubKegiatan;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
@@ -24,7 +25,8 @@ class PelimpahanController extends Controller
     public function create(): View
     {
         return view('user.pelimpahan.create',[
-            'biros' => Biro::all()
+            'biros' => Biro::all(),
+            'subkegiatans' => SubKegiatan::all()
         ]);
     }
 
@@ -35,6 +37,7 @@ class PelimpahanController extends Controller
             'tanggal_pelimpahan' => 'required',
             'jumlah_pelimpahan' => 'required',
             'biro_id' => 'required',
+            'subkegiatan_id' => 'required',
             'note' => 'required',
         ]);
 
@@ -45,6 +48,7 @@ class PelimpahanController extends Controller
             'tanggal_pelimpahan' => $request->tanggal_pelimpahan,
             'jumlah_pelimpahan' => $request->jumlah_pelimpahan,
             'biro_id' => $request->biro_id,
+            'subkegiatan_id' => $request->subkegiatan_id,
             'note' => $request->note,
         ]);
         
@@ -57,11 +61,12 @@ class PelimpahanController extends Controller
             $existingSaldo->save();
         } else {
             // Jika belum ada, buat saldo baru
-            $saldo = Saldo::create([
+            Saldo::create([
                 'id' => Str::uuid(),
                 'belanja_id' => null,
                 'pelimpahan_id' => $pelimpahan->id,
                 'biro_id' => $request->biro_id,
+                'subkegiatan_id' => $request->subkegiatan_id,
                 'saldo' => $request->jumlah_pelimpahan,
             ]);
         }

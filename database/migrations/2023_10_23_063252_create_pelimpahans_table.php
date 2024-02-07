@@ -15,8 +15,9 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('nodokumen');
             $table->date('tanggal_pelimpahan');
-            $table->integer('jumlah_pelimpahan');
-            $table->uuid('biro_id');
+            $table->bigInteger('jumlah_pelimpahan');
+            $table->foreignUuid('subkegiatan_id')->references('id')->on('sub_kegiatans')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignUuid('biro_id')->references('id')->on('biros')->onUpdate('cascade')->onDelete('cascade');
             $table->string('note');
             $table->timestamps();
         });

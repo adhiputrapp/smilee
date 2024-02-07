@@ -89,15 +89,25 @@
                         </select>
                     </div> --}}
                     <div class="form-group mb-5 flex gap-x-2">
-                        <div class="flex-grow">
-                            <x-input-label for="kode_sub_kegiatan" :value="__('Kode Sub Kegiatan')"/>
+                        {{-- <div class="flex-grow"> --}}
+                            <div class="flex-grow">
+                                <x-input-label for="nama_sub_kegiatan" :value="__('Nama Sub Kegiatan')"/>
+                                {{-- <x-text-input type="text" name="nama_sub_kegiatan" id="nama_sub_kegiatan" class="block mt-1 w-full" required readonly/> --}}
+                                <select id="nama_sub_kegiatan" name="sub_kegiatan_id" class="block mt-1 w-full" required>
+                                    <option value="">-</option>
+                                    @foreach ($subkegiatans as $subkegiatan)
+                                        <option value="{{$subkegiatan->id}}"{{ $belanja->subkegiatan_id == $subkegiatan->id ? 'selected' : '' }}>{{ $subkegiatan->kode_sub_kegiatan }} | {{$subkegiatan->nama_sub_kegiatan}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            {{-- <x-input-label for="kode_sub_kegiatan" :value="__('Kode Sub Kegiatan')"/>
                             <x-text-input type="text" name="kode_sub_kegiatan" id="kode_sub_kegiatan" class="block mt-1 w-full" required readonly value="{{ $belanja->subkegiatan->kode_sub_kegiatan }}"/>
                         </div>
                         <div class="flex-grow">
                             <x-input-label for="nama_sub_kegiatan" :value="__('Nama Sub Kegiatan')"/>
                             <x-text-input type="text" name="nama_sub_kegiatan" id="nama_sub_kegiatan" class="block mt-1 w-full" required readonly value="{{ $belanja->subkegiatan->nama_sub_kegiatan }}"/>
                         </div>
-                        <x-text-input type="hidden" name="sub_kegiatan_id" id="sub_kegiatan_id" class="block mt-1 w-full" required readonly value="{{ $belanja->subkegiatan->id }}"/>
+                        <x-text-input type="hidden" name="sub_kegiatan_id" id="sub_kegiatan_id" class="block mt-1 w-full" required readonly value="{{ $belanja->subkegiatan->id }}"/> --}}
                     </div>
 
                     <!-- Kodering -->
@@ -105,7 +115,7 @@
                         <x-input-label for="kodering_id" :value="__('Kodering')"/>
                         <select id="nama_kodering_relasi" name="kodering_id" class="block mt-1 w-full" required>
                             @foreach ($koderings as $kodering)
-                                <option value="{{$kodering->id}}" {{ $belanja->kodering_id == $kodering->id ? 'selected' : '' }}>{{$kodering->nama_kodering}}</option>
+                                <option value="{{$kodering->id}}" {{ $belanja->kodering_id == $kodering->id ? 'selected' : '' }}>{{$kodering->kode_kodering}} | {{$kodering->nama_kodering}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -160,10 +170,10 @@
             //     placeholder: 'Cari nama kegiatan',
             //     allowClear: true,
             // });
-            // $('#nama_subkegiatan_relasi').select2({
-            //     placeholder: 'Cari nama subkegiatan',
-            //     allowClear: true,
-            // });
+            $('#nama_sub_kegiatan').select2({
+                placeholder: 'Cari nama subkegiatan',
+                allowClear: true,
+            });
             $('#nama_kodering_relasi').select2({
                 placeholder: 'Cari nama kodering',
                 allowClear: true,
@@ -180,24 +190,24 @@
                     type: "GET",
                     dataType: 'JSON',
                     data: {
-                        kodering: e.target.value
+                        sub_kegiatan_id: e.target.value
                     },
                     success: (res) => {
-                        $("#kode_sub_kegiatan").val(res.data.subkegiatan.kode_sub_kegiatan)
-                        $("#nama_sub_kegiatan").val(res.data.subkegiatan.nama_sub_kegiatan)
-                        $("#sub_kegiatan_id").val(res.data.subkegiatan.id)
+                        // $("#kode_sub_kegiatan").val(res.data.subkegiatan.kode_sub_kegiatan)
+                        // $("#nama_sub_kegiatan").val(res.data.subkegiatan.nama_sub_kegiatan)
+                        // $("#sub_kegiatan_id").val(res.data.subkegiatan.id)
                         
-                        $("#kode_kegiatan").val(res.data.subkegiatan.kegiatan.kode_kegiatan)
-                        $("#nama_kegiatan").val(res.data.subkegiatan.kegiatan.nama_kegiatan)
-                        $("#kegiatan_id").val(res.data.subkegiatan.kegiatan.id)
+                        $("#kode_kegiatan").val(res.data.kegiatan.kode_kegiatan)
+                        $("#nama_kegiatan").val(res.data.kegiatan.nama_kegiatan)
+                        $("#kegiatan_id").val(res.data.kegiatan.id)
                         
-                        $("#kode_program").val(res.data.subkegiatan.kegiatan.program.kode_program)
-                        $("#nama_program").val(res.data.subkegiatan.kegiatan.program.nama_program)
-                        $("#program_id").val(res.data.subkegiatan.kegiatan.program.id)
+                        $("#kode_program").val(res.data.kegiatan.program.kode_program)
+                        $("#nama_program").val(res.data.kegiatan.program.nama_program)
+                        $("#program_id").val(res.data.kegiatan.program.id)
                         
-                        $("#kode_biro").val(res.data.subkegiatan.kegiatan.program.biro.kode_biro)
-                        $("#nama_biro").val(res.data.subkegiatan.kegiatan.program.biro.nama_biro)
-                        $("#biro_id").val(res.data.subkegiatan.kegiatan.program.biro.id)
+                        // $("#kode_biro").val(res.data.subkegiatan.kegiatan.program.biro.kode_biro)
+                        // $("#nama_biro").val(res.data.subkegiatan.kegiatan.program.biro.nama_biro)
+                        // $("#biro_id").val(res.data.subkegiatan.kegiatan.program.biro.id)
                     },
                     error: (error) => {
                         console.log(error);

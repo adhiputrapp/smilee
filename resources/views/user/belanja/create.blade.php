@@ -86,6 +86,21 @@
                         <x-text-input type="number" name="pengeluaran" id="pengeluaran" class="block mt-1 w-full" required/>
                     </div>
                     <div class="form-group mb-5">
+                        <x-input-label for="keterangan" :value="__('Keterangan Pajak')"/>
+                        <x-text-input type="text" name="keterangan[]" id="keterangan" class="block mt-1 w-full" required/>
+                    </div>
+                    <div class="form-group mb-5">
+                        <x-input-label for="nominal" :value="__('Nominal Pajak')"/>
+                        <x-text-input type="number" name="nominal[]" id="nominal" class="block mt-1 w-full" required/>
+                    </div>
+
+                    <div id="tax-container">
+                        
+                    </div>
+
+                    <button type="button" id="add-tax" class="btn btn-primary inline-block rounded bg-gradient-to-r from-blue-700 to-blue-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">Tambah Pajak</button>
+
+                    <div class="form-group mb-5">
                         <x-input-label for="uraian" :value="__('Uraian')"/>
                         <x-text-input type="text" name="uraian" id="uraian" class="block mt-1 w-full" required/>
                     </div>
@@ -101,6 +116,11 @@
         $(document).ready(function() {
             $('#nama_sub_kegiatan').select2({
                 placeholder: 'Cari nama SubKegiatan',
+                allowClear: true,
+            });
+
+            $('#nama_kodering_relasi').select2({
+                placeholder: 'Cari nama Kodering',
                 allowClear: true,
             });
 
@@ -139,7 +159,22 @@
                 })
             })
         });
-        
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#add-tax").click(function () {
+                $("#tax-container").append(`
+                    <div class="form-group mb-5">
+                        <x-input-label for="keterangan" :value="__('Keterangan Pajak')"/>
+                        <x-text-input type="text" name="keterangan[]" class="block mt-1 w-full" required/>
+                    </div>
+                    <div class="form-group mb-5">
+                        <x-input-label for="nominal" :value="__('Nominal Pajak')"/>
+                        <x-text-input type="number" name="nominal[]" class="block mt-1 w-full" required/>
+                    </div>
+                `);
+            });
+        });
     </script>
     @endpush
 </x-app-layout>

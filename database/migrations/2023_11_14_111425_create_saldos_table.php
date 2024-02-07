@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('saldos', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignuuid('belanja_id')->references('id')->on('belanjas')->onUpdate('cascade');
+            $table->foreignuuid('belanja_id')->references('id')->on('belanjas')->onUpdate('cascade')->nullable();
             $table->foreignuuid('pelimpahan_id')->references('id')->on('pelimpahans')->onUpdate('cascade');
             $table->foreignuuid('biro_id')->references('id')->on('biros')->onUpdate('cascade');
             $table->integer('saldo');

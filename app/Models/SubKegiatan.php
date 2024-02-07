@@ -34,5 +34,10 @@ class SubKegiatan extends Model
     {
         return $this->hasMany(Anggaran::class, 'subkegiatan_id', 'id');
     }
+
+    public function pelimpahan(): HasMany
+    {
+        return $this->hasMany(Pelimpahan::class, 'subkegiatan_id', 'id');
+    }
 }
 

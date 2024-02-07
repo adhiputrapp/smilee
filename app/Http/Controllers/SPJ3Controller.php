@@ -36,10 +36,7 @@ class SPJ3Controller extends Controller
     }
 
     public function export() {
-        $spj = Belanja::whereHas('pengesahan', function($query) {
-            $query->where('sah', 'disetujui');
-        })
-            ->with('biro','program','kegiatan','subkegiatan','kodering', 'verifikasi', 'saldo.pelimpahan')
+        $spj = Belanja::with('biro','program','kegiatan','subkegiatan','kodering', 'verifikasi', 'saldo.pelimpahan')
             ->where('subkegiatan_id', $this->request->sub_kegiatan_id)
             ->where('kodering_id', $this->request->kodering_id)
             ->whereMonth('tanggal_belanja', explode('-', $this->request->tanggal)[1])

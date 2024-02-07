@@ -19,6 +19,14 @@
                         <x-text-input type="number" name="jumlah_pelimpahan" id="jumlah_pelimpahan" class="block mt-1 w-full" required/>
                     </div>
                     <div class="form-group mb-5">
+                        <x-input-label for="subkegiatan_id" :value="__('Nama Subkegiatan')"/>
+                        <select id="subkegiatan" name="subkegiatan_id" class="block mt-1 w-full" required>
+                            @foreach ($subkegiatans as $subkegiatan)
+                                <option value="{{$subkegiatan->id}}">{{$subkegiatan->nama_sub_kegiatan}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group mb-5">
                         <x-input-label for="biro_id" :value="__('Nama Biro')"/>
                         <select id="nama_biro_relasi" name="biro_id" class="block mt-1 w-full" required>
                             @foreach ($biros as $biro)
@@ -42,6 +50,13 @@
         $(document).ready(function() {
             $('#nama_biro_relasi').select2({
                 placeholder: 'Cari nama biro',
+                allowClear: true,
+            });
+        });
+        
+        $(document).ready(function() {
+            $('#subkegiatan').select2({
+                placeholder: 'Cari nama subkegiatan',
                 allowClear: true,
             });
         });

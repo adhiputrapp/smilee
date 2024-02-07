@@ -59,4 +59,13 @@ class Belanja extends Model
         return $this->hasOne(Saldo::class, 'belanja_id', 'id');
     }
     
+    public function pajak()
+    {
+        return $this->hasMany(Pajak::class, 'belanja_id', 'id');
+    }
+
+    public function files(): HasMany
+    {
+        return $this->hasMany(File::class, 'UniqueId', 'id');
+    }
 }

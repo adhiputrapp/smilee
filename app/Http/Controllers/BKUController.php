@@ -41,10 +41,7 @@ class BKUController extends Controller
 
         $bulanAnggaran = date('m', strtotime($request->bulan));
         // Ambil data belanja berdasarkan filter
-        $belanjas = Belanja::whereHas('pengesahan', function ($query) {
-                $query->where('sah', 'disetujui');
-            })
-            ->with('biro','program','kegiatan','subkegiatan','kodering', 'verifikasi', 'saldo.pelimpahan')
+        $belanjas = Belanja::with('biro','program','kegiatan','subkegiatan','kodering', 'verifikasi', 'saldo.pelimpahan')
             ->whereMonth('tanggal_belanja', $bulanAnggaran)
             ->whereYear('tanggal_belanja', $request->tahun)
             ->where('subkegiatan_id', $request->subkegiatan_id)

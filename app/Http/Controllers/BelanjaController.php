@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\File;
+use App\Models\Pajak;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
@@ -66,9 +68,12 @@ class BelanjaController extends Controller
             'nobukti' => 'required',
             'pengeluaran' => 'required',
             'uraian' => 'required',
+            'keterangan' => 'nullable',
+            'nominal' => 'nullable',
+            'belanja_id' => 'nullable',
         ]);
 
-        Belanja::create([
+        $belanja = Belanja::create([
             'id' => Str::uuid(),
             'tanggal_belanja' => $request->tanggal_belanja,
             'biro_id' => $request->biro_id,
@@ -81,6 +86,34 @@ class BelanjaController extends Controller
             'pengeluaran' => $request->pengeluaran,
             'uraian' => $request->uraian,
         ]);
+
+        if ($request->filled('keterangan') && $request->filled('nominal')) {
+            foreach ($request->keterangan as $key => $keterangan) {
+                Pajak::create([
+                    'belanja_id' => $belanja->id,
+                    'keterangan' => $keterangan,
+                    'nominal' => $request->nominal[$key],
+                ]);
+            }
+        } 
+
+        foreach ($this->request->file('file') as $key => $file) {
+            $folderName = Str::slug($belanja->tanggal_belanja);
+            $path = $file->store("/process-1/project-files/{$folderName}/", 'public');
+
+            $files[$key] = File::create([
+                'UniqueId' => $belanja->id,
+                'file_name' => $file->getClientOriginalName(),
+                'path' => $path,
+            ]);
+            }
+
+        // $pajak = Pajak::create([
+        //     'id' => Str::uuid(),
+        //     'belanja_id' => $belanja->id,
+        //     'keterangan' => $request->keterangan,
+        //     'nominal' => $request->nominal,
+        // ]);
 
         return redirect()->route('belanjas.index');
     }
@@ -129,6 +162,21 @@ class BelanjaController extends Controller
             'pengeluaran' => $request->pengeluaran,
             'uraian' => $request->uraian,
         ]);
+
+        if ($request->filled('keterangan') && $request->filled('nominal')) {
+            foreach ($request->keterangan as $key => $keterangan) {
+                Pajak::create([
+                    'belanja_id' => $belanja->id,
+                    'keterangan' => $keterangan,
+                    'nominal' => $request->nominal[$key],
+                ]);
+            }
+        }
+
+        // $pajak = Pajak::update([
+        //     'belanja_id' => $belanja->id,
+        //     'keterangan' => $request->keterangan,
+        //     'nominal' => $request->nominal,]);
 
         return redirect()->route('belanjas.index')->with('success', 'Belanja berhasil diperbarui.');
     }

@@ -52,35 +52,21 @@
             </div>
         </div>
     </div>   
-    {{-- @push('script')
-        <script>
+    @push('script')
+    <script>
+        $(document).ready(function() {
+            $('#sub_kegiatan_id').select2({
+                placeholder: 'Cari nama Subkegiatan',
+                allowClear: true,
+            });
+        });
+        
         $(document).ready(function() {
             $('#kodering_id').select2({
                 placeholder: 'Cari nama subkegiatan',
                 allowClear: true,
             });
-
-            $('#kodering_id').on('select2:select', function(e) {
-                e.preventDefault()
-
-                $.ajax({
-                    url: "{{ route('anggarans.search') }}",
-                    type: "GET",
-                    dataType: "JSON",
-                    data: {
-                        kodering: e.target.value
-                    },
-                    success: (res) => {
-                        $('#kode_sub_kegiatan').val(res.data.subkegiatan.kode_sub_kegiatan)
-                        $('#nama_sub_kegiatan').val(res.data.subkegiatan.nama_sub_kegiatan)
-                        $('#sub_kegiatan_id').val(res.data.subkegiatan.id)
-                    },
-                    error: (error) => {
-                        console.log(error);
-                    }
-                })
-            })
         });
-        </script>
-    @endpush --}}
+    </script>
+    @endpush
 </x-app-layout>

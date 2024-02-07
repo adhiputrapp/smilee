@@ -47,10 +47,7 @@ class RincianObjekController extends Controller
     }
 
     public function export() {
-        $data = Belanja::whereHas('pengesahan', function($query) {
-            $query->where('sah', 'disetujui');
-        })
-            ->where('subkegiatan_id', $this->request->sub_kegiatan_id)
+        $data = Belanja::where('subkegiatan_id', $this->request->sub_kegiatan_id)
             ->where('kodering_id', $this->request->kodering)
             ->whereMonth('tanggal_belanja', explode('-', $this->request->tanggal)[1])
             ->whereYear('tanggal_belanja', explode('-', $this->request->tanggal)[0])
