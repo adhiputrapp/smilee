@@ -34,4 +34,9 @@ class Anggaran extends Model
         return $this->belongsTo(Kodering::class, 'kodering_id', 'id');
     }
 
+    public function saldoanggaran() : HasMany
+    {
+        return $this->hasMany(SaldoAnggaran::class, 'anggaran_id', 'id');
+    }
+
 }

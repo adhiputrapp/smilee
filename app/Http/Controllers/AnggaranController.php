@@ -57,7 +57,7 @@ class AnggaranController extends Controller
             'uraian' => 'required',
         ]);
 
-        Anggaran::create([
+        $anggaran = Anggaran::create([
             'id' => Str::uuid(),
             'subkegiatan_id' => $request->sub_kegiatan_id,
             'kodering_id' => $request->kodering_id,
@@ -65,6 +65,8 @@ class AnggaranController extends Controller
             'jumlah_anggaran' => $request->jumlah_anggaran,
             'uraian' => $request->uraian,
         ]);
+
+        
 
         return redirect()->route('anggarans.index');
     }

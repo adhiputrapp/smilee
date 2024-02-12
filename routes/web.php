@@ -141,6 +141,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/update/{id}', 'update')->name('belanjas.update')->middleware('permission:belanjas.update');
         Route::get('/delete/{id}', 'destroy')->name('belanjas.delete')->middleware('permission:belanjas.delete');
         Route::get('/export', 'export')->name('belanjas.export')->middleware('permission:belanjas.export');
+        Route::get('/show', 'show')->name('belanjas.show')->middleware('permission:belanjas.show');
     });
 
     Route::prefix('/anggaran')->controller(AnggaranController::class)->group(function () {

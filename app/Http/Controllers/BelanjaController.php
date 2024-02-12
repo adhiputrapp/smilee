@@ -79,7 +79,7 @@ class BelanjaController extends Controller
             'biro_id' => $request->biro_id,
             'program_id' => $request->program_id,
             'kegiatan_id' => $request->kegiatan_id,
-            'subkegiatan_id' => $request->sub_kegiatan_id,
+            'sub_kegiatan_id' => $request->sub_kegiatan_id,
             'kodering_id' => $request->kodering_id,
             'jenis_belanja' => $request->jenis_belanja,
             'nobukti' => $request->nobukti,
@@ -97,16 +97,19 @@ class BelanjaController extends Controller
             }
         } 
 
-        foreach ($this->request->file('file') as $key => $file) {
-            $folderName = Str::slug($belanja->tanggal_belanja);
-            $path = $file->store("/process-1/project-files/{$folderName}/", 'public');
-
-            $files[$key] = File::create([
-                'UniqueId' => $belanja->id,
-                'file_name' => $file->getClientOriginalName(),
-                'path' => $path,
-            ]);
-            }
+        if ($request->hasFile('file')) {
+            foreach ($request->file('file') as $key => $file) {
+                $folderName = Str::slug($belanja->tanggal_belanja);
+                $path = $file->store("/process-1/project-files/{$folderName}/", 'public');
+    
+                $files[$key] = File::create([
+                    'UniqueId' => $belanja->id,
+                    'file_name' => $file->getClientOriginalName(),
+                    'path' => $path,
+                ]);
+            }
+        }
+        
 
         // $pajak = Pajak::create([
         //     'id' => Str::uuid(),
@@ -131,6 +134,13 @@ class BelanjaController extends Controller
             'subkegiatans' => SubKegiatan::all(),
             'koderings' => Kodering::all()
         ]);
+    }
+
+    public function show($id)
+    {
+        $belanja = Belanja::with(['pajak', 'files'])->findOrFail($id);
+
+        return view('belanja.detail', compact('belanja'));
     }
 
     public function update(Request $request, $id)
