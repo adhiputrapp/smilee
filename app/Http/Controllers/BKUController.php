@@ -23,10 +23,10 @@ class BKUController extends Controller
         return view('laporan.bku.index', compact('subkegiatans'));
     }
 
-    public function search()
-    {
+    // public function search()
+    // {
 
-    }
+    // }
 
     public function export(Request $request)
     {

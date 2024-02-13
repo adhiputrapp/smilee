@@ -68,7 +68,7 @@
                     },
                     {
                         label: 'Jenis Belanja',
-                        field: 'jenis_belanja',
+                         field: 'jenis_belanja',
                     },
                     {
                         label: 'Pengeluaran',
@@ -83,13 +83,14 @@
                         field: 'status_verifikasi',
                     },
                     {
-                        label: 'Edit/Hapus',
+                        label: 'Edit/Hapus/Detail',
                         field: 'action'
                     }
                 ],
                 rows: belanja.map((row) => {
                     let editButton = '';
                     let deleteButton = '';
+                    let detailButton = '';
                     // let isUnverified = row.verifikasi == null || row.verifikasi === 'unverified';
 
                     // Tombol Edit
@@ -111,6 +112,14 @@
                         </a>
                         @endif`;
 
+                    //Tombol Detail
+                        detailButton =`
+                        @if (Auth::user()->can('belanjas.show'))
+                        <a href="{{ url('/belanja/show/${row.id}') }}" class="inline-block rounded  bg-gradient-to-l from-green-600 to-green-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out hover:bg-danger-600 hover:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] focus:bg-danger-600 focus:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] focus:outline-none focus:ring-0 active:bg-danger-700 active:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(220,76,100,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)]">
+                            Detail
+                        </a>
+                        @endif`;
+
                     return {
                         ...row,
                         tanggal_belanja: new Date(row.tanggal_belanja).toLocaleDateString(),
@@ -125,7 +134,8 @@
                                 (row.verifikasi.verif === 'unverified' ? 'Ditolak, mohon revisi' :
                                     'Belum diverifikasi')) : 'Belum diverifikasi',
                         action: `${editButton}
-                        ${deleteButton}`
+                        ${deleteButton}
+                        ${detailButton}`
 
                     }
                 })
