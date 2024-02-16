@@ -209,6 +209,17 @@ class BelanjaController extends Controller
     public function export() 
     {
         $belanjas = Belanja::all();
+
+        foreach ($belanjas as $belanja) {
+            // Hitung total pajak yang diakumulasi untuk kodering pada belanja ini
+            $totalPajakPerKodering = Pajak::select('kodering_id', DB::raw('SUM(nominal) as total_pajak'))
+                ->where('belanja_id', $belanja->id)
+                ->groupBy('kodering_id')
+                ->get();
+    
+            // Tambahkan total pajak ke dalam data belanja
+            $belanja->total_pajak_per_kodering = $totalPajakPerKodering;
+        }
         return Excel::download(new RincianExport($belanjas), 'rincian.xlsx');
     }
 }

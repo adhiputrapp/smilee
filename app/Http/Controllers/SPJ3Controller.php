@@ -36,12 +36,27 @@ class SPJ3Controller extends Controller
     }
 
     public function export() {
-        $spj = Belanja::with('biro','program','kegiatan','subkegiatan','kodering', 'verifikasi', 'saldo.pelimpahan')
+        $spj = Belanja::with('biro','program','kegiatan','subkegiatan','kodering', 'verifikasi', 'saldo.pelimpahan', 'pajak')
             ->where('subkegiatan_id', $this->request->sub_kegiatan_id)
             ->where('kodering_id', $this->request->kodering_id)
             ->whereMonth('tanggal_belanja', explode('-', $this->request->tanggal)[1])
             ->whereYear('tanggal_belanja', explode('-', $this->request->tanggal)[0])
             ->get();
+            $totalPajakPerKodering = [];
+
+            // Iterasi setiap belanja untuk menghitung total pajak per kodering
+            foreach ($spj as $belanja) {
+                $totalPajak = $belanja->pajak->sum('nominal'); // Ambil total pajak untuk belanja ini
+                $koderingId = $belanja->kodering_id; // Ambil ID kodering dari belanja ini
+        
+                // Jika kodering sudah ada dalam array totalPajakPerKodering, tambahkan total pajak ke total yang sudah ada
+                // Jika belum ada, inisialisasi total pajak untuk kodering tersebut
+                if (isset($totalPajakPerKodering[$koderingId])) {
+                    $totalPajakPerKodering[$koderingId] += $totalPajak;
+                } else {
+                    $totalPajakPerKodering[$koderingId] = $totalPajak;
+                }
+            }
         $eom = Carbon::createFromDate(explode('-', $this->request->tanggal)[0], 
         explode('-', $this->request->tanggal)[1], 
         1 );
