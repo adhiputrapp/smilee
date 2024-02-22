@@ -19,16 +19,18 @@ class SPJ3Export implements FromCollection, WithDrawings, WithColumnWidths, With
     public $eom;
     public $total;
     public $saldoBulanLalu;
+    public $totalPajakPerKeterangan;
     // public $subKegiatan;
     // public $kegiatan;
     // public $program;
 
-    public function __construct($spj, $eom, $total, $saldoBulanLalu) 
+    public function __construct($spj, $eom, $total, $saldoBulanLalu, $totalPajakPerKeterangan) 
     {
         $this->spj = $spj;
         $this->eom = $eom;
         $this->total = $total;
         $this->saldoBulanLalu = $saldoBulanLalu;
+        $this->totalPajakPerKeterangan = $totalPajakPerKeterangan;
         // $this->tahun = $tahun;
         // $this->subKegiatan = $subKegiatan;
         // $this->kegiatan = $kegiatan;
@@ -187,7 +189,7 @@ class SPJ3Export implements FromCollection, WithDrawings, WithColumnWidths, With
                         $jumlahspj3 = $event->sheet->getCell('N'.$row)->getValue();
                         $totalspj = $jumlahspj1 + $jumlahspj2 + $jumlahspj3;
                         $event->sheet->setCellValue('O'.$row, $totalspj);
-                        $jumlahspj4 = $event->sheet->getCell('D'.$row)->getValue();
+                        $jumlahspj4 = $event->sheet->getCell('D'.$row)->getValue();         
                         $jumlahspj5 = $event->sheet->getCell('O'.$row)->getValue();
                         $totalspj1 = $jumlahspj4 - $jumlahspj5;
                         $event->sheet->setCellValue('P'.$row, $totalspj1);
@@ -197,7 +199,13 @@ class SPJ3Export implements FromCollection, WithDrawings, WithColumnWidths, With
                 //FOOTER
                     $event->sheet->setCellValue('A'.($row+1), "JUMLAH");
                     $event->sheet->mergeCells('L'.($row+1).':M'.($row+ 1));
-                    $event->sheet->setCellValue('A'.($row+2), $item->pajak->keterangan);
+                    foreach ($item->pajak as $index => $pajak) {
+                        // Tulis keterangan pajak pada kolom A dan baris yang sesuai
+                        $event->sheet->setCellValue('A'.($row+2+$index), $pajak->keterangan);
+                        $event->sheet->mergeCells('B'.($row+2+$index).':C'.($row+2+$index));
+                        // $event->sheet->setCellValue('B'.($row+2+$index), $totalPajakPerKeterangan);
+                    }
+                    // $event->sheet->setCellValue('A'.($row+2), $item->pajak->keterangan);
                     // $event->sheet->setCellValue('A'.($row+2), "SP2D");
                     // $event->sheet->mergeCells('L'.($row+2).':M'.($row+ 2));
                     // $event->sheet->setCellValue('A'.($row+3), "SP2D UP");
