@@ -19,18 +19,18 @@ class SPJ3Export implements FromCollection, WithDrawings, WithColumnWidths, With
     public $eom;
     public $total;
     public $saldoBulanLalu;
-    public $totalPajakPerKeterangan;
+    public $totalPajak;
     // public $subKegiatan;
     // public $kegiatan;
     // public $program;
 
-    public function __construct($spj, $eom, $total, $saldoBulanLalu, $totalPajakPerKeterangan) 
+    public function __construct($spj, $eom, $total, $saldoBulanLalu, $totalPajak) 
     {
         $this->spj = $spj;
         $this->eom = $eom;
         $this->total = $total;
         $this->saldoBulanLalu = $saldoBulanLalu;
-        $this->totalPajakPerKeterangan = $totalPajakPerKeterangan;
+        $this->totalPajak = $totalPajak;
         // $this->tahun = $tahun;
         // $this->subKegiatan = $subKegiatan;
         // $this->kegiatan = $kegiatan;
@@ -203,6 +203,17 @@ class SPJ3Export implements FromCollection, WithDrawings, WithColumnWidths, With
                         // Tulis keterangan pajak pada kolom A dan baris yang sesuai
                         $event->sheet->setCellValue('A'.($row+2+$index), $pajak->keterangan);
                         $event->sheet->mergeCells('B'.($row+2+$index).':C'.($row+2+$index));
+                        // $totalPajakPerKeterangan = $item->pajak->where('keterangan', $pajak->keterangan)->sum('nominal');
+                        $totalPajak = [];
+
+                        if (isset($totalPajak[$pajak->keterangan])) {
+                            $totalPajak[$pajak->keterangan] += $pajak->nominal;
+                        } else {
+                            // Jika keterangan belum ada dalam array, inisialisasi total dengan nominal pajak saat ini
+                            $totalPajak[$pajak->keterangan] = $pajak->nominal;
+                        }
+                        $event->sheet->setCellValue('B'.($row+2+$index), $totalPajak);
+                        // Tulis total pajak per keterangan pada kolom B
                         // $event->sheet->setCellValue('B'.($row+2+$index), $totalPajakPerKeterangan);
                     }
                     // $event->sheet->setCellValue('A'.($row+2), $item->pajak->keterangan);

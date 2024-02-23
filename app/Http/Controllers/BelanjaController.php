@@ -79,7 +79,7 @@ class BelanjaController extends Controller
             'biro_id' => $request->biro_id,
             'program_id' => $request->program_id,
             'kegiatan_id' => $request->kegiatan_id,
-            'sub_kegiatan_id' => $request->sub_kegiatan_id,
+            'subkegiatan_id' => $request->sub_kegiatan_id,
             'kodering_id' => $request->kodering_id,
             'jenis_belanja' => $request->jenis_belanja,
             'nobukti' => $request->nobukti,

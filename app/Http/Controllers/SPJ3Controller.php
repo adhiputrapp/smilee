@@ -69,18 +69,28 @@ class SPJ3Controller extends Controller
                 Carbon::parse($item->tanggal_belanja)->month < explode('-', $this->request->tanggal)[1] &&
                 Carbon::parse($item->tanggal_belanja)->year == explode('-', $this->request->tanggal)[0];
         })->sum('pengeluaran');
-        $totalPajakPerKeterangan = [];
+        $totalPajak = [];
 
-        // Iterasi melalui setiap item Belanja
-        foreach ($spj->pajak as $pajak) {
-            // Jika keterangan sudah ada dalam array, tambahkan nominal pajak ke total yang ada
-            if (isset($totalPajakPerKeterangan[$pajak->keterangan])) {
-                $totalPajakPerKeterangan[$pajak->keterangan] += $pajak->nominal;
-            } else {
-                // Jika keterangan belum ada dalam array, inisialisasi total dengan nominal pajak saat ini
-                $totalPajakPerKeterangan[$pajak->keterangan] = $pajak->nominal;
+        foreach ($spj as $belanja) {
+            foreach ($belanja->pajak as $pajak) {
+                // Jika keterangan sudah ada dalam array, tambahkan nominal pajak ke total yang ada
+                if (isset($totalPajak[$pajak->keterangan])) {
+                    $totalPajak[$pajak->keterangan] += $pajak->nominal;
+                } else {
+                    // Jika keterangan belum ada dalam array, inisialisasi total dengan nominal pajak saat ini
+                    $totalPajak[$pajak->keterangan] = $pajak->nominal;
+                }
             }
         }
+
+        // Iterasi melalui setiap item Belanja
+        // foreach ($spj as $belanja) {
+        //     // Iterasi melalui setiap item pajak dari belanja saat ini
+        //     foreach ($belanja->pajak as $pajak) {
+        //         // Akumulasi nominal pajak
+        //         $totalPajak += $pajak->nominal;
+        //     }
+        // }
     
         // $saldoBulanLalu = $spj->where('subkegiatan_id', $this->request->sub_kegiatan_id)
         // ->where('kodering_id', $this->request->koderingId) // Sesuaikan dengan id kodering yang diinginkan
@@ -105,7 +115,8 @@ class SPJ3Controller extends Controller
             $eom,
             $total,
             $saldoBulanLalu,
-            $totalPajakPerKeterangan,
+            $totalPajak,
+            // $totalPajakPerKeterangan,
             // explode('-', $this->request->tanggal)[0],
             // Carbon::now()->month(explode('-', $this->request->tanggal)[1]),
             // $tahun,
