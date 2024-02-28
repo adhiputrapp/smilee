@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Program;
+use App\Models\SaldoAnggaran;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -66,7 +67,19 @@ class AnggaranController extends Controller
             'uraian' => $request->uraian,
         ]);
 
-        
+        $existingSaldo = SaldoAnggaran::where('belanja_id', $request->belanja_id)->first();
+
+        if ($existingSaldo){
+            $existingSaldo->nominal += $request->jumlah_anggaran;
+            $existingSaldo->save();
+        } else {
+            SaldoAnggaran::create([
+                'id' => Str::uuid(),
+                'belanja_id' => null,
+                'anggaran_id' => $anggaran->id,
+                'nominal' => $request->jumlah_anggaran
+            ]);
+        }
 
         return redirect()->route('anggarans.index');
     }

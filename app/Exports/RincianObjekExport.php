@@ -129,7 +129,7 @@ class RincianObjekExport implements FromCollection, WithDrawings, WithStyles, Wi
                     if ($item->jenis_belanja == 'UP/GU') {
                         $event->sheet->setCellValue("G".$row, $item->pengeluaran);
                     }
-                    $event->sheet->setCellValue("H".$row, ($item->saldo ? $item->saldo->saldo : 0));
+                    $event->sheet->setCellValue("H".$row, ($this->anggaran->saldoanggaran ? $this->anggaran->saldoanggaran->nominal : 0));
                     //Styling
                     $event->sheet->getStyle('A' . $row.":H".$row)
                         ->getAlignment()
