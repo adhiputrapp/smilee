@@ -17,7 +17,7 @@ class Kodering extends Model
 
     public function subkegiatan() : HasMany
     {
-        return $this->hasMany(SubKegiatan::class, 'nama_sub_kegiatan_relasi', 'nama_sub_kegiatan');
+        return $this->hasMany(SubKegiatan::class, 'nama_sub_kegiatan', 'nama_sub_kegiatan_relasi');
     }
 
     public function belanja()

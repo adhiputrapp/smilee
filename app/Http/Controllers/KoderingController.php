@@ -30,13 +30,15 @@ class KoderingController extends Controller
     {
         $request->validate([
             'nama_kodering' => 'required',
-            'kode_kodering' => 'required'
+            'kode_kodering' => 'required',
+            'nama_sub_kegiatan_relasi' => 'required',
         ]);
 
         Kodering::create([
             'id' => Str::uuid(),
             'nama_kodering' => $request->nama_kodering,
             'kode_kodering' => $request->kode_kodering,
+            'nama_sub_kegiatan_relasi' => $request->nama_sub_kegiatan_relasi
         ]);
 
         return redirect()->route('koderings.index');
@@ -54,13 +56,15 @@ class KoderingController extends Controller
     {
         $request->validate([
             'nama_kodering' => 'required',
-            'kode_kodering' => 'required'
+            'kode_kodering' => 'required',
+            'nama_sub_kegiatan_relasi' => 'required',
         ]);
     
         $koderings = Kodering::find($id);
 
         $koderings->kode_kodering = $request->kode_kodering;
         $koderings->nama_kodering = $request->nama_kodering;
+        $koderings->nama_sub_kegiatan_relasi = $request->nama_sub_kegiatan_relasi;
 
         $koderings->save();
 
