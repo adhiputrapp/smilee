@@ -138,7 +138,7 @@ class BelanjaController extends Controller
 
     public function show($id)
     {
-        $belanja = Belanja::findOrFail($id);
+        $belanja = Belanja::findOrFail($id)->load('pajak', 'files');
 
         return view('user.belanja.show', compact('belanja'));
     }

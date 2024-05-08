@@ -78,8 +78,9 @@ class PelimpahanController extends Controller
     {
         $pelimpahans = Pelimpahan::with('biro')->find($id);
         $biros = Biro::all();
+        $subkegiatans = SubKegiatan::all();
 
-        return view('user.pelimpahan.edit', compact('pelimpahans','biros'));
+        return view('user.pelimpahan.edit', compact('pelimpahans','biros', 'subkegiatans'));
     }
 
     public function update(Request $request, $id)

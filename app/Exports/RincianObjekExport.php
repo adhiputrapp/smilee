@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use Carbon\Carbon;
 use Illuminate\View\View;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
@@ -116,8 +117,15 @@ class RincianObjekExport implements FromCollection, WithDrawings, WithStyles, Wi
                 $row = 17;
 
                 foreach ($this->data as $item) {
+                    $dt = Carbon::parse($item->tanggal_belanja)->settings([
+                        'locale' => 'id',
+                        'timezone' => 'Asia/Jakarta',
+                    ])->translatedFormat('d F Y');
+
+                    $event->sheet->getRowDimension($row)->setRowHeight(50.3);
+
                     $event->sheet->setCellValue("A".$row, $number+1);
-                    $event->sheet->setCellValue("B".$row, $item->tanggal_belanja->format('j F Y'));
+                    $event->sheet->setCellValue("B".$row, $dt);
                     $event->sheet->setCellValue("C".$row, $item->nobukti);
                     $event->sheet->setCellValue("D".$row, $item->uraian);
                     if ($item->jenis_belanja == 'LS') {
@@ -129,7 +137,9 @@ class RincianObjekExport implements FromCollection, WithDrawings, WithStyles, Wi
                     if ($item->jenis_belanja == 'UP/GU') {
                         $event->sheet->setCellValue("G".$row, $item->pengeluaran);
                     }
-                    $event->sheet->setCellValue("H".$row, ($this->anggaran->saldoanggaran ? $this->anggaran->saldoanggaran->nominal : 0));
+                    foreach ($this->anggaran->saldoanggaran as $key => $saldoAnggaran) {
+                        $event->sheet->setCellValue("H".$row, ($saldoAnggaran ? $saldoAnggaran->nominal : 0));
+                    }
                     //Styling
                     $event->sheet->getStyle('A' . $row.":H".$row)
                         ->getAlignment()
@@ -147,6 +157,11 @@ class RincianObjekExport implements FromCollection, WithDrawings, WithStyles, Wi
                         ->getBorders()
                         ->getAllBorders()
                         ->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+
+                    $event->sheet->getStyle("E{$row}")->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                    $event->sheet->getStyle("F{$row}")->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                    $event->sheet->getStyle("G{$row}")->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                    $event->sheet->getStyle("H{$row}")->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
                     
                     $number++;
                     $row++;

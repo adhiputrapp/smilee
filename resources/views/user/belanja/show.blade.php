@@ -15,11 +15,16 @@
         <p>Uraian: {{ $belanja->uraian }}</p>
         <!-- Tambahkan informasi lainnya sesuai kebutuhan -->
     </div>
-    
+
+    {{-- @dd($belanja) --}}
+
     <!-- Jika terdapat data pajak -->
     @if($belanja->pajak->isNotEmpty())
-        <h2>Detail Pajak</h2>
-        <p>Jumlah Pajak: {{ $belanja->pajak->nominal }}</p>
+    <h2>Detail Pajak</h2>
+        @foreach ($belanja->pajak as $item)     
+            <p>Keterangan Pajak: {{ $item->keterangan }}</p>
+            <p>Jumlah Pajak: {{ $item->nominal }}</p>
+        @endforeach
         <!-- Tambahkan informasi lainnya sesuai dengan struktur pajak -->
     @endif
 

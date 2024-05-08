@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Biro;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -16,16 +17,20 @@ class AdminTableSeeder extends Seeder
      */
     public function run(): void
     {
+        $biro = Biro::create([
+            'nama_biro' => 'Keuangan',
+            'kode_biro' => '001'
+        ]);
 
         $user = User::create([
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
-            'password' => bcrypt('mwNVmoqmNo'),
+            'password' => bcrypt('admin123'),
             'golongan' => ('admin'),
             'pangkat' => ('admin'),
             'jabatan' => ('admin'),
             'nip' => ('12345'),
-            'biro_id' =>  null,
+            'biro_id' =>  $biro->id,
         ]);
         $user->assignRole('admin');
 

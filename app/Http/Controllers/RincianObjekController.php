@@ -53,7 +53,7 @@ class RincianObjekController extends Controller
             ->whereYear('tanggal_belanja', explode('-', $this->request->tanggal)[0])
             ->get();
         $kodering = Kodering::find($this->request->kodering);
-        $anggaran = Anggaran::where('kodering_id', $kodering->id)->first();
+        $anggaran = Anggaran::where('kodering_id', $kodering->id)->first()->load('saldoanggaran');
         $pelimpahan = Pelimpahan::where('biro_id', $this->request->user()->biro->id)->first();
 
         // dd($data);
