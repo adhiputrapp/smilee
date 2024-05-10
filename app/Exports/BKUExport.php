@@ -121,7 +121,7 @@ class BKUExport implements FromArray, ShouldAutoSize, WithColumnWidths, WithStyl
                     $row++;
                 }
                  $event->sheet->setCellValue('D' . $row, "Jumlah");    
-                    $event->sheet->setCellValue('G' . $row, "=SUM(G12:G".($row - 1).")");
+                    $event->sheet->setCellValue('G' . $row, "=SUM(G10:G".($row - 1).")");
 
                     $event->sheet->getStyle('A' .$row.":H".$row)
                         ->getFont()

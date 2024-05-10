@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use Carbon\Carbon;
 use Illuminate\View\View;
+use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithColumnWidths;
@@ -16,44 +17,27 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class RincianObjekExport implements FromCollection, WithDrawings, WithStyles, WithColumnWidths, WithEvents//, WithColumnFormatting
+class RincianObjekExport implements FromArray, WithDrawings, WithStyles, WithColumnWidths, WithEvents//, WithColumnFormatting
 {
-    public $data;
+    public $exportData;
     public $tahun;
-    public $sumLS;
-    public $sumTU;
-    public $sumUPGU;
     public $kodering;
     public $anggaran;
     public $pelimpahan;
     public $eom; 
 
-    public function __construct($data, $tahun, $sumLS, $sumTU, $sumUPGU, $kodering, $anggaran, $pelimpahan, $eom) {
-        $this->data = $data;
+    public function __construct($exportData, $tahun, $kodering, $anggaran, $pelimpahan, $eom) {
+        $this->exportData = $exportData;
         $this->tahun = $tahun;
-        $this->sumLS = $sumLS;
-        $this->sumTU = $sumTU;
-        $this->sumUPGU = $sumUPGU;
         $this->kodering = $kodering;
         $this->anggaran = $anggaran;
         $this->pelimpahan = $pelimpahan;
         $this->eom = $eom;
     }
 
-    public function collection()
+    public function array() : array
     {
-        return collect($this->data)->map(function ($item, $index)
-        {
-            return[
-                'NObukti' => $item->nobukti,
-                'Uraian' => $item->uraian,
-                'Nama Kodering' => $item->tanggal_belanja,
-                'Nama SubKegiatan' => $item->subkegiatan->nama_sub_kegiatan,
-                // 'D' => $item->saldo->pelimpahan->jumlah_pengeluaran,
-                'Pengeluaran' => $item->pengeluaran,
-                'Nobukti' => $item->nobukti,
-            ];
-        });
+        return $this->exportData;        
     }    
 
     public function registerEvents(): array
@@ -116,34 +100,30 @@ class RincianObjekExport implements FromCollection, WithDrawings, WithStyles, Wi
                 $number = 0;
                 $row = 17;
 
-                foreach ($this->data as $item) {
-                    $dt = Carbon::parse($item->tanggal_belanja)->settings([
-                        'locale' => 'id',
-                        'timezone' => 'Asia/Jakarta',
-                    ])->translatedFormat('d F Y');
-
+                foreach ($this->exportData as $item) {
                     $event->sheet->getRowDimension($row)->setRowHeight(50.3);
 
-                    $event->sheet->setCellValue("A".$row, $number+1);
-                    $event->sheet->setCellValue("B".$row, $dt);
-                    $event->sheet->setCellValue("C".$row, $item->nobukti);
-                    $event->sheet->setCellValue("D".$row, $item->uraian);
-                    if ($item->jenis_belanja == 'LS') {
-                        $event->sheet->setCellValue("E".$row, $item->pengeluaran);
+                    $event->sheet->setCellValue("A".$row, $item["No"]);
+                    $event->sheet->setCellValue("B".$row, $item["Tanggal"]);
+                    $event->sheet->setCellValue("C".$row, $item["NoBKU"]);
+                    $event->sheet->setCellValue("D".$row, $item["Uraian"]);
+                    $event->sheet->getStyle('D' . $row)->getAlignment()->setWrapText(true);
+                    if ($item["JenisBelanja"] == 'LS') {
+                        $event->sheet->setCellValue("E".$row, $item["Pengeluaran"]);
                     }
-                    if ($item->jenis_belanja == 'TU') {
-                        $event->sheet->setCellValue("F".$row, $item->pengeluaran);
+                    if ($item["JenisBelanja"] == 'TU') {
+                        $event->sheet->setCellValue("F".$row, $item["Pengeluaran"]);
                     }
-                    if ($item->jenis_belanja == 'UP/GU') {
-                        $event->sheet->setCellValue("G".$row, $item->pengeluaran);
+                    if ($item["JenisBelanja"] == 'UP/GU') {
+                        $event->sheet->setCellValue("G".$row, $item["Pengeluaran"]);
                     }
-                    foreach ($this->anggaran->saldoanggaran as $key => $saldoAnggaran) {
-                        $event->sheet->setCellValue("H".$row, ($saldoAnggaran ? $saldoAnggaran->nominal : 0));
-                    }
+                    
+                    $event->sheet->setCellValue("H".$row, $item["Saldo"]);
+
                     //Styling
                     $event->sheet->getStyle('A' . $row.":H".$row)
                         ->getAlignment()
-                        ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER)
+                        ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT)
                         ->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
                     $event->sheet->getStyle('A' . $row.":H".$row)
                         ->getBorders()
@@ -163,11 +143,18 @@ class RincianObjekExport implements FromCollection, WithDrawings, WithStyles, Wi
                     $event->sheet->getStyle("G{$row}")->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
                     $event->sheet->getStyle("H{$row}")->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
                     
+                    $event->sheet->getStyle("E".($row + 1))->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                    $event->sheet->getStyle("F".($row + 1))->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                    $event->sheet->getStyle("G".($row + 1))->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                    
                     $number++;
                     $row++;
                 }
                 $event->sheet->getStyle('D' . $row)->getFont()->setBold(true);
                 $event->sheet->setCellValue("D".($row ), "Jumlah");
+                $event->sheet->setCellValue("E".($row ), "=SUM(E17:E".($row - 1).")");
+                $event->sheet->setCellValue("F".($row ), "=SUM(F17:E".($row - 1).")");
+                $event->sheet->setCellValue("G".($row ), "=SUM(G17:E".($row - 1).")");
 
                 $event->sheet->setCellValue("C".($row + 5), "Disetujui Oleh,");
                 $event->sheet->setCellValue("C".($row + 6), "Kuasa Pengguna Anggaran");
@@ -185,7 +172,7 @@ class RincianObjekExport implements FromCollection, WithDrawings, WithStyles, Wi
     // public function view() : View
     // {
     //     return view('laporan.rincian-objek.export', [
-    //         'data' => $this->data,
+    //         'exportData' => $this->exportData,
     //         'tahun' => $this->tahun,
     //         'sumLS' => $this->sumLS,
     //         'sumTU' => $this->sumTU,
